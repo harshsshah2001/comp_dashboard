@@ -54,7 +54,7 @@
             <label for="signInEmail" class="form-label">Email address</label>
             <input type="email" class="form-control m-b-md" id="signInEmail" name="email" placeholder="example@neptune.com">
             <small id="email_error" class="text-danger"></small>
-            
+
 
             <label for="signInPassword" class="form-label mt-3">Password</label>
             <input type="password" class="form-control" id="signInPassword" name="password" placeholder="••••••••">
@@ -105,6 +105,7 @@ $(document).ready(function(){
                         alert(response.message);
                     }
                 }
+
             },
             error: function(xhr) {
                 // Laravel validation errors (422)
