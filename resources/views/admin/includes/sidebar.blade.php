@@ -1,5 +1,3 @@
-@include('admin.includes.header')
-
 <div class="app-sidebar">
     <div class="logo">
         <a href="index.html" class="logo-icon"><span class="logo-text">Neptune</span></a>
@@ -20,19 +18,22 @@
                 <a href="index.html" class="active"><i class="material-icons-two-tone">dashboard</i>Dashboard</a>
             </li>
             <li>
-                <a href="mailbox.html"><i class="material-icons-two-tone">inbox</i>Mailbox<span class="badge rounded-pill badge-danger float-end">87</span></a>
+                <a href="mailbox.html"><i class="material-icons-two-tone">inbox</i>Mailbox<span
+                        class="badge rounded-pill badge-danger float-end">87</span></a>
             </li>
             <li>
                 <a href="file-manager.html"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
             </li>
             <li>
-                <a href="calendar.html"><i class="material-icons-two-tone">calendar_today</i>Calendar<span class="badge rounded-pill badge-success float-end">14</span></a>
+                <a href="calendar.html"><i class="material-icons-two-tone">calendar_today</i>Calendar<span
+                        class="badge rounded-pill badge-success float-end">14</span></a>
             </li>
             <li>
                 <a href="todo.html"><i class="material-icons-two-tone">done</i>Todo</a>
             </li>
             <li>
-                <a href=""><i class="material-icons-two-tone">star</i>Pages<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href=""><i class="material-icons-two-tone">star</i>Pages<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="pricing.html">Pricing</a>
@@ -44,10 +45,11 @@
                         <a href="settings.html">Settings</a>
                     </li>
                     <li>
-                        <a href="#">Authentication<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                        <a href="#">Authentication<i
+                                class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="{{route('signin')}}">Sign In</a>
+                                <a href="{{ route('signin') }}">Sign In</a>
                             </li>
                             <li>
                                 <a href="sign-up.html">Sign Up</a>
@@ -66,7 +68,8 @@
                 UI Elements
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">color_lens</i>Styles<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">color_lens</i>Styles<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="styles-typography.html">Typography</a>
@@ -80,7 +83,8 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">grid_on</i>Tables<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">grid_on</i>Tables<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="tables-basic.html">Basic</a>
@@ -91,7 +95,8 @@
                 </ul>
             </li>
             <li>
-                <a href=""><i class="material-icons-two-tone">sentiment_satisfied_alt</i>Elements<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href=""><i class="material-icons-two-tone">sentiment_satisfied_alt</i>Elements<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="ui-alerts.html">Alerts</a>
@@ -141,7 +146,8 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">card_giftcard</i>Components<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">card_giftcard</i>Components<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="components-accordions.html">Accordions</a>
@@ -179,7 +185,8 @@
                 <a href="widgets.html"><i class="material-icons-two-tone">widgets</i>Widgets</a>
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">edit</i>Forms<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">edit</i>Forms<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="forms-basic.html">Basic</a>
@@ -211,7 +218,8 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">analytics</i>Charts<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">analytics</i>Charts<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="charts-apex.html">Apex</a>
@@ -225,7 +233,8 @@
                 Layout
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">view_agenda</i>Content<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">view_agenda</i>Content<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="content-page-headings.html">Page Headings</a>
@@ -245,7 +254,8 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">menu</i>Menu<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">menu</i>Menu<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="menu-off-canvas.html">Off-Canvas</a>
@@ -265,7 +275,8 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="material-icons-two-tone">view_day</i>Header<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <a href="#"><i class="material-icons-two-tone">view_day</i>Header<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
                     <li>
                         <a href="header-basic.html">Basic</a>
@@ -295,10 +306,4 @@
             </li>
         </ul>
     </div>
-    @yield('content')
 </div>
-
-
-
-
-@include('admin.includes.footer')
