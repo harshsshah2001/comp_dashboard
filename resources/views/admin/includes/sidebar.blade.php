@@ -22,6 +22,18 @@
                         class="badge rounded-pill badge-danger float-end">87</span></a>
             </li>
             <li>
+                <a href=""><i class="material-icons-two-tone">star</i>Products<i
+                        class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="{{route('category.create')}}">Category</a>
+                    </li>
+                    <li>
+                        <a href="error.html">Error</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <a href="file-manager.html"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
             </li>
             <li>
@@ -49,7 +61,7 @@
                                 class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="{{ route('signin') }}">Sign In</a>
+                    <a href="{{ route('loginform') }}">Sign In</a>
                             </li>
                             <li>
                                 <a href="sign-up.html">Sign Up</a>
