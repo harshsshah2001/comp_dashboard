@@ -1,8 +1,34 @@
 @include('admin.includes.header')
 @include('admin.includes.sidebar')
+
+<style>
+    /* Make top bar (Show entries + Search) on the same line */
+    div.dataTables_wrapper div.dataTables_length {
+        float: left !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter {
+        float: right !important;
+        text-align: right !important;
+    }
+
+    /* Align the Search label + input inside */
+    div.dataTables_filter label {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 0 !important;
+    }
+
+    div.dataTables_wrapper .dataTables_paginate {
+        display: none !important;
+    }
+</style>
+
 <div class="app-content">
 
-    <div class="app-container">
+    <div class="app-content">
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
@@ -23,7 +49,7 @@
                                             <select class="form-control" id="parentCategory" name="parentCategory">
                                                 <option value="">Select Parent Category</option>
 
-                                                @foreach($categories as $cat)
+                                                @foreach($categoryTitles as $cat)
                                                     <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}
                                                     </option>
                                                 @endforeach
@@ -74,13 +100,335 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Category List</h5>
+                    </div>
+                    <div class="card-body">
+                        <table id="datatable1" class="display w-100">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Parent Category</th>
+                                    <th>Category Title</th>
+                                    <th>Category Image</th>
+                                    <th>Category Icon</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Category Modal -->
+        <div class="modal fade" id="editCategoryModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="updateCategoryForm">
+                            @csrf
+
+                            <input type="hidden" id="edit_id" name="id">
+
+                            <!-- Parent Category -->
+                            <div class="mb-3">
+                                <label>Parent Category</label>
+                                <select class="form-control" id="edit_parentCategory" name="parentCategory">
+                                    <option value="">Select Parent Category</option>
+
+                                    @foreach($categoryTitles as $cat)
+                                        <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+
+                            <!-- Category Title -->
+                            <div class="mb-3">
+                                <label>Category Title</label>
+                                <input type="text" class="form-control" id="edit_categoryTitle" name="categoryTitle">
+                            </div>
+
+                            <!-- Category Image -->
+                            <div class="mb-3">
+                                <label>Category Image</label>
+                                <div style="margin-bottom: 10px;">
+                                    <img id="old_image_preview" src="" width="80" height="80"
+                                        style="display:none; border-radius:5px;">
+                                </div>
+                                <input type="file" class="form-control" id="edit_image" name="image">
+
+                                <div style="margin-top: 10px;">
+                                    <img id="new_image_preview" src="" width="80" height="80"
+                                        style="display:none; border-radius:5px;">
+                                </div>
+                            </div>
+
+                            <!-- Category Icon -->
+                            <div class="mb-3">
+                                <label>Category Icon</label>
+                                <div style="margin-bottom: 10px;">
+                                    <img id="old_icon_preview" src="" width="80" height="80"
+                                        style="display:none; border-radius:5px;">
+                                </div>
+                                <input type="file" class="form-control" id="edit_icon" name="icon">
+
+                                <div style="margin-top: 10px;">
+                                    <img id="new_icon_preview" src="" width="80" height="80"
+                                        style="display:none; border-radius:5px;">
+                                </div>
+                            </div>
+
+
+                            <!-- Description -->
+                            <div class="mb-3">
+                                <label>Description</label>
+                                <textarea class="form-control" id="edit_categoryDescription"
+                                    name="categoryDescription"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Update Category</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
 
 
 @include('admin.includes.footer')
 
+
+
 <script>
+    let table = $('#datatable1').DataTable({
+        processing: true,
+        serverSide: false,
+        ordering: false,
+
+        ajax: {
+            url: "{{ route('category.create') }}",
+            type: "GET"
+        },
+
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+
+            {
+                data: "parentCategory",
+                render: function (data) {
+                    return data ? data : "—"; // hides null
+                }
+            },
+
+            { data: "categoryTitle" },
+
+            {
+                data: "image",
+                render: function (data) {
+                    if (data) {
+                        return `<img src="/storage/${data}" width="50" height="50">`;
+                    }
+                    return "No Image";
+                }
+            },
+
+            {
+                data: "icon",
+                render: function (data) {
+                    if (data) {
+                        return `<img src="/storage/${data}" width="50" height="50">`;
+                    }
+                    return "No Icon";
+                }
+            },
+
+            { data: "categoryDescription" },
+
+            {
+                data: "id",
+                render: function (id) {
+                    return `
+            <a href="javascript:void(0)" class="text-warning me-2 editBtn" data-id="${id}" style="cursor:pointer;">
+                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+            </a>
+
+            <a href="javascript:void(0)" class="text-danger deleteBtn" data-id="${id}" style="cursor:pointer;">
+                <i class="fa-solid fa-trash fa-lg"></i>
+            </a>
+        `;
+                }
+            }
+
+        ]
+
+    });
+
+
+    //open pop form for update category
+    $(document).on('click', '.editBtn', function () {
+        let id = $(this).data('id');
+
+        $.ajax({
+            url: "/admin/category/edit/" + id,
+            type: "GET",
+            success: function (res) {
+
+                $("#edit_id").val(res.id);
+                $("#edit_parentCategory").val(res.parentCategory);
+                $("#edit_categoryTitle").val(res.categoryTitle);
+                $("#edit_categoryDescription").val(res.categoryDescription);
+
+                // Show old image
+                if (res.image) {
+                    $("#old_image_preview").attr("src", "/storage/" + res.image).show();
+                } else {
+                    $("#old_image_preview").hide();
+                }
+
+                // Show old icon
+                if (res.icon) {
+                    $("#old_icon_preview").attr("src", "/storage/" + res.icon).show();
+                } else {
+                    $("#old_icon_preview").hide();
+                }
+
+                // Clear new previews
+                $("#new_image_preview").hide();
+                $("#new_icon_preview").hide();
+
+                $("#editCategoryModal").modal('show');
+            }
+
+        });
+    });
+
+    //update category
+    $("#updateCategoryForm").on("submit", function (e) {
+        e.preventDefault();
+
+        let id = $("#edit_id").val();
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "/admin/category/update/" + id,
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            success: function (res) {
+                if (res.status === true) {
+                    Swal.fire({
+                        icon: "success",
+                        text: res.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    $("#editCategoryModal").modal('hide');
+                    $('#datatable1').DataTable().ajax.reload();
+                }
+            }
+        });
+    });
+
+    // Preview new CATEGORY image
+    $("#edit_image").on("change", function () {
+        let file = this.files[0];
+        if (file) {
+            $("#new_image_preview").attr("src", URL.createObjectURL(file)).show();
+        }
+    });
+
+    // Preview new CATEGORY icon
+    $("#edit_icon").on("change", function () {
+        let file = this.files[0];
+        if (file) {
+            $("#new_icon_preview").attr("src", URL.createObjectURL(file)).show();
+        }
+    });
+
+
+    // Delete script
+
+    $(document).on('click', '.deleteBtn', function () {
+
+        let id = $(this).data('id');
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This record will be deleted!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url: "/admin/category/delete/" + id,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+
+                    success: function (res) {
+                        if (res.status === true) {
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted',
+                                text: res.message,
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+
+                            $('#datatable1').DataTable().ajax.reload();
+                        } else {
+                            Swal.fire("Error", res.message, "error");
+                        }
+                    },
+
+                    error: function () {
+                        Swal.fire("Error", "Server Error", "error");
+                    }
+                });
+
+            }
+        });
+
+    });
+
+
+    // category store
     $("#addCategoryForm").on('submit', function (e) {
         e.preventDefault();
 
@@ -128,4 +476,5 @@
 
         });
     });
+
 </script>

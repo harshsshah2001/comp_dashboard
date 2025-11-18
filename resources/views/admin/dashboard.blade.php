@@ -4,7 +4,7 @@
 
 
 
-<div class="app-container">
+
 
     <div class="app-content">
         <div class="content-wrapper">
@@ -696,7 +696,6 @@
             </div>
         </div>
     </div>
-</div>
 
 
 

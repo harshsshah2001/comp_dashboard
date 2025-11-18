@@ -14,7 +14,7 @@ class AdminService
         $this->repo = $repo;
     }
 
-    public function addCategory($request)
+    public function AddData($request)
     {
         // Image Upload
         $image = null;
@@ -40,5 +40,30 @@ class AdminService
 
 
         return $this->repo->insertData('categories', $data);
+    }
+
+    public function deleteCategory($id)
+    {
+        return $this->repo->deleteData('categories', $id);
+    }
+
+    public function updateCategory($request, $id)
+    {
+        $data = [
+            'parentCategory' => $request->parentCategory,
+            'categoryTitle' => $request->categoryTitle,
+            'categoryDescription' => $request->categoryDescription,
+            'updated_at' => now(),
+        ];
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('categories', 'public');
+        }
+
+        if ($request->hasFile('icon')) {
+            $data['icon'] = $request->file('icon')->store('category_icons', 'public');
+        }
+
+        return $this->repo->updateData('categories', $id, $data);
     }
 }
