@@ -28,191 +28,196 @@
 
 <div class="app-content">
 
-    <div class="app-content">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title">Add Category</h5>
-                        </div>
+                            <div class="card-header">
+                                <h5 class="card-title">Add Category</h5>
+                            </div>
 
+                            <div class="card-body">
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                        aria-labelledby="pills-home-tab">
+                                        <form id="addCategoryForm" enctype="multipart/form-data">
+                                            @csrf
+                                            <!-- Parent Category -->
+                                            <div class="mb-3">
+                                                <label for="parentCategory" class="form-label">Parent Category</label>
+                                                <select class="form-control" id="parentCategory" name="parentCategory">
+                                                    <option value="">Select Parent Category</option>
+
+                                                    @foreach($categoryTitles as $cat)
+                                                        <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
+                                                <div class="form-text">Select or enter the main parent category.</div>
+                                            </div>
+
+
+
+                                            <!-- Category Title -->
+                                            <div class="mb-3">
+                                                <label for="categoryTitle" class="form-label">Category Title</label>
+                                                <input type="text" class="form-control" id="categoryTitle"
+                                                    name="categoryTitle" placeholder="Enter category title">
+                                                <div class="form-text">Provide the visible title for this category.
+                                                </div>
+                                            </div>
+
+                                            <!-- Category Image -->
+                                            <div class="mb-3">
+                                                <label for="categoryImage" class="form-label">Category Image</label>
+                                                <input type="file" class="form-control" id="categoryImage" name="image">
+                                                <div class="form-text">Upload the main image for this category.</div>
+                                            </div>
+
+                                            <!-- Category Icon -->
+                                            <div class="mb-3">
+                                                <label for="categoryIcon" class="form-label">Category Icon</label>
+                                                <input type="file" class="form-control" id="categoryIcon" name="icon">
+                                                <div class="form-text">Upload a small icon representing the category.
+                                                </div>
+                                            </div>
+
+                                            <!-- Description -->
+                                            <div class="mb-3">
+                                                <label for="categoryDescription" class="form-label">Description</label>
+                                                <textarea class="form-control" id="categoryDescription" rows="3"
+                                                    name="categoryDescription"
+                                                    placeholder="Enter category description"></textarea>
+                                                <div class="form-text">Short description about this category.</div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Category List</h5>
+                        </div>
                         <div class="card-body">
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                    aria-labelledby="pills-home-tab">
-                                    <form id="addCategoryForm" enctype="multipart/form-data">
-                                        @csrf
-                                        <!-- Parent Category -->
-                                        <div class="mb-3">
-                                            <label for="parentCategory" class="form-label">Parent Category</label>
-                                            <select class="form-control" id="parentCategory" name="parentCategory">
-                                                <option value="">Select Parent Category</option>
+                            <table id="datatable1" class="display w-100">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Parent Category</th>
+                                        <th>Category Title</th>
+                                        <th>Category Image</th>
+                                        <th>Category Icon</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
 
-                                                @foreach($categoryTitles as $cat)
-                                                    <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}
-                                                    </option>
-                                                @endforeach
-
-                                            </select>
-                                            <div class="form-text">Select or enter the main parent category.</div>
-                                        </div>
-
-
-
-                                        <!-- Category Title -->
-                                        <div class="mb-3">
-                                            <label for="categoryTitle" class="form-label">Category Title</label>
-                                            <input type="text" class="form-control" id="categoryTitle"
-                                                name="categoryTitle" placeholder="Enter category title">
-                                            <div class="form-text">Provide the visible title for this category.</div>
-                                        </div>
-
-                                        <!-- Category Image -->
-                                        <div class="mb-3">
-                                            <label for="categoryImage" class="form-label">Category Image</label>
-                                            <input type="file" class="form-control" id="categoryImage" name="image">
-                                            <div class="form-text">Upload the main image for this category.</div>
-                                        </div>
-
-                                        <!-- Category Icon -->
-                                        <div class="mb-3">
-                                            <label for="categoryIcon" class="form-label">Category Icon</label>
-                                            <input type="file" class="form-control" id="categoryIcon" name="icon">
-                                            <div class="form-text">Upload a small icon representing the category.</div>
-                                        </div>
-
-                                        <!-- Description -->
-                                        <div class="mb-3">
-                                            <label for="categoryDescription" class="form-label">Description</label>
-                                            <textarea class="form-control" id="categoryDescription" rows="3"
-                                                name="categoryDescription"
-                                                placeholder="Enter category description"></textarea>
-                                            <div class="form-text">Short description about this category.</div>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </form>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Category List</h5>
-                    </div>
-                    <div class="card-body">
-                        <table id="datatable1" class="display w-100">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Parent Category</th>
-                                    <th>Category Title</th>
-                                    <th>Category Image</th>
-                                    <th>Category Icon</th>
-                                    <th>Description</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+            <!-- Edit Category Modal -->
+            <div class="modal fade" id="editCategoryModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Category</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="updateCategoryForm">
+                                @csrf
+
+                                <input type="hidden" id="edit_id" name="id">
+
+                                <!-- Parent Category -->
+                                <div class="mb-3">
+                                    <label>Parent Category</label>
+                                    <select class="form-control" id="edit_parentCategory" name="parentCategory">
+                                        <option value="">Select Parent Category</option>
+
+                                        @foreach($categoryTitles as $cat)
+                                            <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+
+                                <!-- Category Title -->
+                                <div class="mb-3">
+                                    <label>Category Title</label>
+                                    <input type="text" class="form-control" id="edit_categoryTitle"
+                                        name="categoryTitle">
+                                </div>
+
+                                <!-- Category Image -->
+                                <div class="mb-3">
+                                    <label>Category Image</label>
+                                    <div style="margin-bottom: 10px;">
+                                        <img id="old_image_preview" src="" width="80" height="80"
+                                            style="display:none; border-radius:5px;">
+                                    </div>
+                                    <input type="file" class="form-control" id="edit_image" name="image">
+
+                                    <div style="margin-top: 10px;">
+                                        <img id="new_image_preview" src="" width="80" height="80"
+                                            style="display:none; border-radius:5px;">
+                                    </div>
+                                </div>
+
+                                <!-- Category Icon -->
+                                <div class="mb-3">
+                                    <label>Category Icon</label>
+                                    <div style="margin-bottom: 10px;">
+                                        <img id="old_icon_preview" src="" width="80" height="80"
+                                            style="display:none; border-radius:5px;">
+                                    </div>
+                                    <input type="file" class="form-control" id="edit_icon" name="icon">
+
+                                    <div style="margin-top: 10px;">
+                                        <img id="new_icon_preview" src="" width="80" height="80"
+                                            style="display:none; border-radius:5px;">
+                                    </div>
+                                </div>
+
+
+                                <!-- Description -->
+                                <div class="mb-3">
+                                    <label>Description</label>
+                                    <textarea class="form-control" id="edit_categoryDescription"
+                                        name="categoryDescription"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100">Update Category</button>
+                            </form>
+                        </div>
 
                     </div>
                 </div>
             </div>
+
         </div>
-
-        <!-- Edit Category Modal -->
-        <div class="modal fade" id="editCategoryModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Category</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form id="updateCategoryForm">
-                            @csrf
-
-                            <input type="hidden" id="edit_id" name="id">
-
-                            <!-- Parent Category -->
-                            <div class="mb-3">
-                                <label>Parent Category</label>
-                                <select class="form-control" id="edit_parentCategory" name="parentCategory">
-                                    <option value="">Select Parent Category</option>
-
-                                    @foreach($categoryTitles as $cat)
-                                        <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
-                                    @endforeach
-
-                                </select>
-                            </div>
-
-                            <!-- Category Title -->
-                            <div class="mb-3">
-                                <label>Category Title</label>
-                                <input type="text" class="form-control" id="edit_categoryTitle" name="categoryTitle">
-                            </div>
-
-                            <!-- Category Image -->
-                            <div class="mb-3">
-                                <label>Category Image</label>
-                                <div style="margin-bottom: 10px;">
-                                    <img id="old_image_preview" src="" width="80" height="80"
-                                        style="display:none; border-radius:5px;">
-                                </div>
-                                <input type="file" class="form-control" id="edit_image" name="image">
-
-                                <div style="margin-top: 10px;">
-                                    <img id="new_image_preview" src="" width="80" height="80"
-                                        style="display:none; border-radius:5px;">
-                                </div>
-                            </div>
-
-                            <!-- Category Icon -->
-                            <div class="mb-3">
-                                <label>Category Icon</label>
-                                <div style="margin-bottom: 10px;">
-                                    <img id="old_icon_preview" src="" width="80" height="80"
-                                        style="display:none; border-radius:5px;">
-                                </div>
-                                <input type="file" class="form-control" id="edit_icon" name="icon">
-
-                                <div style="margin-top: 10px;">
-                                    <img id="new_icon_preview" src="" width="80" height="80"
-                                        style="display:none; border-radius:5px;">
-                                </div>
-                            </div>
-
-
-                            <!-- Description -->
-                            <div class="mb-3">
-                                <label>Description</label>
-                                <textarea class="form-control" id="edit_categoryDescription"
-                                    name="categoryDescription"></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100">Update Category</button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-
     </div>
+
 </div>
+
 
 
 @include('admin.includes.footer')
@@ -325,6 +330,33 @@
             }
 
         });
+    });
+
+
+    // Preview new CATEGORY image
+    $("#edit_image").on("change", function () {
+        let file = this.files[0];
+        if (file) {
+            $("#new_image_preview")
+                .attr("src", URL.createObjectURL(file))
+                .show();
+
+            // Hide old image when new one is selected
+            $("#old_image_preview").hide();
+        }
+    });
+
+    // Preview new CATEGORY icon
+    $("#edit_icon").on("change", function () {
+        let file = this.files[0];
+        if (file) {
+            $("#new_icon_preview")
+                .attr("src", URL.createObjectURL(file))
+                .show();
+
+            // Hide old icon when new one is selected
+            $("#old_icon_preview").hide();
+        }
     });
 
     //update category

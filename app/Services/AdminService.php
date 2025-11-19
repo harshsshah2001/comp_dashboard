@@ -14,56 +14,83 @@ class AdminService
         $this->repo = $repo;
     }
 
-    public function AddData($request)
+    public function store($request, $validation_rules, $model, $image_paths = [])
     {
-        // Image Upload
-        $image = null;
-        $icon = null;
+        // Validate
+        $validated = $request->validate($validation_rules);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image')->store('categories', 'public');
+        $data = $validated;
+
+        // Handle images dynamically
+        foreach ($image_paths as $field => $path) {
+            if ($request->hasFile($field)) {
+                $data[$field] = $request->file($field)->store($path, 'public');
+            }
         }
 
-        if ($request->hasFile('icon')) {
-            $icon = $request->file('icon')->store('category_icons', 'public');
-        }
+        // Add timestamps
+        $data['created_at'] = now();
+        $data['updated_at'] = now();
 
-        $data = [
-            'parentCategory'       => $request->parentCategory,
-            'categoryTitle'        => $request->categoryTitle,
-            'image'                => $image,
-            'icon'                 => $icon,
-            'categoryDescription'  => $request->categoryDescription,
-            'created_at'           => now(),
-            'updated_at'           => now(),
-        ];
+        // Save to model
+        $model::create($data);
 
-
-        return $this->repo->insertData('categories', $data);
+        return response()->json([
+            'status'  => true,
+            'message' => 'Category Added Successfully'
+        ]);
     }
 
-    public function deleteCategory($id)
-    {
-        return $this->repo->deleteData('categories', $id);
+    public function update($request, $validation_rules, $model, $id, $image_paths = [])
+{
+    $validated = $request->validate($validation_rules);
+
+    $data = $validated;
+
+    // Handle images dynamically
+    foreach ($image_paths as $field => $path) {
+        if ($request->hasFile($field)) {
+            $data[$field] = $request->file($field)->store($path, 'public');
+        }
     }
 
-    public function updateCategory($request, $id)
+    $data['updated_at'] = now();
+
+    return $model::where('id', $id)->update($data);
+}
+
+    public function delete($model, $id, $image_fields = [])
     {
-        $data = [
-            'parentCategory' => $request->parentCategory,
-            'categoryTitle' => $request->categoryTitle,
-            'categoryDescription' => $request->categoryDescription,
-            'updated_at' => now(),
-        ];
+        // Fetch item
+        $item = $model::find($id);
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public');
+        if (!$item) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Record not found'
+            ]);
         }
 
-        if ($request->hasFile('icon')) {
-            $data['icon'] = $request->file('icon')->store('category_icons', 'public');
+        // Delete images if exist
+        foreach ($image_fields as $field) {
+            if (!empty($item->$field)) {
+                Storage::disk('public')->delete($item->$field);
+            }
         }
 
-        return $this->repo->updateData('categories', $id, $data);
+        // Delete record from database
+        $deleted = $item->delete();
+
+        if ($deleted) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Category Deleted Successfully'
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Delete Failed'
+        ]);
     }
 }

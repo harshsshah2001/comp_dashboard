@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RolesPermission;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,4 +22,19 @@ Route::get('/category/create', [CategoryController::class, 'categoryform'])->nam
 Route::post('/admin/category/store', [CategoryController::class, 'store'])->name('category.store');
 Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-Route::post('/admin/category/update/{id}', [CategoryController::class, 'update'])->name('category.update');
+Route::post('/admin/category/update/{id}', [CategoryController::class, 'update']);
+
+Route::get('/admin/category/chart', [CategoryController::class, 'chart'])->name('category.chart');
+
+
+// Product Routes
+Route::get('/product/create', [ProductController::class, 'productform'])->name('product.create');
+Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+
+
+// Roles and permissions routes
+Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
+Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
+Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
+Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
+

@@ -36,33 +36,29 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $model = \App\Models\Category::class;
+
+        // Validation rules
+        $validation_rules = [
             'parentCategory' => 'nullable|string',
             'categoryTitle'  => 'nullable|string|max:255',
             'image'          => 'nullable|image',
             'icon'           => 'nullable|image',
             'categoryDescription' => 'nullable|string',
-        ]);
+        ];
 
+        // Image upload paths
+        $image_paths = [
+            'image' => 'categories',
+            'icon'  => 'category_icons'
+        ];
 
-        $result = $this->service->AddData($request);
-
-        if ($result) {
-            return response()->json(['status' => true, 'message' => 'Category Added Successfully']);
-        }
-
-        return response()->json(['status' => false, 'message' => 'Something went wrong']);
-    }
-
-    public function delete($id)
-    {
-        $result = $this->service->deleteCategory($id);
-
-        if ($result) {
-            return response()->json(['status' => true, 'message' => 'Category Deleted Successfully']);
-        }
-
-        return response()->json(['status' => false, 'message' => 'Delete Failed']);
+        return $this->service->store(
+            $request,
+            $validation_rules,
+            $model,
+            $image_paths
+        );
     }
 
     public function edit($id)
@@ -73,12 +69,48 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $result = $this->service->updateCategory($request, $id);
+        $model = \App\Models\Category::class;
 
-        if ($result) {
+        $validation_rules = [
+            'parentCategory' => 'nullable|string',
+            'categoryTitle'  => 'nullable|string|max:255',
+            'image'          => 'nullable|image',
+            'icon'           => 'nullable|image',
+            'categoryDescription' => 'nullable|string',
+        ];
+
+        $paths = [
+            'image' => 'categories',
+            'icon'  => 'category_icons'
+        ];
+
+        $updated = $this->service->update($request, $validation_rules, $model, $id, $paths);
+
+        if ($updated) {
             return response()->json(['status' => true, 'message' => 'Category Updated Successfully']);
         }
 
         return response()->json(['status' => false, 'message' => 'Update Failed']);
+    }
+
+    public function delete($id)
+    {
+        $model = \App\Models\Category::class;
+
+        // Fields that contain image paths in DB
+        $image_fields = ['image', 'icon'];
+
+        return $this->service->delete($model, $id, $image_fields);
+    }
+
+    public function chart()
+    {
+        // Fetch category titles & count how many are in each parent category
+        $chartData = Category::select('parentCategory')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('parentCategory')
+            ->get();
+
+        return view('admin.category.chart', compact('chartData'));
     }
 }

@@ -28,11 +28,26 @@
                     <li>
                         <a href="{{route('category.create')}}">Category</a>
                     </li>
+                    
                     <li>
-                        <a href="error.html">Error</a>
+                        <a href="{{ route('product.create') }}">Product</a>
                     </li>
                 </ul>
             </li>
+
+            <li>
+                    <a href="#"><i class="fa fa-lock"></i>Roles & Permissions<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                    <ul class="sub-menu">
+
+                            <li><a href="{{ route('roles') }}">Roles</a></li>
+                            <li><a href="{{ route('permissions') }}">Permissions</a></li>
+
+                            <li><a href="{{ route('role_permission_list') }}">Role & Permissions</a></li>
+
+                            <li><a href="{{ route('userlist') }}">Users</a></li>
+
+                    </ul>
+                </li>
             <li>
                 <a href="file-manager.html"><i class="material-icons-two-tone">cloud_queue</i>File Manager</a>
             </li>
