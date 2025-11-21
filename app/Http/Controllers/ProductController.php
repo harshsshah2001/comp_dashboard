@@ -18,11 +18,12 @@ class ProductController extends Controller
         $this->service = $service;
     }
 
-    public function productform(){
+    public function productform()
+    {
 
         $category = Category::select('categoryTitle')->get();
         $products = Product::all();
-        return view("admin.product.create_product",compact("category","products"));
+        return view("admin.product.create_product", compact("category", "products"));
     }
     public function store(Request $request)
     {
@@ -47,4 +48,37 @@ class ProductController extends Controller
         );
     }
 
+    public function edit($id)
+    {
+        $category = Product::find($id);
+        return response()->json($category);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $model = \App\Models\Product::class;
+
+        $validation_rules = [
+            'productcategories'   => 'required|string',
+            'productname'         => 'required|string|max:255',
+            'productdescription'  => 'required|string',
+            'price'               => 'required|numeric',
+            'saleprice'           => 'nullable|numeric',
+            'image'               => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'icon'                => 'nullable|image|mimes:jpg,jpeg,png,webp',
+        ];
+
+        $paths = [
+            'icon'  => 'product/icon',
+            'image' => 'product/image',
+        ];
+
+        $updated = $this->service->update($request, $validation_rules, $model, $id, $paths);
+
+        if ($updated) {
+            return response()->json(['status' => true, 'message' => 'Category Updated Successfully']);
+        }
+
+        return response()->json(['status' => false, 'message' => 'Update Failed']);
+    }
 }

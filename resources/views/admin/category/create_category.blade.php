@@ -30,6 +30,7 @@
 
     <div class="content-wrapper">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
@@ -44,58 +45,75 @@
                                         aria-labelledby="pills-home-tab">
                                         <form id="addCategoryForm" enctype="multipart/form-data">
                                             @csrf
-                                            <!-- Parent Category -->
-                                            <div class="mb-3">
-                                                <label for="parentCategory" class="form-label">Parent Category</label>
-                                                <select class="form-control" id="parentCategory" name="parentCategory">
-                                                    <option value="">Select Parent Category</option>
 
-                                                    @foreach($categoryTitles as $cat)
-                                                        <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}
-                                                        </option>
-                                                    @endforeach
+                                            <!-- ROW 1 -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="parentCategory" class="form-label">Parent
+                                                        Category</label>
+                                                    <select class="form-control" id="parentCategory"
+                                                        name="parentCategory">
+                                                        <option value="">Select Parent Category</option>
+                                                        @foreach($categoryTitles as $cat)
+                                                            <option value="{{ $cat->categoryTitle }}">
+                                                                {{ $cat->categoryTitle }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="form-text">Select or enter the main parent category.
+                                                    </div>
+                                                </div>
 
-                                                </select>
-                                                <div class="form-text">Select or enter the main parent category.</div>
-                                            </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="categoryTitle" class="form-label">Category Title</label>
+                                                    <input type="text" class="form-control" id="categoryTitle"
+                                                        name="categoryTitle" placeholder="Enter category title">
+                                                    <div class="form-text">Provide the visible title for this category.
+                                                    </div>
+                                                    <span class="text-danger error-text categoryTitle_error"></span>
 
-
-
-                                            <!-- Category Title -->
-                                            <div class="mb-3">
-                                                <label for="categoryTitle" class="form-label">Category Title</label>
-                                                <input type="text" class="form-control" id="categoryTitle"
-                                                    name="categoryTitle" placeholder="Enter category title">
-                                                <div class="form-text">Provide the visible title for this category.
                                                 </div>
                                             </div>
 
-                                            <!-- Category Image -->
-                                            <div class="mb-3">
-                                                <label for="categoryImage" class="form-label">Category Image</label>
-                                                <input type="file" class="form-control" id="categoryImage" name="image">
-                                                <div class="form-text">Upload the main image for this category.</div>
-                                            </div>
+                                            <!-- ROW 2 -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="categoryImage" class="form-label">Category Image</label>
+                                                    <input type="file" class="form-control" id="categoryImage"
+                                                        name="image">
+                                                    <div class="form-text">Upload the main image for this category.
+                                                    </div>
+                                                    <span class="text-danger error-text image_error"></span>
 
-                                            <!-- Category Icon -->
-                                            <div class="mb-3">
-                                                <label for="categoryIcon" class="form-label">Category Icon</label>
-                                                <input type="file" class="form-control" id="categoryIcon" name="icon">
-                                                <div class="form-text">Upload a small icon representing the category.
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="categoryIcon" class="form-label">Category Icon</label>
+                                                    <input type="file" class="form-control" id="categoryIcon"
+                                                        name="icon">
+                                                    <div class="form-text">Upload a small icon representing the
+                                                        category.</div>
                                                 </div>
                                             </div>
 
-                                            <!-- Description -->
-                                            <div class="mb-3">
-                                                <label for="categoryDescription" class="form-label">Description</label>
-                                                <textarea class="form-control" id="categoryDescription" rows="3"
-                                                    name="categoryDescription"
-                                                    placeholder="Enter category description"></textarea>
-                                                <div class="form-text">Short description about this category.</div>
+                                            <!-- ROW 3 (Description) -->
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="categoryDescription"
+                                                        class="form-label">Description</label>
+                                                    <textarea class="form-control" id="categoryDescription" rows="3"
+                                                        name="categoryDescription"
+                                                        placeholder="Enter category description"></textarea>
+                                                    <div class="form-text">Short description about this category.</div>
+                                                    <span
+                                                        class="text-danger error-text categoryDescription_error"></span>
+
+                                                </div>
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -147,84 +165,106 @@
 
                                 <input type="hidden" id="edit_id" name="id">
 
-                                <!-- Parent Category -->
-                                <div class="mb-3">
-                                    <label>Parent Category</label>
-                                    <select class="form-control" id="edit_parentCategory" name="parentCategory">
-                                        <option value="">Select Parent Category</option>
+                                <!-- ROW 1 -->
+                                <div class="row">
 
-                                        @foreach($categoryTitles as $cat)
-                                            <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-
-                                <!-- Category Title -->
-                                <div class="mb-3">
-                                    <label>Category Title</label>
-                                    <input type="text" class="form-control" id="edit_categoryTitle"
-                                        name="categoryTitle">
-                                </div>
-
-                                <!-- Category Image -->
-                                <div class="mb-3">
-                                    <label>Category Image</label>
-                                    <div style="margin-bottom: 10px;">
-                                        <img id="old_image_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
+                                    <!-- Parent Category -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Parent Category</label>
+                                        <select class="form-control" id="edit_parentCategory" name="parentCategory">
+                                            <option value="">Select Parent Category</option>
+                                            @foreach($categoryTitles as $cat)
+                                                <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <input type="file" class="form-control" id="edit_image" name="image">
 
-                                    <div style="margin-top: 10px;">
-                                        <img id="new_image_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
+                                    <!-- Category Title -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Category Title</label>
+                                        <input type="text" class="form-control" id="edit_categoryTitle"
+                                            name="categoryTitle">
+                                        <span class="text-danger error-text categoryTitle_error"></span>
+
                                     </div>
+
                                 </div>
 
-                                <!-- Category Icon -->
-                                <div class="mb-3">
-                                    <label>Category Icon</label>
-                                    <div style="margin-bottom: 10px;">
-                                        <img id="old_icon_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
-                                    </div>
-                                    <input type="file" class="form-control" id="edit_icon" name="icon">
+                                <!-- ROW 2 -->
+                                <div class="row">
 
-                                    <div style="margin-top: 10px;">
-                                        <img id="new_icon_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
+                                    <!-- Category Image -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Category Image</label>
+
+                                        <!-- Old Image -->
+                                        <div style="margin-bottom: 10px;">
+                                            <img id="old_image_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+
+                                        <input type="file" class="form-control" id="edit_image" name="image">
+
+                                        <!-- New Preview -->
+                                        <div style="margin-top: 10px;">
+                                            <img id="new_image_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+                                        <span class="text-danger error-text image_error"></span>
+
                                     </div>
+
+                                    <!-- Category Icon -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Category Icon</label>
+
+                                        <!-- Old Icon -->
+                                        <div style="margin-bottom: 10px;">
+                                            <img id="old_icon_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+
+                                        <input type="file" class="form-control" id="edit_icon" name="icon">
+
+                                        <!-- New Preview -->
+                                        <div style="margin-top: 10px;">
+                                            <img id="new_icon_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+                                    </div>
+
                                 </div>
 
+                                <!-- ROW 3 (Description) -->
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label>Description</label>
+                                        <textarea class="form-control" id="edit_categoryDescription"
+                                            name="categoryDescription"></textarea>
+                                    </div>
+                                    <span class="text-danger error-text categoryDescription_error"></span>
 
-                                <!-- Description -->
-                                <div class="mb-3">
-                                    <label>Description</label>
-                                    <textarea class="form-control" id="edit_categoryDescription"
-                                        name="categoryDescription"></textarea>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary w-100">Update Category</button>
+                                <button type="submit" class="btn btn-primary btn-sm float-start">Update
+                                    Category</button>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
 </div>
 
 
-
 @include('admin.includes.footer')
 
 
-
 <script>
+
+    // DataTable initialization
     let table = $('#datatable1').DataTable({
         processing: true,
         serverSide: false,
@@ -293,7 +333,6 @@
 
     });
 
-
     //open pop form for update category
     $(document).on('click', '.editBtn', function () {
         let id = $(this).data('id');
@@ -331,7 +370,6 @@
 
         });
     });
-
 
     // Preview new CATEGORY image
     $("#edit_image").on("change", function () {
@@ -388,6 +426,8 @@
                     $('#datatable1').DataTable().ajax.reload();
                 }
             }
+            
+
         });
     });
 
@@ -407,9 +447,7 @@
         }
     });
 
-
     // Delete script
-
     $(document).on('click', '.deleteBtn', function () {
 
         let id = $(this).data('id');
@@ -459,6 +497,24 @@
 
     });
 
+    // for refresh a category dropdown
+    function loadCategoryDropdown() {
+        $.ajax({
+            url: "{{ route('category.titles') }}",
+            type: "GET",
+            success: function (data) {
+
+                let dropdown = $("#parentCategory");
+                dropdown.empty();          // reset dropdown
+                dropdown.append(`<option value="">Select Parent Category</option>`);
+
+                // Repopulate
+                data.forEach(cat => {
+                    dropdown.append(`<option value="${cat.categoryTitle}">${cat.categoryTitle}</option>`);
+                });
+            }
+        });
+    }
 
     // category store
     $("#addCategoryForm").on('submit', function (e) {
@@ -483,11 +539,14 @@
                         icon: 'success',
                         title: 'Success',
                         text: res.message,
-                        timer: 2000,
+                        timer: 1000,
                         showConfirmButton: false
                     });
 
                     $("#addCategoryForm")[0].reset();
+                    table.ajax.reload(null, false);
+                    loadCategoryDropdown();  // 🔥 Refresh dropdown list
+
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -498,13 +557,25 @@
             },
 
             error: function (err) {
-                console.log(err.responseText);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Server Error',
-                    text: err.responseText
-                });
+
+                // Clear old errors
+                $('.error-text').text('');
+
+
+                if (err.status === 422) {
+                    // Loop through validation errors and show below fields
+                    $.each(err.responseJSON.errors, function (field, messages) {
+                        $('.' + field + '_error').text(messages[0]);
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Server Error',
+                        text: 'Something went wrong!'
+                    });
+                }
             }
+
 
         });
     });

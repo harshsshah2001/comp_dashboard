@@ -51,70 +51,85 @@
                                         <form id="addCategoryForm" enctype="multipart/form-data">
                                             @csrf
 
-                                            <div class="mb-3">
-                                                <label for="category" class="form-label">Select Category</label>
-                                                <select class="form-control" id="category" name="category">
-                                                    <option value="">Select Category</option>
+                                            <!-- ROW 1 -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="category" class="form-label">Select Category</label>
+                                                    <select class="form-control" id="category" name="category">
+                                                        <option value="">Select Category</option>
 
-                                                    @foreach($category as $cat)
-                                                        <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}
-                                                        </option>
-                                                    @endforeach
+                                                        @foreach($category as $cat)
+                                                            <option value="{{ $cat->categoryTitle }}">
+                                                                {{ $cat->categoryTitle }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="form-text">Select or enter the main parent category.
+                                                    </div>
+                                                </div>
 
-                                                </select>
-                                                <div class="form-text">Select or enter the main parent category.</div>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="productname" class="form-label">product Title</label>
-                                                <input type="text" class="form-control" id="productname"
-                                                    name="productname" placeholder="Enter category title">
-                                                <div class="form-text">Provide the visible title for this category.
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="productname" class="form-label">Product Title</label>
+                                                    <input type="text" class="form-control" id="productname"
+                                                        name="productname" placeholder="Enter product title">
+                                                    <div class="form-text">Provide the visible title for this product.
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label for="productimage" class="form-label">Product Image</label>
-                                                <input type="file" class="form-control" id="productimage" name="image">
-                                                <div class="form-text">Upload the main image for this product.</div>
-                                            </div>
-
-
-                                            <div class="mb-3">
-                                                <label for="producticon" class="form-label">Product Icon</label>
-                                                <input type="file" class="form-control" id="producticon" name="icon">
-                                                <div class="form-text">Upload a small icon representing the product.
+                                            <!-- ROW 2 -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="productimage" class="form-label">Product Image</label>
+                                                    <input type="file" class="form-control" id="productimage"
+                                                        name="image">
+                                                    <div class="form-text">Upload the main image for this product.</div>
                                                 </div>
-                                            </div>
 
-
-                                            <div class="mb-3">
-                                                <label for="productdescription" class="form-label">Description</label>
-                                                <textarea class="form-control" id="productdescription" rows="3"
-                                                    name="productdescription"
-                                                    placeholder="Enter Product description"></textarea>
-                                                <div class="form-text">Short description about this product.</div>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="price" class="form-label">Price</label>
-                                                <input type="text" class="form-control" id="price" name="price"
-                                                    placeholder="Enter product price">
-                                                <div class="form-text">Provide the visible title for this Product.
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="saleprice" class="form-label">Sale Price</label>
-                                                <input type="text" class="form-control" id="saleprice" name="saleprice"
-                                                    placeholder="Enter sale price">
-                                                <div class="form-text">Provide the visible title for this Product.
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="producticon" class="form-label">Product Icon</label>
+                                                    <input type="file" class="form-control" id="producticon"
+                                                        name="icon">
+                                                    <div class="form-text">Upload a small icon representing the product.
+                                                    </div>
                                                 </div>
                                             </div>
 
 
+
+                                            <!-- ROW 4 -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="price" class="form-label">Price</label>
+                                                    <input type="text" class="form-control" id="price" name="price"
+                                                        placeholder="Enter product price">
+                                                    <div class="form-text">Provide the visible title for this product.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="saleprice" class="form-label">Sale Price</label>
+                                                    <input type="text" class="form-control" id="saleprice"
+                                                        name="saleprice" placeholder="Enter sale price">
+                                                    <div class="form-text">Provide the visible title for this product.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- ROW 3 -->
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="productdescription"
+                                                        class="form-label">Description</label>
+                                                    <textarea class="form-control" id="productdescription" rows="3"
+                                                        name="productdescription"
+                                                        placeholder="Enter product description"></textarea>
+                                                    <div class="form-text">Short description about this product.</div>
+                                                </div>
+                                            </div>
 
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -153,18 +168,18 @@
                 </div>
             </div>
 
-            <!-- Edit product Modal -->
-            <div class="modal fade" id="editCategoryModal" tabindex="-1">
+            <!-- Edit Product Modal -->
+            <div class="modal fade" id="editProductModal" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <h5 class="modal-title">Edit Category</h5>
+                            <h5 class="modal-title">Edit Product</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
                         <div class="modal-body">
-                            <form id="updateCategoryForm">
+                            <form id="updateProductForm">
                                 @csrf
 
                                 <input type="hidden" id="edit_id" name="id">
@@ -172,23 +187,20 @@
                                 <!-- Parent Category -->
                                 <div class="mb-3">
                                     <label>Parent Category</label>
-                                    <select class="form-control" id="edit_productcategories" name="productcategories">
+                                    <select class="form-control" id="edit_parentCategory" name="productcategories">
                                         <option value="">Select Parent Category</option>
-
-
-
                                     </select>
                                 </div>
 
-                                <!-- Category Title -->
+                                <!-- Product Title -->
                                 <div class="mb-3">
-                                    <label>Category Title</label>
-                                    <input type="text" class="form-control" id="edit_productname" name="productname">
+                                    <label>Product Title</label>
+                                    <input type="text" class="form-control" id="edit_producttitle" name="productname">
                                 </div>
 
-                                <!-- Category Image -->
+                                <!-- Product Image -->
                                 <div class="mb-3">
-                                    <label>Category Image</label>
+                                    <label>Product Image</label>
                                     <div style="margin-bottom: 10px;">
                                         <img id="old_image_preview" src="" width="80" height="80"
                                             style="display:none; border-radius:5px;">
@@ -201,9 +213,9 @@
                                     </div>
                                 </div>
 
-                                <!-- Category Icon -->
+                                <!-- Product Icon -->
                                 <div class="mb-3">
-                                    <label>Category Icon</label>
+                                    <label>Product Icon</label>
                                     <div style="margin-bottom: 10px;">
                                         <img id="old_icon_preview" src="" width="80" height="80"
                                             style="display:none; border-radius:5px;">
@@ -216,6 +228,15 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="text" class="form-control" id="price" name="price">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="saleprice" class="form-label">Sale Price</label>
+                                    <input type="text" class="form-control" id="saleprice" name="saleprice">
+                                </div>
 
                                 <!-- Description -->
                                 <div class="mb-3">
@@ -224,7 +245,7 @@
                                         name="productdescription"></textarea>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary w-100">Update Category</button>
+                                <button type="submit" class="btn btn-primary w-100">Update Product</button>
                             </form>
                         </div>
 
@@ -234,17 +255,14 @@
 
         </div>
     </div>
-
 </div>
 
-
 @include('admin.includes.footer')
-
-
 
 <script>
     $(document).ready(function () {
 
+        // add data
         $("#addCategoryForm").on("submit", function (e) {
             e.preventDefault();
 
@@ -295,9 +313,6 @@
             });
         });
 
-
-
-
         // display data
         function loadProducts() {
             let products = @json($products);
@@ -328,7 +343,7 @@
                         data: 'id',
                         render: function (id) {
                             return `
-            <a href="#" class="text-primary edit-btn" data-id="${id}" title="Edit" style="font-size:18px; margin-right:10px;">
+            <a href="#" class="text-primary editBtn" data-id="${id}" title="Edit" style="font-size:18px; margin-right:10px;">
                 <i class="fa-solid fa-pen-to-square"></i>
             </a>
 
@@ -342,8 +357,112 @@
                 ]
             });
         }
-
         loadProducts();
+
+        // Open popup form for update PRODUCT
+        $(document).on("click", ".editBtn", function () {
+            let id = $(this).data("id");
+
+            $.ajax({
+                url: "/admin/product/edit/" + id,
+                type: "GET",
+                success: function (res) {
+
+                    // Fill form fields (product data)
+                    $("#edit_id").val(res.id);
+                    $("#edit_parentCategory").val(res.parent_category);
+                    $("#edit_producttitle").val(res.product_title);
+                    $("#edit_productdescription").val(res.product_description);
+                    $("#price").val(res.price);
+                    $("#saleprice").val(res.saleprice);
+
+                    // Show old image
+                    if (res.image) {
+                        $("#old_image_preview")
+                            .attr("src", "/storage/" + res.image)
+                            .show();
+                    } else {
+                        $("#old_image_preview").hide();
+                    }
+
+                    // Show old icon
+                    if (res.icon) {
+                        $("#old_icon_preview")
+                            .attr("src", "/storage/" + res.icon)
+                            .show();
+                    } else {
+                        $("#old_icon_preview").hide();
+                    }
+
+                    // Clear new previews
+                    $("#new_image_preview").hide();
+                    $("#new_icon_preview").hide();
+
+                    // Show Modal
+                    $("#editProductModal").modal("show");
+                }
+            });
+        });
+
+
+        // Preview new product image
+        $("#edit_image").on("change", function () {
+            let file = this.files[0];
+            if (file) {
+                $("#new_image_preview")
+                    .attr("src", URL.createObjectURL(file))
+                    .show();
+
+                $("#old_image_preview").hide();
+            }
+        });
+
+        // Preview new product icon
+        $("#edit_icon").on("change", function () {
+            let file = this.files[0];
+            if (file) {
+                $("#new_icon_preview")
+                    .attr("src", URL.createObjectURL(file))
+                    .show();
+
+                $("#old_icon_preview").hide();
+            }
+        });
+
+
+        // Update PRODUCT
+        $("#updateProductForm").on("submit", function (e) {
+            e.preventDefault();
+
+            let id = $("#edit_id").val();
+            let formData = new FormData(this);
+
+            $.ajax({
+                url: "/admin/product/update/" + id,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function (res) {
+                    if (res.status === true) {
+                        Swal.fire({
+                            icon: "success",
+                            text: res.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                        $("#editProductModal").modal("hide");
+                        $("#datatable1").DataTable().ajax.reload();
+                    }
+                }
+            });
+        });
+
+
     });
 
 </script>

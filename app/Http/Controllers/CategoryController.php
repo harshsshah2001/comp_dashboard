@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Services\AdminService;
 use App\Models\Category;
 
@@ -34,23 +35,37 @@ class CategoryController extends Controller
         return view('admin.category.create_category', compact('categoryTitles'));
     }
 
+    public function titles()
+    {
+        return Category::select('categoryTitle')->get();
+    }
+
+
     public function store(Request $request)
     {
         $model = \App\Models\Category::class;
 
-        // Validation rules
         $validation_rules = [
             'parentCategory' => 'nullable|string',
-            'categoryTitle'  => 'nullable|string|max:255',
-            'image'          => 'nullable|image',
+            'categoryTitle'  => 'required|string|max:255|min:3',
+            'image'          => 'required|nullable|image',
             'icon'           => 'nullable|image',
-            'categoryDescription' => 'nullable|string',
+            'categoryDescription' => 'required|string',
         ];
 
-        // Image upload paths
+        $validator = Validator::make($request->all(), $validation_rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors()
+            ], 422);
+        }
+
         $image_paths = [
-            'image' => 'categories',
-            'icon'  => 'category_icons'
+            'icon'  => 'categories/icons',
+            'image' => 'categories/images'
         ];
 
         return $this->service->store(
@@ -60,6 +75,8 @@ class CategoryController extends Controller
             $image_paths
         );
     }
+
+
 
     public function edit($id)
     {
@@ -73,11 +90,21 @@ class CategoryController extends Controller
 
         $validation_rules = [
             'parentCategory' => 'nullable|string',
-            'categoryTitle'  => 'nullable|string|max:255',
-            'image'          => 'nullable|image',
+            'categoryTitle'  => 'required|nullable|string|max:255',
+            'image'          => 'required|nullable|image',
             'icon'           => 'nullable|image',
-            'categoryDescription' => 'nullable|string',
+            'categoryDescription' => 'required|nullable|string',
         ];
+
+        $validator = Validator::make($request->all(), $validation_rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors()
+            ], 422);
+        }
 
         $paths = [
             'image' => 'categories',
