@@ -43,8 +43,6 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $model = \App\Models\Category::class;
-
         $validation_rules = [
             'parentCategory' => 'nullable|string',
             'categoryTitle'  => 'required|string|max:255|min:3',
@@ -71,7 +69,7 @@ class CategoryController extends Controller
         return $this->service->store(
             $request,
             $validation_rules,
-            $model,
+            \App\Models\Category::class,
             $image_paths
         );
     }
