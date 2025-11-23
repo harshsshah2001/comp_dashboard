@@ -88,42 +88,42 @@
                 </div>
             </div>
 
-<div class="modal fade" id="editRoleModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+            <div class="modal fade" id="editRoleModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
 
-            <form id="updateRoleForm">
+                        <form id="updateRoleForm">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Role</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Role</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
 
-                <div class="modal-body">
+                            <div class="modal-body">
 
-                    <input type="hidden" id="edit_id" name="id">
+                                <input type="hidden" id="edit_id" name="id">
 
-                    <div class="mb-3">
-                        <label>Role Name</label>
-                        <input type="text" id="edit_rolename" name="rolename" class="form-control">
+                                <div class="mb-3">
+                                    <label>Role Name</label>
+                                    <input type="text" id="edit_rolename" name="rolename" class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label>Description</label>
+                                    <input type="text" id="edit_description" name="description" class="form-control">
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+
+                        </form>
+
                     </div>
-
-                    <div class="mb-3">
-                        <label>Description</label>
-                        <input type="text" id="edit_description" name="description" class="form-control">
-                    </div>
-
                 </div>
-
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-
-            </form>
-
-        </div>
-    </div>
-</div>
+            </div>
 
 
 

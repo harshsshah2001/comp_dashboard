@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,9 @@ class RolesPermission extends Controller
     {
         $this->service = $service;
     }
+
+
+    // Role functions is start here
 
     public function roles(Request $request)
     {
@@ -100,10 +104,89 @@ class RolesPermission extends Controller
         ]);
     }
 
-    public function permissions()
+    // Roles functions is finidh here
+
+
+    // Permisison functions is start here
+    public function permissions(Request $request)
     {
+        $permission = Permission::all();
+
+        // If AJAX request → send JSON for DataTables
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $permission
+            ]);
+        }
         return view('admin.Roles and Permissions.permissions');
     }
+    public function permissionsubmit(Request $request)
+    {
+        $permission_rules = [
+            'permission_name'=> 'required|string|max:255|unique:roles,rolename',
+            'description'=>'nullable|string',
+        ];
+
+        $validator = Validator::make($request->all(), $permission_rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        return $this->service->store(
+            $request,
+            $permission_rules,
+            \App\Models\Permission::class 
+        );
+
+    }
+    public function permissiondelete($id)
+    {
+        $this->service->delete(\App\Models\Permission::class, $id);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Permission deleted successfully'
+        ]);
+    }
+
+    public function permissionedit($id)
+    {
+        $role = Permission::find($id);
+        return response()->json($role);
+    }
+    public function permissionupdate(Request $request, $id)
+    {
+        $model = \App\Models\Permission::class;
+
+        $validation_rules = [
+            'permission_name' => 'required|string|max:255|unique:permissions,permission_name,' . $id,
+            'description' => 'nullable|string',
+        ];
+
+        $validator = Validator::make($request->all(), $validation_rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors()
+            ], 422);
+        }
+
+        $updated = $this->service->update($request, $validation_rules, $model, $id);
+
+        if ($updated) {
+            return response()->json(['status' => true, 'message' => 'Permission Updated Successfully']);
+        }
+
+        return response()->json(['status' => false, 'message' => 'Update Failed']);
+    }
+
 
     public function role_permission_list()
     {
