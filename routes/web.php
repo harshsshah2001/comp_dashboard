@@ -54,5 +54,8 @@ Route::middleware('web')->group(function () {
         Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
         Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
         Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
+        Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])
+    ->name('user.submit');
+
     });
 });

@@ -56,11 +56,11 @@ class RolesPermission extends Controller
         return $this->service->store(
             $request,
             $role_rules,
-            \App\Models\Role::class 
+            \App\Models\Role::class
         );
     }
 
-     public function edit($id)
+    public function edit($id)
     {
         $role = Role::find($id);
         return response()->json($role);
@@ -123,8 +123,8 @@ class RolesPermission extends Controller
     public function permissionsubmit(Request $request)
     {
         $permission_rules = [
-            'permission_name'=> 'required|string|max:255|unique:roles,rolename',
-            'description'=>'nullable|string',
+            'permission_name' => 'required|string|max:255|unique:roles,rolename',
+            'description' => 'nullable|string',
         ];
 
         $validator = Validator::make($request->all(), $permission_rules);
@@ -140,9 +140,8 @@ class RolesPermission extends Controller
         return $this->service->store(
             $request,
             $permission_rules,
-            \App\Models\Permission::class 
+            \App\Models\Permission::class
         );
-
     }
     public function permissiondelete($id)
     {
@@ -195,6 +194,33 @@ class RolesPermission extends Controller
 
     public function user_list()
     {
-        return view('admin.Roles and Permissions.user-list');
+        $role = Role::all();
+        return view('admin.Roles and Permissions.user-list', compact('role'));
+    }
+    public function usersubmit(Request $request)
+    {
+        $user_rules = [
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|unique:userlists,email',
+            'number'    => 'required|string|max:20|unique:userlists,number',
+            'password'  => 'required|string|min:6',
+            'role_id'   => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $user_rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        return $this->service->store(
+            $request,
+            $user_rules,
+            \App\Models\Userlist::class
+        );
     }
 }

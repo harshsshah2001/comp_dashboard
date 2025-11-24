@@ -1,6 +1,32 @@
 @include('admin.includes.header')
 @include('admin.includes.sidebar')
 
+<style>
+    /* Make top bar (Show entries + Search) on the same line */
+    div.dataTables_wrapper div.dataTables_length {
+        float: left !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter {
+        float: right !important;
+        text-align: right !important;
+    }
+
+    /* Align the Search label + input inside */
+    div.dataTables_filter label {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 0 !important;
+    }
+
+    div.dataTables_wrapper .dataTables_paginate {
+        display: none !important;
+    }
+</style>
+
+
 <div class="app-content">
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -23,7 +49,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Phone</label>
-                                    <input type="text" class="form-control" name="phone" placeholder="Enter phone">
+                                    <input type="text" class="form-control" name="number" placeholder="Enter phone">
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Password</label>
@@ -34,7 +60,9 @@
                                     <label class="form-label">Select Role</label>
                                     <select name="role_id" class="form-select" required>
                                         <option value="">Select Role</option>
-
+                                        @foreach($role as $role)
+                                        <option value="{{ $role->id }}">{{ $role->rolename }}</option>
+                                        @endforeach
                                         <option value=""></option>
                                     </select>
                                 </div>
@@ -99,7 +127,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Phone</label>
-                                    <input type="text" class="form-control" name="phone" id="phone">
+                                    <input type="text" class="form-control" name="number" id="phone">
                                 </div>
 
                                 <div class="mb-3">
@@ -125,8 +153,40 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
 @include('admin.includes.footer')
+
+<script>
+    $.ajaxSetup({
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    }
+});
+
+$("#addUserForm").on("submit", function(e) {
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    $.ajax({
+        url: "{{ route('user.submit') }}",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            Swal.fire("Success", "User added successfully!", "success");
+        },
+        error: function(xhr) {
+            Swal.fire("Error", "Validation failed", "error");
+        }
+    });
+});
+
+
+
+</script>
