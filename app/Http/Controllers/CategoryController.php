@@ -16,17 +16,20 @@ class CategoryController extends Controller
     {
         $this->service = $service;
     }
+
+    public function list()
+    {
+        $categories = Category::all();
+
+        return response()->json([
+            'data' => $categories
+        ]);
+    }
+
     public function categoryform(Request $request)
     {
         // Fetch categories
         $categories = Category::all();
-
-        // If AJAX request → send JSON for DataTables
-        if ($request->ajax()) {
-            return response()->json([
-                'data' => $categories
-            ]);
-        }
 
         // For dropdown only (title)
         $categoryTitles = Category::select('categoryTitle')->get();
@@ -87,11 +90,11 @@ class CategoryController extends Controller
         $model = \App\Models\Category::class;
 
         $validation_rules = [
-            'parentCategory' => 'nullable|string',
-            'categoryTitle'  => 'required|nullable|string|max:255',
-            'image'          => 'required|nullable|image',
-            'icon'           => 'nullable|image',
-            'categoryDescription' => 'required|nullable|string',
+            'parentCategory'       => 'nullable|string',
+            'categoryTitle'        => 'required|string|max:255',
+            'image'                => 'nullable|image',
+            'icon'                 => 'nullable|image',
+            'categoryDescription'  => 'required|string',
         ];
 
         $validator = Validator::make($request->all(), $validation_rules);
@@ -117,6 +120,7 @@ class CategoryController extends Controller
 
         return response()->json(['status' => false, 'message' => 'Update Failed']);
     }
+
 
     public function delete($id)
     {

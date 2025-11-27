@@ -48,87 +48,95 @@
                                         aria-labelledby="pills-home-tab">
 
 
-                                        <form id="addCategoryForm" enctype="multipart/form-data">
+                                        <form id="addProductForm" enctype="multipart/form-data">
                                             @csrf
 
                                             <!-- ROW 1 -->
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="category" class="form-label">Select Category</label>
+                                                    <label class="form-label">Select Category</label>
                                                     <select class="form-control" id="category" name="category">
                                                         <option value="">Select Category</option>
-
                                                         @foreach($category as $cat)
                                                             <option value="{{ $cat->categoryTitle }}">
-                                                                {{ $cat->categoryTitle }}</option>
+                                                                {{ $cat->categoryTitle }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
-                                                    <div class="form-text">Select or enter the main parent category.
-                                                    </div>
+                                                    <span class="text-danger error-text category_error"></span>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="productname" class="form-label">Product Title</label>
+                                                    <label class="form-label">Product Title</label>
                                                     <input type="text" class="form-control" id="productname"
                                                         name="productname" placeholder="Enter product title">
-                                                    <div class="form-text">Provide the visible title for this product.
-                                                    </div>
+                                                    <span class="text-danger error-text productname_error"></span>
                                                 </div>
                                             </div>
 
                                             <!-- ROW 2 -->
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="productimage" class="form-label">Product Image</label>
+                                                    <label class="form-label">Product Image</label>
                                                     <input type="file" class="form-control" id="productimage"
                                                         name="image">
-                                                    <div class="form-text">Upload the main image for this product.</div>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="producticon" class="form-label">Product Icon</label>
+                                                    <label class="form-label">Product Icon</label>
                                                     <input type="file" class="form-control" id="producticon"
                                                         name="icon">
-                                                    <div class="form-text">Upload a small icon representing the product.
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                            <!-- ROW 4 -->
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="price" class="form-label">Price</label>
-                                                    <input type="text" class="form-control" id="price" name="price"
-                                                        placeholder="Enter product price">
-                                                    <div class="form-text">Provide the visible title for this product.
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="saleprice" class="form-label">Sale Price</label>
-                                                    <input type="text" class="form-control" id="saleprice"
-                                                        name="saleprice" placeholder="Enter sale price">
-                                                    <div class="form-text">Provide the visible title for this product.
-                                                    </div>
                                                 </div>
                                             </div>
 
                                             <!-- ROW 3 -->
                                             <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Price</label>
+                                                    <input type="text" class="form-control" id="edit_price" name="price"
+                                                        placeholder="Enter price">
+                                                    <span class="text-danger error-text price_error"></span>
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Sale Price</label>
+                                                    <input type="text" class="form-control" id="edit_saleprice"
+                                                        name="saleprice" placeholder="Enter sale price">
+                                                    <span class="text-danger error-text saleprice_error"></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- ROW 4 (NEW — split description into 2 fields for symmetry) -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Short Description</label>
+                                                    <input type="text" class="form-control" id="shortdesc"
+                                                        name="shortdesc" placeholder="Short description">
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">SKU / Product Code</label>
+                                                    <input type="text" class="form-control" id="sku" name="sku"
+                                                        placeholder="Enter SKU">
+                                                </div>
+                                            </div>
+
+                                            <!-- ROW 5 - Full Width Description -->
+                                            <div class="row">
                                                 <div class="col-md-12 mb-3">
-                                                    <label for="productdescription"
-                                                        class="form-label">Description</label>
-                                                    <textarea class="form-control" id="productdescription" rows="3"
-                                                        name="productdescription"
+                                                    <label class="form-label">Full Description</label>
+                                                    <textarea class="form-control" id="productdescription"
+                                                        name="productdescription" rows="3"
                                                         placeholder="Enter product description"></textarea>
-                                                    <div class="form-text">Short description about this product.</div>
+                                                    <span
+                                                        class="text-danger error-text productdescription_error"></span>
                                                 </div>
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
+
+
 
                                     </div>
                                 </div>
@@ -184,74 +192,110 @@
 
                                 <input type="hidden" id="edit_id" name="id">
 
-                                <!-- Parent Category -->
-                                <div class="mb-3">
-                                    <label>Parent Category</label>
-                                    <select class="form-control" id="edit_parentCategory" name="productcategories">
-                                        <option value="">Select Parent Category</option>
-                                    </select>
-                                </div>
+                                <!-- ROW 1 -->
+                                <div class="row">
 
-                                <!-- Product Title -->
-                                <div class="mb-3">
-                                    <label>Product Title</label>
-                                    <input type="text" class="form-control" id="edit_producttitle" name="productname">
-                                </div>
-
-                                <!-- Product Image -->
-                                <div class="mb-3">
-                                    <label>Product Image</label>
-                                    <div style="margin-bottom: 10px;">
-                                        <img id="old_image_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
+                                    <!-- Parent Category -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Parent Category</label>
+                                        <select class="form-control" id="edit_parentCategory" name="category">
+                                            <option value="">Select Parent Category</option>
+                                        </select>
+                                        <span class="text-danger error-text category_error"></span>
                                     </div>
-                                    <input type="file" class="form-control" id="edit_image" name="image">
 
-                                    <div style="margin-top: 10px;">
-                                        <img id="new_image_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
+                                    <!-- Product Title -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Product Title</label>
+                                        <input type="text" class="form-control" id="edit_producttitle"
+                                            name="productname">
+                                        <span class="text-danger error-text productname_error"></span>
                                     </div>
+
                                 </div>
 
-                                <!-- Product Icon -->
-                                <div class="mb-3">
-                                    <label>Product Icon</label>
-                                    <div style="margin-bottom: 10px;">
-                                        <img id="old_icon_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
+                                <!-- ROW 2 -->
+                                <div class="row">
+
+                                    <!-- Product Image -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Product Image</label>
+
+                                        <!-- Old Image -->
+                                        <div style="margin-bottom: 10px;">
+                                            <img id="old_image_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+
+                                        <input type="file" class="form-control" id="edit_image" name="image">
+
+                                        <!-- New Preview -->
+                                        <div style="margin-top: 10px;">
+                                            <img id="new_image_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+                                        <span class="text-danger error-text image_error"></span>
                                     </div>
-                                    <input type="file" class="form-control" id="edit_icon" name="icon">
 
-                                    <div style="margin-top: 10px;">
-                                        <img id="new_icon_preview" src="" width="80" height="80"
-                                            style="display:none; border-radius:5px;">
+                                    <!-- Product Icon -->
+                                    <div class="col-md-6 mb-3">
+                                        <label>Product Icon</label>
+
+                                        <!-- Old Icon -->
+                                        <div style="margin-bottom: 10px;">
+                                            <img id="old_icon_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+
+                                        <input type="file" class="form-control" id="edit_icon" name="icon">
+
+                                        <!-- New Preview -->
+                                        <div style="margin-top: 10px;">
+                                            <img id="new_icon_preview" src="" width="80" height="80"
+                                                style="display:none; border-radius:5px;">
+                                        </div>
+                                        <span class="text-danger error-text icon_error"></span>
                                     </div>
+
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="price" class="form-label">Price</label>
-                                    <input type="text" class="form-control" id="price" name="price">
+                                <!-- ROW 3 -->
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Price</label>
+                                        <input type="text" class="form-control" id="price" name="price">
+                                        <span class="text-danger error-text price_error"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label>Sale Price</label>
+                                        <input type="text" class="form-control" id="saleprice" name="saleprice">
+                                        <span class="text-danger error-text saleprice_error"></span>
+                                    </div>
+
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="saleprice" class="form-label">Sale Price</label>
-                                    <input type="text" class="form-control" id="saleprice" name="saleprice">
+                                <!-- ROW 4 (Description) -->
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label>Description</label>
+                                        <textarea class="form-control" id="edit_productdescription"
+                                            name="productdescription"></textarea>
+                                    </div>
+                                    <span class="text-danger error-text productdescription_error"></span>
                                 </div>
 
-                                <!-- Description -->
-                                <div class="mb-3">
-                                    <label>Description</label>
-                                    <textarea class="form-control" id="edit_productdescription"
-                                        name="productdescription"></textarea>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100">Update Product</button>
+                                <button type="submit" class="btn btn-primary btn-sm float-start">
+                                    Update Product
+                                </button>
                             </form>
                         </div>
 
                     </div>
                 </div>
             </div>
+
 
         </div>
     </div>
@@ -263,7 +307,7 @@
     $(document).ready(function () {
 
         // add data
-        $("#addCategoryForm").on("submit", function (e) {
+        $("#addProductForm").on("submit", function (e) {
             e.preventDefault();
 
             let formData = new FormData(this);
@@ -284,7 +328,7 @@
                             showConfirmButton: false
                         });
 
-                        $("#addCategoryForm")[0].reset();
+                        table.ajax.reload(null, false);
                     }
                 },
                 error: function (xhr) {
@@ -314,50 +358,50 @@
         });
 
         // display data
-        function loadProducts() {
-            let products = @json($products);
+        let table = $("#datatable1").DataTable({
+            processing: true,
+            serverSide: true,
+            ordering: false,
 
-            $("#datatable1").DataTable({
-                data: products,
-                destroy: true, // allow reinit
-                columns: [
-                    { data: 'id' },
-                    { data: 'category', defaultContent: 'N/A' },
-                    { data: 'productname' },
-                    {
-                        data: 'image',
-                        render: function (img) {
-                            return `<img src="/storage/${img}" width="40">`;
-                        }
-                    },
-                    {
-                        data: 'icon',
-                        render: function (img) {
-                            return `<img src="/storage/${img}" width="30">`;
-                        }
-                    },
-                    { data: 'price' },
-                    { data: 'saleprice' },
-                    { data: 'productdescription' },
-                    {
-                        data: 'id',
-                        render: function (id) {
-                            return `
-            <a href="#" class="text-primary editBtn" data-id="${id}" title="Edit" style="font-size:18px; margin-right:10px;">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </a>
+            ajax: {
+                url: "{{ route('product.list') }}",
+                type: "GET"
+            },
 
-            <a href="#" class="text-danger delete-btn" data-id="${id}" title="Delete" style="font-size:18px;">
-                <i class="fa-solid fa-trash"></i>
-            </a>
-        `;
-                        }
-                    }
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
 
-                ]
-            });
-        }
-        loadProducts();
+            columns: [
+                { data: null, render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
+
+                { data: "category" },
+                { data: "productname" },
+
+                {
+                    data: "image",
+                    render: img => img ? `<img src="/storage/${img}" width="40">` : "No Image"
+                },
+
+                {
+                    data: "icon",
+                    render: img => img ? `<img src="/storage/${img}" width="30">` : "No Icon"
+                },
+
+                { data: "price" },
+                { data: "saleprice" },
+                { data: "productdescription" },
+
+                {
+                    data: "id",
+                    render: id => `
+                <a class="editBtn text-primary" data-id="${id}"><i class="fa-solid fa-pen-to-square"></i></a>
+<a class="deleteBtn text-danger" data-id="${id}" style="cursor:pointer">
+    <i class="fa-solid fa-trash"></i>
+</a>
+            `
+                }
+            ]
+        });
 
         // Open popup form for update PRODUCT
         $(document).on("click", ".editBtn", function () {
@@ -368,37 +412,46 @@
                 type: "GET",
                 success: function (res) {
 
-                    // Fill form fields (product data)
+                    // 1. Empty dropdown
+                    $("#edit_parentCategory").empty();
+
+                    // 2. Add default option
+                    $("#edit_parentCategory").append(`<option value="">Select Parent Category</option>`);
+
+                    // 3. Append categories coming from Blade
+                    @foreach($categories as $cat)
+                        $("#edit_parentCategory").append(`
+                                                            <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
+                                                        `);
+                    @endforeach
+
+                    // 4. Set selected category for this product
+                    $("#edit_parentCategory").val(res.category);
+
+                    // Fill other fields
                     $("#edit_id").val(res.id);
-                    $("#edit_parentCategory").val(res.parent_category);
-                    $("#edit_producttitle").val(res.product_title);
-                    $("#edit_productdescription").val(res.product_description);
-                    $("#price").val(res.price);
-                    $("#saleprice").val(res.saleprice);
+                    $("#edit_producttitle").val(res.productname);
+                    $("#edit_productdescription").val(res.productdescription);
+                    $("#edit_price").val(res.price);
+                    $("#edit_saleprice").val(res.saleprice);
 
                     // Show old image
                     if (res.image) {
-                        $("#old_image_preview")
-                            .attr("src", "/storage/" + res.image)
-                            .show();
+                        $("#old_image_preview").attr("src", "/storage/" + res.image).show();
                     } else {
                         $("#old_image_preview").hide();
                     }
 
                     // Show old icon
                     if (res.icon) {
-                        $("#old_icon_preview")
-                            .attr("src", "/storage/" + res.icon)
-                            .show();
+                        $("#old_icon_preview").attr("src", "/storage/" + res.icon).show();
                     } else {
                         $("#old_icon_preview").hide();
                     }
 
-                    // Clear new previews
                     $("#new_image_preview").hide();
                     $("#new_icon_preview").hide();
 
-                    // Show Modal
                     $("#editProductModal").modal("show");
                 }
             });
@@ -437,6 +490,8 @@
             let id = $("#edit_id").val();
             let formData = new FormData(this);
 
+            $(".error-text").text(""); // CLEAR old errors
+
             $.ajax({
                 url: "/admin/product/update/" + id,
                 type: "POST",
@@ -447,7 +502,9 @@
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                 },
                 success: function (res) {
+
                     if (res.status === true) {
+
                         Swal.fire({
                             icon: "success",
                             text: res.message,
@@ -456,12 +513,79 @@
                         });
 
                         $("#editProductModal").modal("hide");
-                        $("#datatable1").DataTable().ajax.reload();
+                        table.ajax.reload(null, false);
+                    }
+                },
+
+                error: function (xhr) {
+
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+
+                        $.each(errors, function (key, value) {
+                            $("." + key + "_error").text(value[0]);
+                        });
+
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            text: "Something went wrong!"
+                        });
                     }
                 }
             });
         });
 
+        $(document).on("click", ".deleteBtn", function () {
+            let id = $(this).data("id");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This product will be permanently deleted!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "/admin/product/delete/" + id,
+                        type: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function (res) {
+                            if (res.status === true) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Deleted!",
+                                    text: res.message,
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                });
+
+                                table.ajax.reload(null, false);
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: res.message
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "Something went wrong!"
+                            });
+                        }
+                    });
+
+                }
+            });
+        });
 
     });
 

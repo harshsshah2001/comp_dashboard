@@ -177,6 +177,8 @@
                                                 <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
                                             @endforeach
                                         </select>
+                                        <span class="text-danger error-text parentCategory_error"></span>
+
                                     </div>
 
                                     <!-- Category Title -->
@@ -271,9 +273,10 @@
         ordering: false,
 
         ajax: {
-            url: "{{ route('category.create') }}",
+            url: "{{ route('category.list') }}",
             type: "GET"
         },
+
 
         columns: [
             {
@@ -342,32 +345,33 @@
             type: "GET",
             success: function (res) {
 
+                // Load fresh dropdown values
+                loadEditCategoryDropdown(res.parentCategory);  // 🔥 NEW CODE
+
                 $("#edit_id").val(res.id);
                 $("#edit_parentCategory").val(res.parentCategory);
                 $("#edit_categoryTitle").val(res.categoryTitle);
                 $("#edit_categoryDescription").val(res.categoryDescription);
 
-                // Show old image
+                // old image
                 if (res.image) {
                     $("#old_image_preview").attr("src", "/storage/" + res.image).show();
                 } else {
                     $("#old_image_preview").hide();
                 }
 
-                // Show old icon
+                // old icon
                 if (res.icon) {
                     $("#old_icon_preview").attr("src", "/storage/" + res.icon).show();
                 } else {
                     $("#old_icon_preview").hide();
                 }
 
-                // Clear new previews
                 $("#new_image_preview").hide();
                 $("#new_icon_preview").hide();
 
                 $("#editCategoryModal").modal('show');
             }
-
         });
     });
 
@@ -404,17 +408,19 @@
         let id = $("#edit_id").val();
         let formData = new FormData(this);
 
+        $(".error-text").text(""); // clear old errors
+
         $.ajax({
             url: "/admin/category/update/" + id,
             type: "POST",
             data: formData,
             processData: false,
             contentType: false,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+
             success: function (res) {
                 if (res.status === true) {
+
                     Swal.fire({
                         icon: "success",
                         text: res.message,
@@ -423,14 +429,26 @@
                     });
 
                     $("#editCategoryModal").modal('hide');
-                    $('#datatable1').DataTable().ajax.reload();
+                    table.ajax.reload();
+                    loadCategoryDropdown();
+                }
+            },
+
+            error: function (xhr) {
+
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+
+                    $.each(errors, function (key, value) {
+                        $("." + key + "_error").text(value[0]);
+                    });
+
+                } else {
+                    Swal.fire("Error!", "Something went wrong!", "error");
                 }
             }
-            
-
         });
     });
-
     // Preview new CATEGORY image
     $("#edit_image").on("change", function () {
         let file = this.files[0];
@@ -482,6 +500,8 @@
                             });
 
                             $('#datatable1').DataTable().ajax.reload();
+                            loadCategoryDropdown();   // 🔥 Auto refresh dropdown after delete
+
                         } else {
                             Swal.fire("Error", res.message, "error");
                         }
@@ -512,6 +532,28 @@
                 data.forEach(cat => {
                     dropdown.append(`<option value="${cat.categoryTitle}">${cat.categoryTitle}</option>`);
                 });
+            }
+        });
+    }
+    // reusable loadEditCategoryDropdown
+    function loadEditCategoryDropdown(selectedValue = "") {
+        $.ajax({
+            url: "{{ route('category.titles') }}",
+            type: "GET",
+            success: function (data) {
+
+                let dropdown = $("#edit_parentCategory");
+                dropdown.empty();
+                dropdown.append(`<option value="">Select Parent Category</option>`);
+
+                data.forEach(cat => {
+                    dropdown.append(`<option value="${cat.categoryTitle}">${cat.categoryTitle}</option>`);
+                });
+
+                // Set default selected category
+                if (selectedValue !== "") {
+                    dropdown.val(selectedValue);
+                }
             }
         });
     }

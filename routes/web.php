@@ -27,6 +27,7 @@ Route::middleware('web')->group(function () {
         Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
         Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/admin/category/update/{id}', [CategoryController::class, 'update']);
+        Route::get('/admin/category/list', [CategoryController::class, 'list'])->name('category.list');
 
         //for refresh a category dropdown
         Route::get('/category/titles', [CategoryController::class, 'titles'])->name('category.titles');
@@ -38,6 +39,11 @@ Route::middleware('web')->group(function () {
         Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
         Route::get('/admin/product/edit/{id}', [ProductController::class, 'edit']);
         Route::post('/admin/product/update/{id}', [ProductController::class, 'update']);
+        Route::get('/admin/product/list', [ProductController::class, 'list'])->name('product.list');
+        Route::delete('/admin/product/delete/{id}', [ProductController::class, 'delete'])
+            ->name('product.delete');
+
+
 
         // Roles and permissions routes
         Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
@@ -45,7 +51,7 @@ Route::middleware('web')->group(function () {
         Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
         Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
         Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
-        
+
         Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
         Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
         Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
@@ -55,7 +61,6 @@ Route::middleware('web')->group(function () {
         Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
         Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
         Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])
-    ->name('user.submit');
-
+            ->name('user.submit');
     });
 });
