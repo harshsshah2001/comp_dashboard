@@ -17,6 +17,7 @@ class CategoryController extends Controller
         $this->service = $service;
     }
 
+    // this is use for datatable's
     public function list()
     {
         $categories = Category::all();
@@ -39,10 +40,41 @@ class CategoryController extends Controller
     }
 
     public function titles()
-    {
-        return Category::select('categoryTitle')->get();
-    }
+{
+    $cats = Category::all();              // fetch all categories
+    $result = $this->buildHierarchy($cats); // build hierarchy
+    return response()->json($result);       // return hierarchical list
+}
 
+
+    private function buildHierarchy($categories, $parent = "")
+    {
+        $output = [];
+
+        foreach ($categories as $cat) {
+
+            // Match parent title as string
+            if ($cat->parentCategory == $parent) {
+
+                $output[] = [
+                    "title" => ($parent == "" ? "" : "— ") . $cat->categoryTitle,
+                    "original" => $cat->categoryTitle
+                ];
+
+                // Recursively find children
+                $children = $this->buildHierarchy($categories, $cat->categoryTitle);
+
+                foreach ($children as $child) {
+                    $output[] = [
+                        "title" => "— " . $child["title"],  // add indent
+                        "original" => $child["original"]
+                    ];
+                }
+            }
+        }
+
+        return $output;
+    }
 
     public function store(Request $request)
     {
@@ -120,7 +152,6 @@ class CategoryController extends Controller
 
         return response()->json(['status' => false, 'message' => 'Update Failed']);
     }
-
 
     public function delete($id)
     {

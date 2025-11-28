@@ -70,16 +70,16 @@
     </div>
 </div>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-$(document).ready(function(){
-    $('#btnLogin').on('click', function(e){
-        e.preventDefault();
+    $(document).ready(function(){
+        $('#btnLogin').on('click', function(e){
+            e.preventDefault();
 
-        // Clear old error messages
-        $('#email_error').text('');
+            // Clear old error messages
+            $('#email_error').text('');
         $('#password_error').text('');
 
         let email = $('#signInEmail').val();
@@ -133,8 +133,9 @@ $(document).ready(function(){
 <script src="{{ asset('assets/plugins/pace/pace.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
 <script src="{{ asset('assets/js/main.min.js') }}"></script>
-<script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+
 
 </div>
 </div>

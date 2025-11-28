@@ -31,6 +31,8 @@
     <div class="content-wrapper">
         <div class="container-fluid">
 
+
+            {{-- add data --}}
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
@@ -54,11 +56,7 @@
                                                     <select class="form-control" id="parentCategory"
                                                         name="parentCategory">
                                                         <option value="">Select Parent Category</option>
-                                                        @foreach($categoryTitles as $cat)
-                                                            <option value="{{ $cat->categoryTitle }}">
-                                                                {{ $cat->categoryTitle }}
-                                                            </option>
-                                                        @endforeach
+
                                                     </select>
                                                     <div class="form-text">Select or enter the main parent category.
                                                     </div>
@@ -122,6 +120,8 @@
                 </div>
             </div>
 
+
+            {{-- data table --}}
             <div class="row">
                 <div class="col">
                     <div class="card">
@@ -173,9 +173,7 @@
                                         <label>Parent Category</label>
                                         <select class="form-control" id="edit_parentCategory" name="parentCategory">
                                             <option value="">Select Parent Category</option>
-                                            @foreach($categoryTitles as $cat)
-                                                <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
-                                            @endforeach
+
                                         </select>
                                         <span class="text-danger error-text parentCategory_error"></span>
 
@@ -521,20 +519,20 @@
     function loadCategoryDropdown() {
         $.ajax({
             url: "{{ route('category.titles') }}",
-            type: "GET",
-            success: function (data) {
+            method: "GET",
+            success: function (res) {
+                $("#parentCategory").empty();
+                $("#parentCategory").append('<option value="">Select Parent Category</option>');
 
-                let dropdown = $("#parentCategory");
-                dropdown.empty();          // reset dropdown
-                dropdown.append(`<option value="">Select Parent Category</option>`);
-
-                // Repopulate
-                data.forEach(cat => {
-                    dropdown.append(`<option value="${cat.categoryTitle}">${cat.categoryTitle}</option>`);
+                res.forEach(function (item) {
+                    $("#parentCategory").append(
+                        `<option value="${item.original}">${item.title}</option>`
+                    );
                 });
             }
         });
     }
+
     // reusable loadEditCategoryDropdown
     function loadEditCategoryDropdown(selectedValue = "") {
         $.ajax({
@@ -547,8 +545,9 @@
                 dropdown.append(`<option value="">Select Parent Category</option>`);
 
                 data.forEach(cat => {
-                    dropdown.append(`<option value="${cat.categoryTitle}">${cat.categoryTitle}</option>`);
+                    dropdown.append(`<option value="${cat.original}">${cat.title}</option>`);
                 });
+
 
                 // Set default selected category
                 if (selectedValue !== "") {
@@ -620,6 +619,10 @@
 
 
         });
+    });
+
+    $(window).on('load', function () {
+        loadCategoryDropdown();
     });
 
 </script>

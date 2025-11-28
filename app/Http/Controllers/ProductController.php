@@ -58,11 +58,43 @@ class ProductController extends Controller
     public function productform()
     {
 
-        $category = Category::select('categoryTitle')->get();
-        $categories = Category::all();
-
-        return view("admin.product.create_product", compact("category", "categories"));
+        return view("admin.product.create_product");
     }
+
+
+    public function titles()
+    {
+        $cats = Category::all();
+        $result = $this->buildHierarchy($cats);
+        return response()->json($result);
+    }
+
+    private function buildHierarchy($categories, $parent = "", $level = 0)
+    {
+        $output = [];
+
+        foreach ($categories as $cat) {
+
+            if ($cat->parentCategory == $parent) {
+
+                $prefix = str_repeat("— ", $level);
+
+                $output[] = [
+                    "title"    => $prefix . $cat->categoryTitle,
+                    "original" => $cat->categoryTitle
+                ];
+
+                $children = $this->buildHierarchy($categories, $cat->categoryTitle, $level + 1);
+
+                foreach ($children as $child) {
+                    $output[] = $child;
+                }
+            }
+        }
+
+        return $output;
+    }
+
     public function store(Request $request)
     {
         $rules = [

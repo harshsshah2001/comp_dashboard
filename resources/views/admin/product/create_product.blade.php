@@ -57,11 +57,7 @@
                                                     <label class="form-label">Select Category</label>
                                                     <select class="form-control" id="category" name="category">
                                                         <option value="">Select Category</option>
-                                                        @foreach($category as $cat)
-                                                            <option value="{{ $cat->categoryTitle }}">
-                                                                {{ $cat->categoryTitle }}
-                                                            </option>
-                                                        @endforeach
+                                                      
                                                     </select>
                                                     <span class="text-danger error-text category_error"></span>
                                                 </div>
@@ -306,6 +302,10 @@
 <script>
     $(document).ready(function () {
 
+        $(window).on('load', function () {
+            loadCategoryDropdown();
+        });
+
         // add data
         $("#addProductForm").on("submit", function (e) {
             e.preventDefault();
@@ -419,11 +419,8 @@
                     $("#edit_parentCategory").append(`<option value="">Select Parent Category</option>`);
 
                     // 3. Append categories coming from Blade
-                    @foreach($categories as $cat)
-                        $("#edit_parentCategory").append(`
-                                                            <option value="{{ $cat->categoryTitle }}">{{ $cat->categoryTitle }}</option>
-                                                        `);
-                    @endforeach
+                    loadEditCategoryDropdown(res.category);
+
 
                     // 4. Set selected category for this product
                     $("#edit_parentCategory").val(res.category);
@@ -588,5 +585,46 @@
         });
 
     });
+    function loadCategoryDropdown() {
+        $.ajax({
+            url: "{{ route('category.titles') }}",
+            type: "GET",
+            success: function (data) {
+
+                $("#category").empty();
+                $("#category").append(`<option value="">Select Category</option>`);
+
+                data.forEach(item => {
+                    $("#category").append(`
+                    <option value="${item.original}">${item.title}</option>
+                `);
+                });
+            }
+        });
+    }
+    function loadEditCategoryDropdown(selectedValue = "") {
+        $.ajax({
+            url: "{{ route('category.titles') }}",
+            type: "GET",
+            success: function (data) {
+
+                let dropdown = $("#edit_parentCategory");
+
+                dropdown.empty();
+                dropdown.append(`<option value="">Select Category</option>`);
+
+                data.forEach(cat => {
+                    dropdown.append(`
+                    <option value="${cat.original}">${cat.title}</option>
+                `);
+                });
+
+                // Auto set selected category
+                if (selectedValue !== "") {
+                    dropdown.val(selectedValue);
+                }
+            }
+        });
+    }
 
 </script>
