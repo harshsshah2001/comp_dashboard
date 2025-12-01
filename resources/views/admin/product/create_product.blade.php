@@ -57,7 +57,7 @@
                                                     <label class="form-label">Select Category</label>
                                                     <select class="form-control" id="category" name="category">
                                                         <option value="">Select Category</option>
-                                                      
+
                                                     </select>
                                                     <span class="text-danger error-text category_error"></span>
                                                 </div>
@@ -110,11 +110,7 @@
                                                         name="shortdesc" placeholder="Short description">
                                                 </div>
 
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">SKU / Product Code</label>
-                                                    <input type="text" class="form-control" id="sku" name="sku"
-                                                        placeholder="Enter SKU">
-                                                </div>
+
                                             </div>
 
                                             <!-- ROW 5 - Full Width Description -->
@@ -282,9 +278,9 @@
                                     <span class="text-danger error-text productdescription_error"></span>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary btn-sm float-start">
+                                {{-- <button type="submit" class="btn btn-primary btn-sm float-start">
                                     Update Product
-                                </button>
+                                </button> --}}
                             </form>
                         </div>
 
@@ -395,9 +391,9 @@
                     data: "id",
                     render: id => `
                 <a class="editBtn text-primary" data-id="${id}"><i class="fa-solid fa-pen-to-square"></i></a>
-<a class="deleteBtn text-danger" data-id="${id}" style="cursor:pointer">
-    <i class="fa-solid fa-trash"></i>
-</a>
+                <a class="deleteBtn text-danger" data-id="${id}" style="cursor:pointer">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
             `
                 }
             ]
@@ -487,7 +483,7 @@
             let id = $("#edit_id").val();
             let formData = new FormData(this);
 
-            $(".error-text").text(""); // CLEAR old errors
+            $(".error-text").text("");
 
             $.ajax({
                 url: "/admin/product/update/" + id,

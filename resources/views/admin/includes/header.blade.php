@@ -23,6 +23,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
         rel="stylesheet">
@@ -75,8 +76,8 @@
                                 </ul>
                             </li>
                             <li class="nav-item dropdown hidden-on-mobile">
-                                <a class="nav-link dropdown-toggle" href="#" id="exploreDropdownLink"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="exploreDropdownLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="material-icons-outlined">explore</i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-lg large-items-menu"
@@ -128,29 +129,27 @@
                                 <a class="nav-link" href="#">Projects</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link toggle-search" href="#"><i
-                                        class="material-icons">search</i></a>
+                                <a class="nav-link toggle-search" href="#"><i class="material-icons">search</i></a>
                             </li>
                             <li class="nav-item hidden-on-mobile">
                                 <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown"
-                                    data-bs-toggle="dropdown"><img src="../../assets/images/flags/us.png"
-                                        alt=""></a>
+                                    data-bs-toggle="dropdown"><img src="../../assets/images/flags/us.png" alt=""></a>
                                 <ul class="dropdown-menu dropdown-menu-end language-dropdown"
                                     aria-labelledby="languageDropDown">
                                     <li><a class="dropdown-item" href="#"><img
                                                 src="../../assets/images/flags/germany.png" alt="">German</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><img
-                                                src="../../assets/images/flags/italy.png" alt="">Italian</a>
+                                    <li><a class="dropdown-item" href="#"><img src="../../assets/images/flags/italy.png"
+                                                alt="">Italian</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><img
-                                                src="../../assets/images/flags/china.png" alt="">Chinese</a>
+                                    <li><a class="dropdown-item" href="#"><img src="../../assets/images/flags/china.png"
+                                                alt="">Chinese</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item hidden-on-mobile">
-                                <a class="nav-link nav-notifications-toggle" id="notificationsDropDown"
-                                    href="#" data-bs-toggle="dropdown">4</a>
+                                <a class="nav-link nav-notifications-toggle" id="notificationsDropDown" href="#"
+                                    data-bs-toggle="dropdown">4</a>
                                 <div class="dropdown-menu dropdown-menu-end notifications-dropdown"
                                     aria-labelledby="notificationsDropDown">
                                     <h6 class="dropdown-header">Notifications</h6>
@@ -200,8 +199,7 @@
                                             <div class="notifications-dropdown-item">
                                                 <div class="notifications-dropdown-item-image">
                                                     <span class="notifications-badge">
-                                                        <img src="../../assets/images/avatars/avatar.png"
-                                                            alt="">
+                                                        <img src="../../assets/images/avatars/avatar.png" alt="">
                                                     </span>
                                                 </div>
                                                 <div class="notifications-dropdown-item-text">
@@ -214,8 +212,7 @@
                                             <div class="notifications-dropdown-item">
                                                 <div class="notifications-dropdown-item-image">
                                                     <span class="notifications-badge">
-                                                        <img src="../../assets/images/avatars/avatar.png"
-                                                            alt="">
+                                                        <img src="../../assets/images/avatars/avatar.png" alt="">
                                                     </span>
                                                 </div>
                                                 <div class="notifications-dropdown-item-text">
@@ -234,5 +231,3 @@
             </nav>
         </div>
     </div> --}}
-
-

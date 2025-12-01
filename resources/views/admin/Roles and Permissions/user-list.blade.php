@@ -39,6 +39,7 @@
                         </div>
                         <div class="card-body">
                             <form class="row g-3" method="post" action="" id="addUserForm">
+                                @csrf
                                 <div class="col-md-4">
                                     <label class="form-label">Full Name</label>
                                     <input type="text" class="form-control" name="name" placeholder="Enter full name">
@@ -60,8 +61,8 @@
                                     <label class="form-label">Select Role</label>
                                     <select name="role_id" class="form-select" required>
                                         <option value="">Select Role</option>
-                                        @foreach($role as $role)
-                                        <option value="{{ $role->id }}">{{ $role->rolename }}</option>
+                                        @foreach($role as $roles)
+                                        <option value="{{ $roles->id }}">{{ $roles->rolename }}</option>
                                         @endforeach
                                         <option value=""></option>
                                     </select>
@@ -102,13 +103,13 @@
             </div>
 
 
-            <!-- Add/Edit User Modal -->
+            <!-- Edit User Modal -->
             <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <form id="userForm">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="userModalLabel">Add/Edit User</h5>
+                                <h5 class="modal-title" id="userModalLabel">Edit User</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 

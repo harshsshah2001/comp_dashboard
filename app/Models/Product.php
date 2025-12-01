@@ -11,6 +11,7 @@ class Product extends Model
         'productname',
         'image',
         'icon',
+        'multipleimage',
         'productdescription',
         'price',
         'saleprice',

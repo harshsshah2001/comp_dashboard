@@ -1,6 +1,32 @@
 @include('admin.includes.header')
 @include('admin.includes.sidebar')
 
+
+<style>
+    /* Make top bar (Show entries + Search) on the same line */
+    div.dataTables_wrapper div.dataTables_length {
+        float: left !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter {
+        float: right !important;
+        text-align: right !important;
+    }
+
+    /* Align the Search label + input inside */
+    div.dataTables_filter label {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 0 !important;
+    }
+
+    div.dataTables_wrapper .dataTables_paginate {
+        display: none !important;
+    }
+</style>
+
 <div class="app-content">
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -70,3 +96,32 @@
 
 
 @include('admin.includes.footer')
+
+<script>
+     let table = $("#datatable1").DataTable({
+            processing: true,
+            serverSide: false,
+            ordering: false,
+
+            ajax: {
+                url: "{{ route('role.list') }}",
+                type: "GET"
+            },
+
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+
+            columns: [
+                { data: null, render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
+
+                { data: "rolename" },
+                { data: "description" },
+
+                {
+                    data: "id",
+                    render: id => `
+                <a class="editBtn text-warming" data-id="${id}"><i class="fa-solid fa-pen-to-square"></i></a>`
+                }
+            ]
+        });
+</script>

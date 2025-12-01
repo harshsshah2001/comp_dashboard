@@ -104,6 +104,20 @@ class RolesPermission extends Controller
         ]);
     }
 
+    public function rolelist(Request $request)
+    {
+
+        $roles = Role::all();
+
+        // If AJAX request → send JSON for DataTables
+        if ($request->ajax()) {
+            return response()->json([
+                'data' => $roles
+            ]);
+        }
+        return view('admin.Roles and Permissions.role-list');
+
+    }
     // Roles functions is finidh here
 
 
@@ -199,6 +213,7 @@ class RolesPermission extends Controller
     }
     public function usersubmit(Request $request)
     {
+
         $user_rules = [
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:userlists,email',
@@ -206,6 +221,8 @@ class RolesPermission extends Controller
             'password'  => 'required|string|min:6',
             'role_id'   => 'required',
         ];
+
+
 
         $validator = Validator::make($request->all(), $user_rules);
 

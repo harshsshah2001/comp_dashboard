@@ -28,6 +28,9 @@ Route::middleware('web')->group(function () {
         Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/admin/category/update/{id}', [CategoryController::class, 'update']);
         Route::get('/admin/category/list', [CategoryController::class, 'list'])->name('category.list');
+        Route::post('/admin/product/upload-multiple', [ProductController::class, 'uploadMultiple'])
+        ->name('product.multiple.upload');
+
 
         //for refresh a category dropdown
         Route::get('/category/titles', [CategoryController::class, 'titles'])->name('category.titles');
@@ -51,6 +54,7 @@ Route::middleware('web')->group(function () {
         Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
         Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
         Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
+        Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
 
         Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
         Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
@@ -61,6 +65,6 @@ Route::middleware('web')->group(function () {
         Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
         Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
         Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])
-            ->name('user.submit');
+        ->name('user.submit');
     });
 });

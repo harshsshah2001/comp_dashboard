@@ -102,6 +102,7 @@ class ProductController extends Controller
             'productname'        => 'required|string|max:255',
             'image'              => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'icon'               => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'multipleimage'      => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'productdescription' => 'nullable|string',
             'price'              => 'nullable|numeric',
             'saleprice'          => 'nullable|numeric',
@@ -114,6 +115,7 @@ class ProductController extends Controller
             [
                 'image' => 'product/image',
                 'icon'  => 'product/icon',
+                'multipleimage' => 'product/multipleimage',
             ]
         );
     }
