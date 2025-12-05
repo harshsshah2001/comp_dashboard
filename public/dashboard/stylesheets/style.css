@@ -3214,4 +3214,23 @@ article .more-link a:hover:after {
     /* match natural spacing */
 }
 
+.product-item {
+    margin-right: 20px;   /* space between cards */
+    margin-bottom: 20px;  /* space below rows */
+}
+.product-item:last-child {
+    margin-right: 0;
+}
+
+/* for “ADD TO CART” button always visible */
+.product-item .add-to-cart {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    position: relative !important; /* Ensures it stays inside the card */
+}
+
+.product-item .product-info {
+    margin-top: 15px !important;   /* add space below image */
+}
 
