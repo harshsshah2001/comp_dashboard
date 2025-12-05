@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function frontend()
+    {
+        $allcategories = Category::all();
+        $allproducts = Product::all();
+        return view('dashboard.dashboard', compact('allcategories','allproducts'));
+    }
+
 
     public function dashboard()
     {
@@ -18,37 +27,35 @@ class AdminController extends Controller
     }
 
     public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    $admin = \App\Models\Admin::where('email', $request->email)->first();
+        $admin = \App\Models\Admin::where('email', $request->email)->first();
 
-    if (!$admin) {
+        if (!$admin) {
+            return response()->json([
+                'status' => 'error',
+                'field' => 'email',
+                'message' => 'Email not found',
+            ]);
+        }
+
+        if ($admin->password !== $request->password) {
+            return response()->json([
+                'status' => 'error',
+                'field' => 'password',
+                'message' => 'Invalid password',
+            ]);
+        }
+
+        session(['admin_id' => $admin->id, 'admin_email' => $admin->email]);
+
         return response()->json([
-            'status' => 'error',
-            'field' => 'email',
-            'message' => 'Email not found',
+            'status' => 'success',
+            'message' => 'Login successful',
         ]);
     }
-
-    if ($admin->password !== $request->password) {
-        return response()->json([
-            'status' => 'error',
-            'field' => 'password',
-            'message' => 'Invalid password',
-        ]);
-    }
-
-    session(['admin_id' => $admin->id, 'admin_email' => $admin->email]);
-
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Login successful',
-    ]);
-}
-
-
 }

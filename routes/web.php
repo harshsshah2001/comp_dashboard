@@ -2,15 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RolesPermission;
 
 Route::middleware('web')->group(function () {
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    // Route::get('/', function () {
+    //     return view('welcome');
+    // });
 
     // Admin Login Routes
     Route::get('/loginform', [AdminController::class, 'signinform'])->name('loginform');
@@ -68,3 +69,7 @@ Route::middleware('web')->group(function () {
         ->name('user.submit');
     });
 });
+
+// Frontend Routes
+
+Route::get('/asdf',[AdminController::class,'frontend'])->name('frontend');
