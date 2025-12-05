@@ -293,15 +293,15 @@
                                 <li class="product-item ">
                                     <div class="product-thumb clearfix">
                                         <a href="#">
-                                            <img src="{{ asset('dashboard/images/shop/sh-4/pexels-vince-2147491.jpg') }}"
+                                            <img src="{{ asset('product/image' . $products->image) }}"
                                                 alt="image">
                                         </a>
                                     </div>
                                     <div class="product-info clearfix">
-                                        <span class="product-title">Cotton White Underweaer Block Out Edition</span>
+                                        <span class="product-title">{{ $products->productname }}</span>
                                         <div class="price">
                                             <ins>
-                                                <span class="amount">$19.00</span>
+                                                <span class="amount">{{ $products->saleprice }}</span>
                                             </ins>
                                         </div>
                                         <ul class="flat-color-list width-14">
