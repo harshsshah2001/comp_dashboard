@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-      public function Homepage()
+    public function Homepage()
     {
         $allcategories = Category::all();
         $allproducts = Product::all();
-        return view('dashboard.dashboard', compact('allcategories','allproducts'));
+        return view('dashboard.dashboard', compact('allcategories', 'allproducts'));
     }
-
+   
 }

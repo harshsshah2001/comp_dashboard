@@ -8,11 +8,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RolesPermission;
 use App\Http\Controllers\UserController;
 
-Route::middleware('web')->group(function () {
-
-    // Route::get('/', function () {
-    //     return view('welcome');
-    // });
 
     // Admin Login Routes
     Route::get('/loginform', [AdminController::class, 'signinform'])->name('loginform');
@@ -69,8 +64,8 @@ Route::middleware('web')->group(function () {
         Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])
         ->name('user.submit');
     });
-});
 
 // Frontend Routes
 
 Route::get('/Homepage',[UserController::class,'Homepage'])->name('homepage');
+

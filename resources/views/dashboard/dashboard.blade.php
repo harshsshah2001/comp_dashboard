@@ -235,55 +235,85 @@
                 })->values();
                 @endphp
 
+                @php
+                function getProductsByCategory($products, $categoryTitle)
+                {
+                return $products->filter(function ($item) use ($categoryTitle) {
+                return strtolower(trim($item->category)) === strtolower(trim($categoryTitle));
+                })->values();
+                }
+                @endphp
+
                 <ul class="flat-filter style-1 text-center max-width-682 clearfix category-dropdown">
 
                     @foreach ($mainCategories as $category)
+
                     @php
                     $children = getChildren($allcategories, $category->categoryTitle);
                     $hasChildren = $children->count() > 0;
+                    $mainProducts = getProductsByCategory($allproducts, $category->categoryTitle);
                     @endphp
 
                     <li class="dropdown">
-                        <a href="#" class="{{ $hasChildren ? 'has-arrow' : '' }}">
+
+                        <a href="#">
                             {{ $category->categoryTitle }}
-                            @if($hasChildren)
+                            @if($hasChildren || $mainProducts->count() > 0)
                             <span class="arrow-right">▸</span>
                             @endif
                         </a>
 
-                        @if($hasChildren)
+                        {{-- SUBMENU START --}}
+                        @if($hasChildren || $mainProducts->count() > 0)
                         <ul class="dropdown-menu">
+
+                            {{-- PRODUCTS directly under main category --}}
+                            @foreach ($mainProducts as $prod)
+                            <li><a href="#">{{ $prod->productname }}</a></li>
+                            @endforeach
+
+                            {{-- CHILD CATEGORIES --}}
                             @foreach ($children as $child)
                             @php
                             $subChildren = getChildren($allcategories, $child->categoryTitle);
                             $childHasChildren = $subChildren->count() > 0;
+                            $childProducts = getProductsByCategory($allproducts, $child->categoryTitle);
                             @endphp
 
                             <li class="dropdown-submenu">
-                                <a href="#" class="{{ $childHasChildren ? 'has-arrow' : '' }}">
+
+                                <a href="#">
                                     {{ $child->categoryTitle }}
-                                    @if($childHasChildren)
+                                    @if($childHasChildren || $childProducts->count() > 0)
                                     <span class="arrow-right">▸</span>
                                     @endif
                                 </a>
 
-                                @if($childHasChildren)
                                 <ul class="dropdown-menu">
+
+                                    {{-- SUB-CATEGORIES --}}
                                     @foreach ($subChildren as $sub)
                                     <li><a href="#">{{ $sub->categoryTitle }}</a></li>
                                     @endforeach
+
+                                    {{-- PRODUCTS inside subcategory --}}
+                                    @foreach ($childProducts as $prod)
+                                    <li><a href="#">{{ $prod->productname }}</a></li>
+                                    @endforeach
+
                                 </ul>
-                                @endif
                             </li>
                             @endforeach
+
                         </ul>
                         @endif
+                        {{-- SUBMENU END --}}
+
                     </li>
+
                     @endforeach
 
                 </ul>
-
-
 
                 <div class="divider h40"></div>
                 <div class="product-content product-fourcolumn clearfix">
@@ -327,6 +357,7 @@
 
 
                     </ul>
+
                     {{-- <div class="elm-btn text-center">
                         <a href="#" class="themesflat-button outline ol-accent margin-top-8">LOAD MORE</a>
                     </div> --}}
