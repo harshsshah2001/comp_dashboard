@@ -8,14 +8,6 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function frontend()
-    {
-        $allcategories = Category::all();
-        $allproducts = Product::all();
-        return view('dashboard.dashboard', compact('allcategories','allproducts'));
-    }
-
-
     public function dashboard()
     {
         return view('admin.dashboard');

@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RolesPermission;
+use App\Http\Controllers\UserController;
 
 Route::middleware('web')->group(function () {
 
@@ -72,4 +73,4 @@ Route::middleware('web')->group(function () {
 
 // Frontend Routes
 
-Route::get('/asdf',[AdminController::class,'frontend'])->name('frontend');
+Route::get('/Homepage',[UserController::class,'Homepage'])->name('homepage');
