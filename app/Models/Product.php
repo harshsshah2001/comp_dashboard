@@ -16,4 +16,9 @@ class Product extends Model
         'price',
         'saleprice',
     ];
+
+     public function subProducts()
+    {
+        return $this->hasMany(SubProduct::class, 'product_id');
+    }
 }
