@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('product_description');
             $table->text('product_sortdescription');
 
-$table->foreignId('product_id')->constrained('products');
+            $table->foreignId('product_id')->constrained('products');
 
             $table->timestamps();
         });

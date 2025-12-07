@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RolesPermission;
+use App\Http\Controllers\SubProductController;
 use App\Http\Controllers\UserController;
 
 
@@ -40,10 +41,11 @@ use App\Http\Controllers\UserController;
         Route::get('/admin/product/edit/{id}', [ProductController::class, 'edit']);
         Route::post('/admin/product/update/{id}', [ProductController::class, 'update']);
         Route::get('/admin/product/list', [ProductController::class, 'list'])->name('product.list');
-        Route::delete('/admin/product/delete/{id}', [ProductController::class, 'delete'])
-            ->name('product.delete');
-
-
+        Route::delete('/admin/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+        
+        // SubProduct Routes
+        Route::get('sub/product/create', [SubProductController::class, 'subproductform'])->name('sub.product.create');
+        
 
         // Roles and permissions routes
         Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');

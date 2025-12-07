@@ -8,6 +8,7 @@ class SubProduct extends Model
 {
 
     protected $fillable = [
+        'product_id',
         'product_name',
         'product_image',
         'product_icon',
@@ -17,7 +18,6 @@ class SubProduct extends Model
         'product_size',
         'product_description',
         'product_sortdescription',
-        'product_id',
     ];
     public function product()
     {
