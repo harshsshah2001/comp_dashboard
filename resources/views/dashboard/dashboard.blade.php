@@ -33,10 +33,10 @@
 
                         <!-- If sub heading exists -->
                         @if($slide->slidersubheading)
-                            <div class="tp-caption tp-resizeme text-333 font-weight-500 letter-spacing-3"
+                            <div class="tp-caption tp-resizeme text-333 font-weight-500 letter-spacing-7"
                                 data-x="['left','left','left','center']" data-hoffset="['7','7','7','0']"
                                 data-y="['middle','middle','middle','middle']" data-voffset="['-62','-62','-62','-62']"
-                                data-fontsize="['72','72','72','46']" data-lineheight="['80','80','80','50']" data-width="full"
+                                data-fontsize="['34','34','34','24']" data-lineheight="['80','80','80','50']" data-width="full"
                                 data-height="none" data-whitespace="normal" data-transform_idle="o:1;"
                                 data-transform_in="y:[100%];s:2000;e:Power4.easeInOut;"
                                 data-transform_out="y:[100%];s:1000;e:Power2.easeInOut;" data-mask_in="x:0px;y:[100%];"
