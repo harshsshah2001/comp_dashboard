@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Imagebox;
+use App\Models\Slider;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Nette\Utils\Image;
 
 class UserController extends Controller
 {
@@ -13,7 +16,9 @@ class UserController extends Controller
     {
         $allcategories = Category::all();
         $allproducts = Product::all();
-        return view('dashboard.dashboard', compact('allcategories', 'allproducts'));
+        $imageboxs = Imagebox::all();
+        $sliders = Slider::all();
+        return view('dashboard.dashboard', compact('allcategories', 'allproducts','imageboxs','sliders'));
     }
-   
+
 }

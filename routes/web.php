@@ -26,8 +26,7 @@ use App\Http\Controllers\UserController;
         Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/admin/category/update/{id}', [CategoryController::class, 'update']);
         Route::get('/admin/category/list', [CategoryController::class, 'list'])->name('category.list');
-        Route::post('/admin/product/upload-multiple', [ProductController::class, 'uploadMultiple'])
-        ->name('product.multiple.upload');
+        Route::post('/admin/product/upload-multiple', [ProductController::class, 'uploadMultiple'])->name('product.multiple.upload');
 
 
         //for refresh a category dropdown
@@ -42,10 +41,10 @@ use App\Http\Controllers\UserController;
         Route::post('/admin/product/update/{id}', [ProductController::class, 'update']);
         Route::get('/admin/product/list', [ProductController::class, 'list'])->name('product.list');
         Route::delete('/admin/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
-        
+
         // SubProduct Routes
         Route::get('sub/product/create', [SubProductController::class, 'subproductform'])->name('sub.product.create');
-        
+
 
         // Roles and permissions routes
         Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
@@ -63,8 +62,19 @@ use App\Http\Controllers\UserController;
         Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
         Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
         Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
-        Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])
-        ->name('user.submit');
+        Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
+
+
+        //ImageBox Routes
+
+        Route::get('/admin/imagebox', [AdminController::class, 'imagebox'])->name('admin.imagebox');
+        Route::post('/admin/imagebox/store', [AdminController::class, 'storeImagebox'])->name('imagebox.store');
+
+
+        // Slider Routes
+        Route::get('/admin/slider', [AdminController::class, 'slider'])->name('admin.slider');
+        Route::post('/admin/slider', [AdminController::class, 'storeslider'])->name('slider.store');
+
     });
 
 // Frontend Routes
