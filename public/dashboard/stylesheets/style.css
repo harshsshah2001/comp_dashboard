@@ -3115,89 +3115,6 @@ article .more-link a:hover:after {
     display: inline-block !important;
 }
 
-/* dropdown box */
-.category-dropdown li .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    list-style: none;
-    background: #fff;
-    border-radius: 8px;
-    padding: 6px 0;
-    width: fit-content !important;
-    min-width: 0 !important;
-    max-width: max-content !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    border: none;
-    z-index: 9999;
-}
-
-.category-dropdown li:hover>.dropdown-menu {
-    display: block !important;
-}
-
-.category-dropdown .dropdown-menu li a {
-    display: flex;
-    /* aligns text + arrow horizontally */
-    justify-content: space-between;
-    /* pushes arrow to the right cleanly */
-    align-items: center;
-    padding: 3px 4px;
-    /* reduce horizontal padding */
-    text-decoration: none;
-    color: #444;
-    white-space: nowrap;
-
-}
-
-/* remove inner borders */
-.category-dropdown .dropdown-menu li {
-    border: none;
-}
-
-/* hover */
-.category-dropdown .dropdown-menu li a:hover {
-    background: #f5f5f5;
-    color: #000;
-}
-
-/* submenu position */
-.category-dropdown .dropdown-submenu {
-    position: relative;
-}
-
-.category-dropdown .dropdown-submenu .dropdown-menu {
-    top: 0;
-    left: 100%;
-    border-radius: 8px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-}
-
-/* arrow element */
-.category-dropdown .has-arrow {
-    position: relative;
-    padding-right: 22px;
-}
-
-.category-dropdown .has-arrow .arrow-right {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 12px;
-    color: #777;
-    pointer-events: none;
-}
-
-.category-dropdown .dropdown-menu li:hover>a .arrow-right {
-    color: #000;
-}
-
-.category-dropdown .has-arrow {
-    padding-right: 12px !important;
-    /* reduce padding from 22px */
-}
 
 /* arrow — no floating, flex handles alignment */
 .category-dropdown .arrow-right {
@@ -3205,21 +3122,6 @@ article .more-link a:hover:after {
     /* minimal spacing */
     font-size: 12px;
     color: #777;
-}
-
-/* remove empty space for items without arrow */
-.category-dropdown .dropdown-menu li a:not(.has-arrow) {
-    justify-content: flex-start !important;
-    padding-right: 12px !important;
-    /* match natural spacing */
-}
-
-.product-item {
-    margin-right: 20px;   /* space between cards */
-    margin-bottom: 20px;  /* space below rows */
-}
-.product-item:last-child {
-    margin-right: 0;
 }
 
 /* for “ADD TO CART” button always visible */

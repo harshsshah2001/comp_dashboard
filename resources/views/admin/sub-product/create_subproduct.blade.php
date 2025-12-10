@@ -347,7 +347,7 @@
             let formData = new FormData(this);
 
             $.ajax({
-                url: "{{ route('w') }}",
+                url: ,
                 type: "POST",
                 data: formData,
                 contentType: false,

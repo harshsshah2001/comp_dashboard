@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Countdowns;
 use App\Models\Imagebox;
 use App\Models\Slider;
 use App\Models\Product;
@@ -18,7 +19,7 @@ class UserController extends Controller
         $allproducts = Product::all();
         $imageboxs = Imagebox::all();
         $sliders = Slider::all();
-        return view('dashboard.dashboard', compact('allcategories', 'allproducts','imageboxs','sliders'));
+        $countdowns = Countdowns::where('status', 1)->latest()->first();
+        return view('dashboard.dashboard', compact('allcategories', 'allproducts', 'imageboxs', 'sliders', 'countdowns'));
     }
-
 }

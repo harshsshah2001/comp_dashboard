@@ -32,6 +32,9 @@
                     <li>
                         <a href="{{ route('product.create') }}">Product</a>
                     </li>
+                    <li>
+                        <a href="{{ route('sub.product.create') }}">Sub Product</a>
+                    </li>
                 </ul>
             </li>
             <li>
@@ -52,6 +55,9 @@
                     <li><a href="{{ route('userlist') }}">Users</a></li>
 
                 </ul>
+            </li>
+             <li>
+                <a href="{{ route('countdown.create') }}"><i class="material-icons-two-tone">access_time</i>CountDown</a>
             </li>
             <li>
                 <a href="mailbox.html"><i class="material-icons-two-tone">inbox</i>Mailbox<span

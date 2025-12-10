@@ -8,76 +8,80 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RolesPermission;
 use App\Http\Controllers\SubProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Countdowns;
 
 
-    // Admin Login Routes
-    Route::get('/loginform', [AdminController::class, 'signinform'])->name('loginform');
-    Route::post('/login', [AdminController::class, 'login'])->name('admin.login.post');
+// Admin Login Routes
+Route::get('/loginform', [AdminController::class, 'signinform'])->name('loginform');
+Route::post('/login', [AdminController::class, 'login'])->name('admin.login.post');
 
-    // Admin Dashboard
-    Route::middleware('admin.auth')->group(function () {
-        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
-
-        // Category Routes
-        Route::get('/category/create', [CategoryController::class, 'categoryform'])->name('category.create');
-        Route::post('/admin/category/store', [CategoryController::class, 'store'])->name('category.store');
-        Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
-        Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-        Route::post('/admin/category/update/{id}', [CategoryController::class, 'update']);
-        Route::get('/admin/category/list', [CategoryController::class, 'list'])->name('category.list');
-        Route::post('/admin/product/upload-multiple', [ProductController::class, 'uploadMultiple'])->name('product.multiple.upload');
+// Admin Dashboard
+Route::middleware('admin.auth')->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 
-        //for refresh a category dropdown
-        Route::get('/category/titles', [CategoryController::class, 'titles'])->name('category.titles');
-
-        Route::get('/admin/category/chart', [CategoryController::class, 'chart'])->name('category.chart');
-
-        // Product Routes
-        Route::get('/product/create', [ProductController::class, 'productform'])->name('product.create');
-        Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
-        Route::get('/admin/product/edit/{id}', [ProductController::class, 'edit']);
-        Route::post('/admin/product/update/{id}', [ProductController::class, 'update']);
-        Route::get('/admin/product/list', [ProductController::class, 'list'])->name('product.list');
-        Route::delete('/admin/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
-
-        // SubProduct Routes
-        Route::get('sub/product/create', [SubProductController::class, 'subproductform'])->name('sub.product.create');
+    // Category Routes
+    Route::get('/category/create', [CategoryController::class, 'categoryform'])->name('category.create');
+    Route::post('/admin/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/admin/category/update/{id}', [CategoryController::class, 'update']);
+    Route::get('/admin/category/list', [CategoryController::class, 'list'])->name('category.list');
+    Route::post('/admin/product/upload-multiple', [ProductController::class, 'uploadMultiple'])->name('product.multiple.upload');
 
 
-        // Roles and permissions routes
-        Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
-        Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
-        Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
-        Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
-        Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
-        Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
+    //for refresh a category dropdown
+    Route::get('/category/titles', [CategoryController::class, 'titles'])->name('category.titles');
 
-        Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
-        Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
-        Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
-        Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
-        Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
-        Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
-        Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
-        Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
-        Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
+    Route::get('/admin/category/chart', [CategoryController::class, 'chart'])->name('category.chart');
+
+    // Product Routes
+    Route::get('/product/create', [ProductController::class, 'productform'])->name('product.create');
+    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/admin/product/edit/{id}', [ProductController::class, 'edit']);
+    Route::post('/admin/product/update/{id}', [ProductController::class, 'update']);
+    Route::get('/admin/product/list', [ProductController::class, 'list'])->name('product.list');
+    Route::delete('/admin/product/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+
+    // SubProduct Routes
+    Route::get('sub/product/create', [SubProductController::class, 'subproductform'])->name('sub.product.create');
 
 
-        //ImageBox Routes
+    // Roles and permissions routes
+    Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
+    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+    Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
+    Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
+    Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
+    Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
 
-        Route::get('/admin/imagebox', [AdminController::class, 'imagebox'])->name('admin.imagebox');
-        Route::post('/admin/imagebox/store', [AdminController::class, 'storeImagebox'])->name('imagebox.store');
+    Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
+    Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
+    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+    Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
+    Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
+    Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
+    Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
+    Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
+    Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
 
 
-        // Slider Routes
-        Route::get('/admin/slider', [AdminController::class, 'slider'])->name('admin.slider');
-        Route::post('/admin/slider', [AdminController::class, 'storeslider'])->name('slider.store');
+    //ImageBox Routes
 
-    });
+    Route::get('/admin/imagebox', [AdminController::class, 'imagebox'])->name('admin.imagebox');
+    Route::post('/admin/imagebox/store', [AdminController::class, 'storeImagebox'])->name('imagebox.store');
+
+
+    // Slider Routes
+    Route::get('/admin/slider', [AdminController::class, 'slider'])->name('admin.slider');
+    Route::post('/admin/slider', [AdminController::class, 'storeslider'])->name('slider.store');
+
+
+    // CountDown Routes
+    Route::get('/admin/countdown/create', [Countdowns::class, 'countdown'])->name('countdown.create');
+    Route::post('/admin/countdown/store', [Countdowns::class, 'storecountdown'])->name('countdown.store');
+});
 
 // Frontend Routes
 
-Route::get('/Homepage',[UserController::class,'Homepage'])->name('homepage');
-
+Route::get('/Homepage', [UserController::class, 'Homepage'])->name('homepage');
