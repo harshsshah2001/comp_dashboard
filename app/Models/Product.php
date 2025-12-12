@@ -10,6 +10,7 @@ class Product extends Model
         'category',
         'productname',
         'image',
+        'badge',
         'icon',
         'multipleimage',
         'productdescription',
@@ -17,8 +18,8 @@ class Product extends Model
         'saleprice',
     ];
 
-     public function subProducts()
-    {
-        return $this->hasMany(SubProduct::class, 'product_id');
-    }
+    //  public function subProducts()
+    // {
+    //     return $this->hasMany(SubProduct::class, 'product_id');
+    // }
 }

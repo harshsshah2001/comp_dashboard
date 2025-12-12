@@ -23,7 +23,7 @@ class ProductController extends Controller
 
     public function list(Request $request)
     {
-        $columns = ['id', 'category', 'productname', 'image', 'icon', 'price', 'saleprice', 'productdescription'];
+        // $columns = ['id', 'category', 'productname', 'image', 'icon', 'price', 'saleprice', 'productdescription'];
 
         $length = $request->input('length');
         $start  = $request->input('start');
@@ -102,6 +102,7 @@ class ProductController extends Controller
             'productname'        => 'required|string|max:255',
             'image'              => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'icon'               => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'badge'              => 'string|max:255',
             'multipleimage'      => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'productdescription' => 'nullable|string',
             'price'              => 'nullable|numeric',
@@ -131,14 +132,16 @@ class ProductController extends Controller
         $model = Product::class;
 
         $validation_rules = [
-            'category'           => 'required|string',
+            'category'           => 'required',
             'productname'        => 'required|string|max:255',
-            'productdescription' => 'required|string',
+            'productdescription' => 'nullable|string',
             'price'              => 'required|numeric',
             'saleprice'          => 'nullable|numeric',
             'image'              => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'badge'              => 'nullable|string|max:255',
             'icon'               => 'nullable|image|mimes:jpg,jpeg,png,webp',
         ];
+
 
         $paths = [
             'icon'  => 'product/icon',

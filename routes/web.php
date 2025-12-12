@@ -9,7 +9,7 @@ use App\Http\Controllers\RolesPermission;
 use App\Http\Controllers\SubProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Countdowns;
-
+use App\Http\Controllers\InfocardsController;
 
 // Admin Login Routes
 Route::get('/loginform', [AdminController::class, 'signinform'])->name('loginform');
@@ -80,6 +80,12 @@ Route::middleware('admin.auth')->group(function () {
     // CountDown Routes
     Route::get('/admin/countdown/create', [Countdowns::class, 'countdown'])->name('countdown.create');
     Route::post('/admin/countdown/store', [Countdowns::class, 'storecountdown'])->name('countdown.store');
+
+    Route::get('/admin/infocards/create', [InfocardsController::class, 'infocards'])->name('infocards.create');
+    Route::post('/admin/infocards/store', [InfocardsController::class, 'storeinfocards'])->name('infocards.store');
+
+
+
 });
 
 // Frontend Routes

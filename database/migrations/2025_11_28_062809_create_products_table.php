@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('productname');
             $table->string('image')->nullable();
+            // i have add New badge column added using a migration
             $table->string('icon')->nullable();
             $table->string('multipleimage')->nullable();
             $table->text('productdescription')->nullable();

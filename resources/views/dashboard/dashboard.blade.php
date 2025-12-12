@@ -215,6 +215,8 @@
                                             <img src="{{ asset('storage/' . $products->image) }}" alt="image"
                                                 style="width:100%; height:200px; object-fit:cover;">
                                         </a>
+                                        <span class="new">{{  $products->badge }}</span>
+
                                     </div>
 
                                     <div class="product-info clearfix">
@@ -319,8 +321,13 @@
 
                 <!-- LEFT SIDE IMAGE (col-6) -->
                 <div class="col-md-6 p-0">
-                    <img src="{{ asset('storage/' . $countdowns->image) }}" alt="Countdown Image"
-                        style="width:100%; height: 535px; object-fit:cover;">
+                    @if ($countdowns && $countdowns->image)
+                        <img src="{{ asset('storage/' . $countdowns->image) }}" alt="Countdown Image"
+                            style="width:100%; height:530px; object-fit:cover;">
+                    @else
+                        <img src="{{ asset('default/countdown-placeholder.jpg') }}" alt="No Countdown Image"
+                            style="width:100%; height:500px; object-fit:cover;">
+                    @endif
                 </div>
 
                 <!-- RIGHT SIDE COUNTDOWN (col-6) -->
@@ -342,7 +349,7 @@
 
                                 <div class="wrap-countdown no-margin-bottom">
                                     <div class="custom-countdown" id="mainCountdown"
-                                        data-end="{{ \Carbon\Carbon::parse($countdowns?->end_datetime)->toIso8601String() }}">
+                                        data-end="{{ \Carbon\Carbon::parse(time: $countdowns?->end_datetime)->toIso8601String() }}">
 
                                         <div class="countdown-box">
                                             <span class="num" id="days">00</span>
@@ -369,16 +376,16 @@
 
                                 <div class="divider h30 clearfix"></div>
                                 <a href="#" class="grab-btn" style="
-                                    display:inline-block;
-                                    background:#ff4d4d;
-                                    color:#fff;
-                                    padding:12px 28px;
-                                    font-size:18px;
-                                    font-weight:600;
-                                    border-radius:6px;
-                                    text-decoration:none;
-                                    transition:0.3s;
-                                ">
+                                                    display:inline-block;
+                                                    background:#ff4d4d;
+                                                    color:#fff;
+                                                    padding:12px 28px;
+                                                    font-size:18px;
+                                                    font-weight:600;
+                                                    border-radius:6px;
+                                                    text-decoration:none;
+                                                    transition:0.3s;
+                                                ">
                                     Grab It
                                 </a>
 
@@ -391,9 +398,7 @@
             </div>
         </div>
     </div>
-
     </div>
-
 
     <style>
         .grab-btn:hover {
@@ -450,218 +455,198 @@
 
     <!-- END COUNTDOWN -->
 
-    <!-- PRODUCT NEW -->
+    <!-- SALE PRODUCT -->
+
     <section class="flat-row row-best-sale">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+
                     <div class="title-section margin-bottom-43">
-                        <h2 class="title">
-                            Best Sale
-                        </h2>
+                        <h2 class="title">Best Sale</h2>
                     </div>
+
+                    @php
+                        // Get ONLY sale products
+                        $saleProducts = $allproducts->filter(function ($item) {
+                            return strtolower(trim($item->badge)) === "sale";
+                        });
+
+                        // Collect categories belonging to sale items
+                        $saleCategories = $saleProducts->map(function ($p) {
+                            return $p->category;
+                        })->unique();
+
+                        // Find main categories for those sale products
+                        $mainCategories = $allcategories->filter(function ($cat) use ($saleCategories) {
+                            return $saleCategories->contains($cat->categoryTitle);
+                        });
+                    @endphp
+
+
+                    <!-- CATEGORY FILTER BOX (same style as file 1) -->
+                    <ul class="flat-filter style-1 text-center max-width-682 clearfix category-dropdown">
+                        @foreach ($mainCategories as $category)
+                            <li>
+                                <a href="#" class="sale-category-filter"
+                                    data-filter="{{ Str::slug($category->categoryTitle) }}">
+                                    {{ $category->categoryTitle }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+
+                    <div class="divider h40"></div>
+
+
+                    <!-- SALE PRODUCT GRID -->
                     <div class="product-content product-fivecolumn clearfix">
                         <ul class="product style3">
-                            <li class="product-item">
-                                <div class="product-thumb clearfix">
-                                    <a href="#">
-                                        <img src="{{ asset('dashboard/images/shop/sh-5/pexels-catscoming-367915 - Copy.jpg') }}"
-                                            alt="image">
-                                    </a>
-                                    <span class="new sale">Sale</span>
-                                </div>
-                                <div class="product-info clearfix">
-                                    <span class="product-title">Faux shearling aviator<br> jacket</span>
-                                    <div class="price">
-                                        <del>
-                                            <span class="regular">$130.00</span>
-                                        </del>
-                                        <ins>
-                                            <span class="amount">$100.00</span>
-                                        </ins>
+
+                            @foreach($saleProducts as $product)
+
+                                @php
+                                    $catSlug = Str::slug($product->category);
+                                @endphp
+
+                                <li class="product-item" data-category="{{ $catSlug }}">
+                                    <div class="product-thumb clearfix">
+                                        <a href="#">
+                                            <img src="{{ asset('storage/' . $product->image) }}" alt="image">
+                                        </a>
+                                        <span class="new sale">Sale</span>
                                     </div>
-                                </div>
-                                <div class="add-to-cart text-center">
-                                    <a href="#">ADD TO CART</a>
-                                </div>
-                                <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                            </li>
-                            <li class="product-item">
-                                <div class="product-thumb clearfix">
-                                    <a href="#">
-                                        <img src="{{ asset('dashboard/images/shop/sh-5/pexels-freestockpro-2837005.jpg') }}"
-                                            alt="image">
-                                    </a>
-                                    <span class="new">New</span>
-                                </div>
-                                <div class="product-info clearfix">
-                                    <span class="product-title">Cotton White Underweaer Block Out Edition</span>
-                                    <div class="price">
-                                        <ins>
-                                            <span class="amount">$100.00</span>
-                                        </ins>
+
+                                    <div class="product-info clearfix">
+                                        <span class="product-title">{{ $product->productname }}</span>
+
+                                        <div class="price">
+                                            <del>
+                                                <span class="regular">${{ $product->price }}</span>
+                                            </del>
+                                            <ins>
+                                                <span class="amount" style="color:#ff0000;">
+                                                    ${{ $product->saleprice }}
+                                                </span>
+                                            </ins>
+                                        </div>
                                     </div>
-                                    <ul class="flat-color-list">
-                                        <li>
-                                            <a href="#" class="red"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="blue"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="black"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="add-to-cart text-center">
-                                    <a href="#">ADD TO CART</a>
-                                </div>
-                                <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                            </li>
-                            <li class="product-item">
-                                <div class="product-thumb clearfix">
-                                    <a href="#">
-                                        <img src="{{ asset('dashboard/images/shop/sh-5/pexels-catscoming-367915 - Copy.jpg') }}"
-                                            alt="image">
-                                    </a>
-                                    <span class="new">New</span>
-                                </div>
-                                <div class="product-info clearfix">
-                                    <span class="product-title">Hood wool blend duffle<br> coat</span>
-                                    <div class="price">
-                                        <ins>
-                                            <span class="amount">$130.00</span>
-                                        </ins>
+
+                                    <div class="add-to-cart text-center">
+                                        <a href="#">ADD TO CART</a>
                                     </div>
-                                </div>
-                                <div class="add-to-cart text-center">
-                                    <a href="#">ADD TO CART</a>
-                                </div>
-                                <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                            </li>
-                            <li class="product-item">
-                                <div class="product-thumb clearfix">
-                                    <a href="#">
-                                        <img src="{{ asset('dashboard/images/shop/sh-5/pexels-vince-2147491 - Copy.jpg') }}"
-                                            alt="image">
-                                    </a>
-                                    <span class="new sale">Sale</span>
-                                </div>
-                                <div class="product-info clearfix">
-                                    <span class="product-title">Slim-fit patterned suit<br> blazer</span>
-                                    <div class="price">
-                                        <del>
-                                            <span class="regular">$170.00</span>
-                                        </del>
-                                        <ins>
-                                            <span class="amount">$139.00</span>
-                                        </ins>
-                                    </div>
-                                </div>
-                                <div class="add-to-cart text-center">
-                                    <a href="#">ADD TO CART</a>
-                                </div>
-                                <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                            </li>
-                            {{-- <li class="product-item">
-                                <div class="product-thumb clearfix">
-                                    <a href="#">
-                                        <img src="{{ asset('dashboard/images/shop/sh-5/pexels-catscoming-367915.jpg') }}"
-                                            alt="image">
-                                    </a>
-                                    <span class="new sale">Sale</span>
-                                </div>
-                                <div class="product-info clearfix">
-                                    <span class="product-title">Cotton cashmereblend<br> cardigan</span>
-                                    <div class="price">
-                                        <del>
-                                            <span class="regular">$130.00</span>
-                                        </del>
-                                        <ins>
-                                            <span class="amount">$100.00</span>
-                                        </ins>
-                                    </div>
-                                    <ul class="flat-color-list">
-                                        <li>
-                                            <a href="#" class="red"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="blue"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="black"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="add-to-cart text-center">
-                                    <a href="#">ADD TO CART</a>
-                                </div>
-                                <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-                            </li> --}}
-                        </ul><!-- /.product -->
-                    </div><!-- /.product-content -->
+
+                                    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
+                                </li>
+
+                            @endforeach
+
+                        </ul>
+                    </div>
+
                 </div>
-            </div><!-- /.row -->
-        </div><!-- /.container -->
+            </div>
+        </div>
     </section>
-    <!-- END PRODUCT NEW -->
+
+
+    <!-- SAME JS FILTERING FROM FILE 1 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const categoryLinks = document.querySelectorAll(".sale-category-filter");
+            const products = document.querySelectorAll(".product-item");
+
+            // DEFAULT: SHOW FIRST SALE CATEGORY
+            if (categoryLinks.length > 0) {
+                let defaultCategory = categoryLinks[0].getAttribute("data-filter");
+
+                products.forEach(product => {
+                    let productCategory = product.getAttribute("data-category");
+
+                    product.style.display =
+                        productCategory === defaultCategory ? "block" : "none";
+                });
+            }
+
+            // ON CLICK FILTER
+            categoryLinks.forEach(link => {
+                link.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    let category = this.getAttribute("data-filter");
+
+                    products.forEach(product => {
+                        let productCategory = product.getAttribute("data-category");
+
+                        product.style.display =
+                            productCategory === category ? "block" : "none";
+                    });
+                });
+            });
+
+        });
+    </script>
+
+    <style>
+        /* spacing between cards */
+        .product-content.product-fivecolumn ul.product.style3>li.product-item {
+            padding: 0 15px !important;
+            margin-bottom: 25px !important;
+            box-sizing: border-box !important;
+        }
+    </style>
+
+    <!-- END SALE PRODUCT -->
 
     <!-- ICON BOX -->
     <section class="flat-row row-icon-box style-1 bg-section bg-color-f5f">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
-                        <div class="inner no-margin  flat-content-box " data-margin="0 0 0 0" data-mobilemargin="0 0 0 0">
-                            <div class="icon-wrap">
-                                <i class="fa fa-truck"></i>
-                            </div>
-                            <div class="text-wrap">
-                                <h5 class="heading letter-spacing--1"><a href="#">Free Shipping</a></h5>
-                                <p class="desc">Apply order over $99</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- /.col-md-3 -->
-                <div class="col-md-3">
-                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
-                        <div class="inner flat-content-box" data-margin="0 0 0 7px" data-mobilemargin="0 0 0 0">
-                            <div class="icon-wrap">
-                                <i class="fa fa-money"></i>
-                            </div>
-                            <div class="text-wrap">
-                                <h5 class="heading letter-spacing--1"><a href="#">Cash On Delivery</a></h5>
-                                <p class="desc">Internet Trend To Repeat</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- /.col-md-3 -->
-                <div class="col-md-3">
-                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
-                        <div class="inner flat-content-box" data-margin="0 0 0 46px" data-mobilemargin="0 0 0 0">
-                            <div class="icon-wrap">
-                                <i class="fa fa-gift"></i>
-                            </div>
-                            <div class="text-wrap">
-                                <h5 class="heading letter-spacing--1"><a href="#">Gift For All</a></h5>
-                                <p class="desc">Gift When Subscribe</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- /.col-md-3 -->
-                <div class="col-md-3">
-                    <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
-                        <div class="inner flat-content-box" data-margin="0 0 0 62px" data-mobilemargin="0 0 0 0">
-                            <div class="icon-wrap">
-                                <i class="fa fa-clock-o"></i>
-                            </div>
-                            <div class="text-wrap">
-                                <h5 class="heading letter-spacing--1"><a href="#">Opening All Week</a></h5>
-                                <p class="desc">6.00 am - 17.00pm</p>
+
+                @foreach ($infocards as $infocard)
+
+                    <div class="col-md-3">
+                        <div class="flat-icon-box icon-left w55 circle bg-white style-1 clearfix">
+                            <div class="inner no-margin flat-content-box">
+
+                                <div class="icon-wrap">
+
+                                    {{-- IMAGE CHECK --}}
+                                    @if ($infocard->image)
+                                        <img src="{{ asset('storage/' . $infocard->image) }}" alt="{{ $infocard->title }}"
+                                            style="width:40px; height:40px; object-fit:contain;">
+
+                                        {{-- ICON CHECK --}}
+                                    @elseif ($infocard->icon)
+                                        <img src="{{ asset('storage/' . $infocard->icon) }}" alt="{{ $infocard->title }}"
+                                            style="width:40px; height:40px; object-fit:contain;">
+
+                                        {{-- DEFAULT ICON (optional fallback) --}}
+                                    @else
+                                        <i class="fa fa-info-circle"></i>
+                                    @endif
+
+                                </div>
+
+                                <div class="text-wrap">
+                                    <h5 class="heading letter-spacing--1">
+                                        {{ $infocard->title }}
+                                    </h5>
+
+                                    <p class="desc">
+                                        {{ $infocard->description }}
+                                    </p>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                </div><!-- /.col-md-3 -->
+
+                @endforeach
+
+
+
             </div>
         </div>
     </section>

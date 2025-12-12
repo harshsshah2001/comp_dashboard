@@ -89,15 +89,17 @@
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Price</label>
-                                                    <input type="text" class="form-control" id="edit_price" name="price"
-                                                        placeholder="Enter price">
+                                                    <input type="text" class="form-control" id="edit_price"
+                                                        name="price">
+
                                                     <span class="text-danger error-text price_error"></span>
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Sale Price</label>
-                                                    <input type="text" class="form-control" id="edit_saleprice"
-                                                        name="saleprice" placeholder="Enter sale price">
+                                                    <input type="text" class="form-control" id="saleprice"
+                                                        name="saleprice">
+
                                                     <span class="text-danger error-text saleprice_error"></span>
                                                 </div>
                                             </div>
@@ -109,8 +111,35 @@
                                                     <input type="text" class="form-control" id="shortdesc"
                                                         name="shortdesc" placeholder="Short description">
                                                 </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Product Label</label>
 
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="badge"
+                                                            id="badgeSale" value="sale">
+                                                        <label class="form-check-label" for="badgeSale">Sale</label>
+                                                    </div>
 
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="badge"
+                                                            id="badgeFeatured" value="featured">
+                                                        <label class="form-check-label" for="badgeFeatured">Is
+                                                            Featured</label>
+                                                    </div>
+
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="badge"
+                                                            id="badgeNew" value="new">
+                                                        <label class="form-check-label" for="badgeNew">New</label>
+                                                    </div>
+
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="badge"
+                                                            id="badgeDiscount" value="discount">
+                                                        <label class="form-check-label"
+                                                            for="badgeDiscount">Discount</label>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <!-- ROW 5 - Full Width Description -->
@@ -154,6 +183,7 @@
                                         <th>Parent Category</th>
                                         <th>Product Name</th>
                                         <th>Product Image</th>
+                                        <th>Badge</th>
                                         <th>Product Icon</th>
                                         <th>Price</th>
                                         <th>Sale Price</th>
@@ -256,31 +286,71 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label>Price</label>
-                                        <input type="text" class="form-control" id="price" name="price">
+                                        <input type="text" class="form-control" id="update_price" name="price">
                                         <span class="text-danger error-text price_error"></span>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label>Sale Price</label>
-                                        <input type="text" class="form-control" id="saleprice" name="saleprice">
+                                        <input type="text" class="form-control" id="edit_saleprice" name="saleprice">
                                         <span class="text-danger error-text saleprice_error"></span>
                                     </div>
 
                                 </div>
 
                                 <!-- ROW 4 (Description) -->
-                                <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <label>Description</label>
-                                        <textarea class="form-control" id="edit_productdescription"
-                                            name="productdescription"></textarea>
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Product Label</label>
+
+                                    <div class="row">
+
+                                        <!-- LEFT COLUMN -->
+                                        <div class="col-md-6">
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" name="badge"
+                                                    id="edit_BadgeSale" value="sale">
+                                                <label class="form-check-label" for="editBadgeSale">Sale</label>
+                                            </div>
+
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" name="badge"
+                                                    id="edit_BadgeFeatured" value="featured">
+                                                <label class="form-check-label" for="editBadgeFeatured">Is
+                                                    Featured</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- RIGHT COLUMN -->
+                                        <div class="col-md-6">
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" name="badge"
+                                                    id="edit_BadgeNew" value="new">
+                                                <label class="form-check-label" for="editBadgeNew">New</label>
+                                            </div>
+
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="radio" name="badge"
+                                                    id="edit_BadgeDiscount" value="discount">
+                                                <label class="form-check-label" for="editBadgeDiscount">Discount</label>
+                                            </div>
+                                        </div>
+
                                     </div>
+
+                                    <span class="text-danger error-text badge_error"></span>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <label>Full Description</label>
+                                    <textarea class="form-control" id="edit_productdescription"
+                                        name="productdescription" rows="3"></textarea>
                                     <span class="text-danger error-text productdescription_error"></span>
                                 </div>
 
-                                {{-- <button type="submit" class="btn btn-primary btn-sm float-start">
+
+                                <button type="submit" class="btn btn-primary btn-sm float-start">
                                     Update Product
-                                </button> --}}
+                                </button>
                             </form>
                         </div>
 
@@ -383,6 +453,7 @@
                     render: img => img ? `<img src="/storage/${img}" width="30">` : "No Icon"
                 },
 
+                { data: "badge" },
                 { data: "price" },
                 { data: "saleprice" },
                 { data: "productdescription" },
@@ -398,58 +469,6 @@
                 }
             ]
         });
-
-        // Open popup form for update PRODUCT
-        $(document).on("click", ".editBtn", function () {
-            let id = $(this).data("id");
-
-            $.ajax({
-                url: "/admin/product/edit/" + id,
-                type: "GET",
-                success: function (res) {
-
-                    // 1. Empty dropdown
-                    $("#edit_parentCategory").empty();
-
-                    // 2. Add default option
-                    $("#edit_parentCategory").append(`<option value="">Select Parent Category</option>`);
-
-                    // 3. Append categories coming from Blade
-                    loadEditCategoryDropdown(res.category);
-
-
-                    // 4. Set selected category for this product
-                    $("#edit_parentCategory").val(res.category);
-
-                    // Fill other fields
-                    $("#edit_id").val(res.id);
-                    $("#edit_producttitle").val(res.productname);
-                    $("#edit_productdescription").val(res.productdescription);
-                    $("#edit_price").val(res.price);
-                    $("#edit_saleprice").val(res.saleprice);
-
-                    // Show old image
-                    if (res.image) {
-                        $("#old_image_preview").attr("src", "/storage/" + res.image).show();
-                    } else {
-                        $("#old_image_preview").hide();
-                    }
-
-                    // Show old icon
-                    if (res.icon) {
-                        $("#old_icon_preview").attr("src", "/storage/" + res.icon).show();
-                    } else {
-                        $("#old_icon_preview").hide();
-                    }
-
-                    $("#new_image_preview").hide();
-                    $("#new_icon_preview").hide();
-
-                    $("#editProductModal").modal("show");
-                }
-            });
-        });
-
 
         // Preview new product image
         $("#edit_image").on("change", function () {
@@ -475,7 +494,50 @@
             }
         });
 
+        // Open Edit Popup
+        $(document).on("click", ".editBtn", function () {
+            let id = $(this).data("id");
 
+            $.ajax({
+                url: "/admin/product/edit/" + id,
+                type: "GET",
+                success: function (res) {
+
+                    $("#edit_parentCategory").empty().append(`<option value="">Select Parent Category</option>`);
+                    loadEditCategoryDropdown(res.category);
+                    $("#edit_parentCategory").val(res.category);
+
+                    $("#edit_id").val(res.id);
+                    $("#edit_producttitle").val(res.productname);
+                    $("#edit_productdescription").val(res.productdescription);
+
+                    $("#update_price").val(res.price);
+                    $("#edit_saleprice").val(res.saleprice);
+                    $("#edit_productdescription").val(res.productdescription);
+
+
+                    $("input[name='edit_BadgeSale'][value='" + res.badge + "']").prop("checked", true);
+
+                    if (res.image) {
+                        $("#old_image_preview").attr("src", "/storage/" + res.image).show();
+                    } else {
+                        $("#old_image_preview").hide();
+                    }
+
+                    if (res.icon) {
+                        $("#old_icon_preview").attr("src", "/storage/" + res.icon).show();
+                    } else {
+                        $("#old_icon_preview").hide();
+                    }
+
+                    $("#new_image_preview").hide();
+                    $("#new_icon_preview").hide();
+
+                    $("#editProductModal").modal("show");
+                }
+
+            });
+        });
         // Update PRODUCT
         $("#updateProductForm").on("submit", function (e) {
             e.preventDefault();
@@ -598,6 +660,7 @@
             }
         });
     }
+
     function loadEditCategoryDropdown(selectedValue = "") {
         $.ajax({
             url: "{{ route('category.titles') }}",

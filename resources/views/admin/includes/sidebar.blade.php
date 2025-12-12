@@ -56,9 +56,17 @@
 
                 </ul>
             </li>
-             <li>
-                <a href="{{ route('countdown.create') }}"><i class="material-icons-two-tone">access_time</i>CountDown</a>
+            <li>
+                <a href="{{ route('countdown.create') }}"><i
+                        class="material-icons-two-tone">access_time</i>CountDown</a>
             </li>
+            <li>
+                <a href="{{ route('infocards.create') }}">
+                    <i class="material-icons-two-tone">table_chart</i>
+                    Info Cards
+                </a>
+            </li>
+
             <li>
                 <a href="mailbox.html"><i class="material-icons-two-tone">inbox</i>Mailbox<span
                         class="badge rounded-pill badge-danger float-end">87</span></a>
