@@ -376,16 +376,16 @@
 
                                 <div class="divider h30 clearfix"></div>
                                 <a href="#" class="grab-btn" style="
-                                                    display:inline-block;
-                                                    background:#ff4d4d;
-                                                    color:#fff;
-                                                    padding:12px 28px;
-                                                    font-size:18px;
-                                                    font-weight:600;
-                                                    border-radius:6px;
-                                                    text-decoration:none;
-                                                    transition:0.3s;
-                                                ">
+                                                                display:inline-block;
+                                                                background:#ff4d4d;
+                                                                color:#fff;
+                                                                padding:12px 28px;
+                                                                font-size:18px;
+                                                                font-weight:600;
+                                                                border-radius:6px;
+                                                                text-decoration:none;
+                                                                transition:0.3s;
+                                                            ">
                                     Grab It
                                 </a>
 
@@ -664,161 +664,35 @@
                         <div class="flat-new-latest post-wrap flat-carousel-box style4 data-effect clearfix"
                             data-auto="false" data-column="3" data-column2="2" data-column3="1" data-gap="30">
                             <div class="owl-carousel owl-theme">
-                                <article class="post clearfix">
-                                    <div class="featured-post data-effect-item">
-                                        <img src="{{ asset('dashboard/images/blog/pexels-jang-1001773.jpg') }}" alt="image">
-                                        <div class="overlay-effect bg-overlay-black opacity02"></div>
-                                    </div>
-                                    <div class="content-post">
-                                        <ul class="meta-post">
-                                            <li class="date">
-                                                Oct 08, 2018
-                                            </li>
-                                            <li class="author">
-                                                <a href="#"> By Admin</a>
-                                            </li>
-                                        </ul><!-- /.meta-post -->
-                                        <div class="title-post">
-                                            <h2><a href="blog-detail.html">The Most Classic, Unexpected, and Hottest Tech
-                                                    Gifts of 2018</a></h2>
-                                        </div><!-- /.title-post -->
-                                        <div class="entry-post">
-                                            <div class="more-link">
-                                                <a href="blog-detail.html">Continue Reading </a>
-                                            </div>
+                                @foreach ($blogs as $blog)
+
+                                    <article class="post clearfix">
+                                        <div class="featured-post data-effect-item">
+                                            <img src="{{ asset('storage/' . $blog->image) }}" alt="image">
+                                            <div class="overlay-effect bg-overlay-black opacity02"></div>
                                         </div>
-                                    </div><!-- /.content-post -->
-                                </article><!-- /.post -->
-                                <article class="post clearfix ">
-                                    <div class="featured-post data-effect-item">
-                                        <img src="{{ asset('dashboard/images/blog/pexels-vince-2147491 - Copy.jpg') }}"
-                                            alt="image">
-                                        <div class="overlay-effect bg-overlay-black opacity02"></div>
-                                    </div>
-                                    <div class="content-post">
-                                        <ul class="meta-post">
-                                            <li class="date">
-                                                Oct 08, 2018
-                                            </li>
-                                            <li class="author">
-                                                <a href="#"> By Admin</a>
-                                            </li>
-                                        </ul><!-- /.meta-post -->
-                                        <div class="title-post">
-                                            <h2><a href="blog-detail.html">Elizabeth Sulcer Is the Woman Behind Your
-                                                    Favorite Street Style Looks</a></h2>
-                                        </div><!-- /.title-post -->
-                                        <div class="entry-post">
-                                            <div class="more-link">
-                                                <a href="blog-detail.html">Continue Reading </a>
+                                        <div class="content-post">
+                                            <ul class="meta-post">
+                                                <li class="date">
+                                                    {{ $blog->date }}
+                                                </li>
+                                                <li class="author">
+                                                    <a href="#"> By Admin</a>
+                                                </li>
+                                            </ul><!-- /.meta-post -->
+                                            <div class="title-post">
+                                                <h2><a href="blog-detail.html"> {{ $blog->title}}</a></h2>
+                                            </div><!-- /.title-post -->
+                                            <div class="entry-post">
+                                                <div class="more-link">
+                                                    <a href="blog-detail.html">Continue Reading </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div><!-- /.content-post -->
-                                </article><!-- /.post -->
-                                <article class="post clearfix">
-                                    <div class="featured-post data-effect-item">
-                                        <img src="{{asset('dashboard/images/blog/pexels-valeriya-1833349 (1) - Copy.jpg')}}"
-                                            alt="image">
-                                        <div class="overlay-effect bg-overlay-black opacity02"></div>
-                                    </div>
-                                    <div class="content-post">
-                                        <ul class="meta-post">
-                                            <li class="date">
-                                                Oct 08, 2018
-                                            </li>
-                                            <li class="author">
-                                                <a href="#"> By Admin</a>
-                                            </li>
-                                        </ul><!-- /.meta-post -->
-                                        <div class="title-post">
-                                            <h2><a href="blog-detail.html">The Victoria's Secret x Balmain Collabo- ration
-                                                    Is Everything You Wanted It To Be</a></h2>
-                                        </div><!-- /.title-post -->
-                                        <div class="entry-post">
-                                            <div class="more-link">
-                                                <a href="blog-detail.html">Continue Reading </a>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.content-post -->
-                                </article><!-- /.post -->
-                                <article class="post clearfix">
-                                    <div class="featured-post data-effect-item">
-                                        <img src="{{asset('dashboard/images/blog/pexels-fariphotography-803963.jpg')}}"
-                                            alt="image">
-                                        <div class="overlay-effect bg-overlay-black opacity02"></div>
-                                    </div>
-                                    <div class="content-post">
-                                        <ul class="meta-post">
-                                            <li class="date">
-                                                Oct 08, 2018
-                                            </li>
-                                            <li class="author">
-                                                <a href="#"> By Admin</a>
-                                            </li>
-                                        </ul><!-- /.meta-post -->
-                                        <div class="title-post">
-                                            <h2><a href="blog-detail.html">The Most Classic, Unexpected, and Hottest Tech
-                                                    Gifts of 2018</a></h2>
-                                        </div><!-- /.title-post -->
-                                        <div class="entry-post">
-                                            <div class="more-link">
-                                                <a href="blog-detail.html">Continue Reading </a>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.content-post -->
-                                </article><!-- /.post -->
-                                <article class="post clearfix">
-                                    <div class="featured-post data-effect-item">
-                                        <img src="{{ asset('dashboard/images/blog/pexels-catscoming-1907244 - Copy.jpg') }}"
-                                            alt="image">
-                                        <div class="overlay-effect bg-overlay-black opacity02"></div>
-                                    </div>
-                                    <div class="content-post">
-                                        <ul class="meta-post">
-                                            <li class="date">
-                                                Oct 08, 2018
-                                            </li>
-                                            <li class="author">
-                                                <a href="#"> By Admin</a>
-                                            </li>
-                                        </ul><!-- /.meta-post -->
-                                        <div class="title-post">
-                                            <h2><a href="blog-detail.html">Elizabeth Sulcer Is the Woman Behind Your
-                                                    Favorite Street Style Looks</a></h2>
-                                        </div><!-- /.title-post -->
-                                        <div class="entry-post">
-                                            <div class="more-link">
-                                                <a href="blog-detail.html">Continue Reading </a>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.content-post -->
-                                </article><!-- /.post -->
-                                <article class="post clearfix">
-                                    <div class="featured-post data-effect-item">
-                                        <img src="{{asset('dashboard/images/blog/pexels-valeriya-1833349 (1) - Copy.jpg')}}"
-                                            alt="image">
-                                        <div class="overlay-effect bg-overlay-black opacity02"></div>
-                                    </div>
-                                    <div class="content-post">
-                                        <ul class="meta-post">
-                                            <li class="date">
-                                                Oct 08, 2018
-                                            </li>
-                                            <li class="author">
-                                                <a href="#"> By Admin</a>
-                                            </li>
-                                        </ul><!-- /.meta-post -->
-                                        <div class="title-post">
-                                            <h2><a href="blog-detail.html">The Victoria's Secret x Balmain Collabo- ration
-                                                    Is Everything You Wanted It To Be</a></h2>
-                                        </div><!-- /.title-post -->
-                                        <div class="entry-post">
-                                            <div class="more-link">
-                                                <a href="blog-detail.html">Continue Reading </a>
-                                            </div>
-                                        </div>
-                                    </div><!-- /.content-post -->
-                                </article><!-- /.post -->
+                                        </div><!-- /.content-post -->
+                                    </article><!-- /.post -->
+
+                                @endforeach
+
                             </div><!-- /.owl-carousel -->
                         </div>
                     </div>
@@ -828,6 +702,9 @@
         </div>
     </section>
     <!-- END NEW LATEST -->
+
+
+
     <section class="flat-row mail-chimp">
         <div class="container">
             <div class="row">
@@ -838,16 +715,18 @@
                 </div>
                 <div class="col-md-8">
                     <div class="subscribe clearfix">
-                        <form action="#" method="post" accept-charset="utf-8" id="subscribe-form">
+                        <form action="{{ route('mail.store') }}" method="post" id="subscribe-form">
+                            @csrf
                             <div class="subscribe-content">
                                 <div class="input">
-                                    <input type="email" name="subscribe-email" placeholder="Your Email">
+                                    <input type="email" name="email" placeholder="Your Email" required>
                                 </div>
                                 <div class="button">
-                                    <button type="button">SUBCRIBE</button>
+                                    <button type="submit">SUBSCRIBE</button>
                                 </div>
                             </div>
                         </form>
+
                         <ul class="flat-social">
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>

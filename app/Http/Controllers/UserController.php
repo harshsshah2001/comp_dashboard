@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Countdowns;
 use App\Models\Imagebox;
@@ -23,6 +24,9 @@ class UserController extends Controller
         $sliders = Slider::all();
         $countdowns = Countdowns::where('status', 1)->latest()->first();
         $infocards = Infocards::all();
-        return view('dashboard.dashboard', compact('allcategories', 'allproducts', 'imageboxs', 'sliders', 'countdowns','infocards'));
+        $blogs = Blog::all();
+        return view('dashboard.dashboard', compact('allcategories', 'allproducts', 'imageboxs', 'sliders', 'countdowns','infocards','blogs'));
     }
+
+    
 }

@@ -42,6 +42,24 @@
                         class="material-icons-two-tone">calendar_today</i>ImageBox<span
                         class="badge rounded-pill badge-success float-end"></span></a>
             </li>
+
+            <li>
+                <a href="{{ route('countdown.create') }}"><i
+                        class="material-icons-two-tone">access_time</i>CountDown</a>
+            </li>
+            <li>
+                <a href="{{ route('infocards.create') }}">
+                    <i class="material-icons-two-tone">table_chart</i>
+                    Info Cards
+                </a>
+            </li>
+             <li>
+                <a href="{{ route('blog.create') }}">
+                    <i class="material-icons-two-tone">note_add</i>
+                    Add Blogs
+                </a>
+            </li>
+
             <li>
                 <a href="#"><i class="fa fa-lock"></i>Roles & Permissions<i
                         class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
@@ -56,17 +74,6 @@
 
                 </ul>
             </li>
-            <li>
-                <a href="{{ route('countdown.create') }}"><i
-                        class="material-icons-two-tone">access_time</i>CountDown</a>
-            </li>
-            <li>
-                <a href="{{ route('infocards.create') }}">
-                    <i class="material-icons-two-tone">table_chart</i>
-                    Info Cards
-                </a>
-            </li>
-
             <li>
                 <a href="mailbox.html"><i class="material-icons-two-tone">inbox</i>Mailbox<span
                         class="badge rounded-pill badge-danger float-end">87</span></a>

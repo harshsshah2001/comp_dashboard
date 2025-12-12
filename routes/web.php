@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RolesPermission;
@@ -10,6 +10,7 @@ use App\Http\Controllers\SubProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Countdowns;
 use App\Http\Controllers\InfocardsController;
+use App\Http\Controllers\MailstoreController;
 
 // Admin Login Routes
 Route::get('/loginform', [AdminController::class, 'signinform'])->name('loginform');
@@ -81,13 +82,18 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('/admin/countdown/create', [Countdowns::class, 'countdown'])->name('countdown.create');
     Route::post('/admin/countdown/store', [Countdowns::class, 'storecountdown'])->name('countdown.store');
 
+    // InfoCards Routes
     Route::get('/admin/infocards/create', [InfocardsController::class, 'infocards'])->name('infocards.create');
     Route::post('/admin/infocards/store', [InfocardsController::class, 'storeinfocards'])->name('infocards.store');
 
-
+    // Blogs Routes
+    Route::get('/admin/blogs/create', [BlogController::class, 'blog'])->name('blog.create');
+    Route::post('/admin/blog/store', [BlogController::class, 'storeblog'])->name('blog.store');
 
 });
 
 // Frontend Routes
 
 Route::get('/Homepage', [UserController::class, 'Homepage'])->name('homepage');
+
+Route::post('/mail', [MailstoreController::class, 'Mail'])->name('mail.store');
