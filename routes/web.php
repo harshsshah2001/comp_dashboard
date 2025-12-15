@@ -12,12 +12,34 @@ use App\Http\Controllers\Countdowns;
 use App\Http\Controllers\InfocardsController;
 use App\Http\Controllers\MailstoreController;
 
+
+
+ Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
+    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+    Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
+    Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
+    Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
+    Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
+
+    Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
+    Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
+    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+    Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
+    Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
+    Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
+    Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
+    Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
+    Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
+
+
 // Admin Login Routes
 Route::get('/loginform', [AdminController::class, 'signinform'])->name('loginform');
+Route::get('/registerform', [AdminController::class, 'signupinform'])->name('registerform');
+Route::post('/registerform/post', [AdminController::class, 'registerpost'])->name('register.post');
 Route::post('/login', [AdminController::class, 'login'])->name('admin.login.post');
 
 // Admin Dashboard
-Route::middleware('admin.auth')->group(function () {
+Route::middleware('auth:userlist')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 
@@ -49,22 +71,7 @@ Route::middleware('admin.auth')->group(function () {
 
 
     // Roles and permissions routes
-    Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
-    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
-    Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
-    Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
-    Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
-    Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
-
-    Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
-    Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
-    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
-    Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
-    Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
-    Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
-    Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
-    Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
-    Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
+   
 
 
     //ImageBox Routes

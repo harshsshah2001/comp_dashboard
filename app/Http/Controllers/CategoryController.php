@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Services\AdminService;
 use App\Models\Category;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -29,6 +30,8 @@ class CategoryController extends Controller
 
     public function categoryform(Request $request)
     {
+
+        // Gate::authorize('isAdmin');
         // Fetch categories
         $categories = Category::all();
 

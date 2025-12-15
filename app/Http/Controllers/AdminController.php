@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -24,43 +26,72 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
+    public function signupinform()
+    {
+        return view('admin.auth.registerform');
+    }
+
+    public function registerpost(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'email' => 'required|email|unique:admin,email',
+            'password' => 'required|min:2'
+        ]);
+
+        // Prepare data (hashed password)
+        $data = [
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
+
+        // Save record
+        $save = Admin::create($data);
+
+        if ($save) {
+            return view('admin.auth.login');
+        }
+
+        return "Data is not submitted";
+    }
+
     public function signinform()
     {
         return view('admin.auth.login');
     }
-
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        $admin = \App\Models\Admin::where('email', $request->email)->first();
+        if (Auth::guard('userlist')->attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ])) {
 
-        if (!$admin) {
+            // regenerate session
+            $request->session()->regenerate();
+
+            // store email in session
+            $request->session()->put(
+                'user_email',
+                Auth::guard('userlist')->user()->email
+            );
+
             return response()->json([
-                'status' => 'error',
-                'field' => 'email',
-                'message' => 'Email not found',
+                'status'   => 'success',
+                'redirect' => route('admin.dashboard')
             ]);
         }
-
-        if ($admin->password !== $request->password) {
-            return response()->json([
-                'status' => 'error',
-                'field' => 'password',
-                'message' => 'Invalid password',
-            ]);
-        }
-
-        session(['admin_id' => $admin->id, 'admin_email' => $admin->email]);
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Login successful',
-        ]);
+            'status'  => 'error',
+            'message' => 'Invalid email or password'
+        ], 401);
     }
+
 
     public function imagebox()
     {

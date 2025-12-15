@@ -21,22 +21,20 @@
                 <a href="{{ route('admin.slider') }}"><i class="material-icons-two-tone">cloud_queue</i>Add Slider</a>
             </li>
 
+            @can('isAdmin')
             <li>
-                <a href=""><i class="material-icons-two-tone">star</i>Products<i
+                <a><i class="material-icons-two-tone">star</i>Products<i
                         class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                 <ul class="sub-menu">
-                    <li>
-                        <a href="{{route('category.create')}}">Category</a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('product.create') }}">Product</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('sub.product.create') }}">Sub Product</a>
-                    </li>
+                    <li><a href="{{ route('category.create') }}">Category</a></li>
+                    <li><a href="{{ route('product.create') }}">Product</a></li>
+                    <li><a href="{{ route('sub.product.create') }}">Sub Product</a></li>
                 </ul>
             </li>
+            @endcan
+
+
+
             <li>
                 <a href="{{ route('admin.imagebox') }}"><i
                         class="material-icons-two-tone">calendar_today</i>ImageBox<span
@@ -53,12 +51,13 @@
                     Info Cards
                 </a>
             </li>
-             <li>
+            <li>
                 <a href="{{ route('blog.create') }}">
                     <i class="material-icons-two-tone">note_add</i>
                     Add Blogs
                 </a>
             </li>
+
 
             <li>
                 <a href="#"><i class="fa fa-lock"></i>Roles & Permissions<i

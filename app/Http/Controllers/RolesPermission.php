@@ -7,6 +7,8 @@ use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class RolesPermission extends Controller
@@ -212,32 +214,35 @@ class RolesPermission extends Controller
         return view('admin.Roles and Permissions.user-list', compact('role'));
     }
     public function usersubmit(Request $request)
-    {
+{
+    $user_rules = [
+        'name'      => 'required|string|max:255',
+        'email'     => 'required|email|unique:userlists,email',
+        'number'    => 'required|string|max:20|unique:userlists,number',
+        'password'  => 'required|string|min:6',
+        'role_id'   => 'required',
+    ];
 
-        $user_rules = [
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|email|unique:userlists,email',
-            'number'    => 'required|string|max:20|unique:userlists,number',
-            'password'  => 'required|string|min:6',
-            'role_id'   => 'required',
-        ];
+    $validator = Validator::make($request->all(), $user_rules);
 
-
-
-        $validator = Validator::make($request->all(), $user_rules);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        return $this->service->store(
-            $request,
-            $user_rules,
-            \App\Models\Userlist::class
-        );
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Validation failed',
+            'errors' => $validator->errors()
+        ], 422);
     }
+
+    // 🔐 HASH PASSWORD
+    $request->merge([
+        'password' => Hash::make($request->password),
+    ]);
+
+    return $this->service->store(
+        $request,
+        $user_rules,
+        \App\Models\Userlist::class
+    );
+}
+
 }
