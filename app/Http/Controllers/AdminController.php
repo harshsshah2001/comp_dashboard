@@ -75,10 +75,7 @@ class AdminController extends Controller
             $request->session()->regenerate();
 
             // store email in session
-            $request->session()->put(
-                'user_email',
-                Auth::guard('userlist')->user()->email
-            );
+            session(['user_email' => Auth::guard('userlist')->user()->email]);
 
             return response()->json([
                 'status'   => 'success',

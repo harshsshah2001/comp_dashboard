@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     Gate::define('isAdmin', function () {
         $user = Auth::guard('userlist')->user();
 
-        return $user && $user->role_id == 1; // 1 = admin
+        return $user && $user->role_id == 1;
     });
 }
 }

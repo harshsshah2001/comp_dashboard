@@ -34,13 +34,15 @@
             @endcan
 
 
+            {{-- @can('isAdmin') --}}
+
 
             <li>
                 <a href="{{ route('admin.imagebox') }}"><i
                         class="material-icons-two-tone">calendar_today</i>ImageBox<span
                         class="badge rounded-pill badge-success float-end"></span></a>
             </li>
-
+            {{-- @endcan --}}
             <li>
                 <a href="{{ route('countdown.create') }}"><i
                         class="material-icons-two-tone">access_time</i>CountDown</a>
