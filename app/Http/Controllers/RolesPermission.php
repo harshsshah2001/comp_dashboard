@@ -139,12 +139,15 @@ class RolesPermission extends Controller
 
 
 
+  public function getPermissions(Request $request)
+    {
+        $permissions = Permission::select('id', 'permission_name')->get();
 
-
-
-
-
-
+        return response()->json([
+            'status' => true,
+            'data' => $permissions
+        ]);
+    }
 
 
 

@@ -133,3 +133,67 @@
 
 
 </script>
+
+<script>
+    // Open modal & fetch permissions
+    $(document).on('click', '.manage-permissions', function () {
+        let roleId = $(this).data('id');
+        $('#modal_role_id').val(roleId);
+        $('#permissionsList').html('');
+
+        $.ajax({
+            url: "{{ route('permissions.list') }}",
+            type: "GET",
+            success: function (res) {
+                if (res.status) {
+                    let html = '';
+
+                    $.each(res.data, function (index, permission) {
+                        html += `
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input permission-checkbox"
+                                        type="checkbox"
+                                        name="permissions[]"
+                                        value="${permission.id}"
+                                        id="permission_${permission.id}">
+                                    <label class="form-check-label" for="permission_${permission.id}">
+                                        ${permission.permission_name }
+                                    </label>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    $('#permissionsList').html(html);
+                    $('#managePermissionsModal').modal('show');
+                }
+            }
+        });
+    });
+
+    // Select All permissions
+    $(document).on('change', '#select_all_permissions', function () {
+        $('.permission-checkbox').prop('checked', $(this).is(':checked'));
+    });
+
+    // Save permissions
+    $('#assignPermissionsForm').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('permissions.assign') }}",
+            type: "POST",
+            data: $(this).serialize(),
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            success: function (res) {
+                if (res.status) {
+                    $('#managePermissionsModal').modal('hide');
+                    alert(res.message);
+                }
+            }
+        });
+    });
+</script>

@@ -23,6 +23,15 @@ use App\Http\Controllers\MailstoreController;
 
     Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
     Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
+
+    // fetch permissions list
+Route::get('/permissions/list', [RolesPermission::class, 'getPermissions'])
+    ->name('permissions.list');
+
+// save role permissions
+Route::post('/permissions/assign', [RolesPermission::class, 'assignPermissions'])
+    ->name('permissions.assign');
+
     
     Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
     Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
