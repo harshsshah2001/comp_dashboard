@@ -62,7 +62,7 @@
                                     <select name="role_id" class="form-select" required>
                                         <option value="">Select Role</option>
                                         @foreach($role as $roles)
-                                        <option value="{{ $roles->id }}">{{ $roles->rolename }}</option>
+                                            <option value="{{ $roles->id }}">{{ $roles->rolename }}</option>
                                         @endforeach
                                         <option value=""></option>
                                     </select>
@@ -90,8 +90,7 @@
                                         <th>No.</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Status</th>
+                                        <th>Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -163,31 +162,111 @@
 
 <script>
     $.ajaxSetup({
-    headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-    }
-});
-
-$("#addUserForm").on("submit", function(e) {
-    e.preventDefault();
-
-    let formData = new FormData(this);
-
-    $.ajax({
-        url: "{{ route('user.submit') }}",
-        type: "POST",
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-            Swal.fire("Success", "User added successfully!", "success");
-        },
-        error: function(xhr) {
-            Swal.fire("Error", "Validation failed", "error");
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         }
     });
+
+    $("#addUserForm").on("submit", function (e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "{{ route('user.submit') }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                Swal.fire("Success", "User added successfully!", "success");
+            },
+            error: function (xhr) {
+                Swal.fire("Error", "Validation failed", "error");
+            }
+        });
+    });
+
+  $(document).ready(function () {
+
+    let table = $('#datatable1').DataTable({
+        processing: true,
+        serverSide: false,
+        ordering: false,
+
+        ajax: {
+            url: "{{ route('userlist') }}",
+            type: "GET",
+            dataSrc: "data"
+        },
+
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: "name" },
+            { data: "email" },
+            { data: "role" },
+            {
+                data: "id",
+                render: function (id) {
+                    return `
+                        <a href="javascript:void(0)"
+                           class="text-warning me-2 editBtn"
+                           data-id="${id}">
+                            <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                        </a>
+
+                        <a href="javascript:void(0)"
+                           class="text-danger deleteBtn"
+                           data-id="${id}">
+                            <i class="fa-solid fa-trash fa-lg"></i>
+                        </a>
+                    `;
+                }
+            }
+        ]
+    });
+
+    // DELETE USER
+    $(document).on('click', '.deleteBtn', function () {
+
+        let id = $(this).data("id");
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This user will be deleted permanently.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url: "{{ route('userdelete', ':id') }}".replace(':id', id),
+                    type: "DELETE",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (res) {
+                        if (res.status === true) {
+                            Swal.fire("Deleted!", res.message, "success");
+                            table.ajax.reload(null, false);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error(xhr.responseText);
+                        Swal.fire("Error!", "Something went wrong!", "error");
+                    }
+                });
+            }
+        });
+    });
+
 });
 
-
-
-</script>
+    </script>

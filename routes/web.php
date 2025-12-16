@@ -23,6 +23,7 @@ use App\Http\Controllers\MailstoreController;
 
     Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
     Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
+    
     Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
     Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
     Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
@@ -30,6 +31,7 @@ use App\Http\Controllers\MailstoreController;
     Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
     Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
     Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
+    Route::delete('user/delete/{id}', [RolesPermission::class, 'userdelete'])->name('userdelete');
 
 
 // Admin Login Routes
@@ -43,7 +45,7 @@ Route::middleware('auth:userlist')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 
-    // Category Routes     
+    // Category Routes
     Route::get('/category/create', [CategoryController::class, 'categoryform'])->name('category.create');
     Route::post('/admin/category/store', [CategoryController::class, 'store'])->name('category.store');
     Route::delete('/admin/category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
@@ -71,7 +73,7 @@ Route::middleware('auth:userlist')->group(function () {
 
 
     // Roles and permissions routes
-   
+
 
 
     //ImageBox Routes

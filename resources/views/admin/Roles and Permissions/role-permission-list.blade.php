@@ -90,6 +90,7 @@
                 </div>
             </div>
 
+
         </div>
     </div>
 </div>
@@ -98,30 +99,37 @@
 @include('admin.includes.footer')
 
 <script>
-     let table = $("#datatable1").DataTable({
-            processing: true,
-            serverSide: false,
-            ordering: false,
+    let table = $("#datatable1").DataTable({
+        processing: true,
+        serverSide: false,
+        ordering: false,
 
-            ajax: {
-                url: "{{ route('role.list') }}",
-                type: "GET"
-            },
+        ajax: {
+            url: "{{ route('role.list') }}",
+            type: "GET"
+        },
 
-            pageLength: 10,
-            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+        pageLength: 10,
+        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
 
-            columns: [
-                { data: null, render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
+        columns: [
+            { data: null, render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1 },
 
-                { data: "rolename" },
-                { data: "description" },
+            { data: "rolename" },
+            { data: "description" },
 
-                {
-                    data: "id",
-                    render: id => `
-                <a class="editBtn text-warming" data-id="${id}"><i class="fa-solid fa-pen-to-square"></i></a>`
+           {
+                data: 'id',
+                orderable: false,
+                render: function (id) {
+                    return `
+                        <button class="btn btn-sm btn-warning manage-permissions" data-id="${id}">Manage Permissions</button>
+                    `;
                 }
-            ]
-        });
+            }
+        ]
+    });
+
+
+
 </script>

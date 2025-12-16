@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\Userlist;
 use Illuminate\Http\Request;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Validator;
@@ -118,7 +119,6 @@ class RolesPermission extends Controller
             ]);
         }
         return view('admin.Roles and Permissions.role-list');
-
     }
     // Roles functions is finidh here
 
@@ -136,6 +136,19 @@ class RolesPermission extends Controller
         }
         return view('admin.Roles and Permissions.permissions');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function permissionsubmit(Request $request)
     {
         $permission_rules = [
@@ -208,41 +221,76 @@ class RolesPermission extends Controller
         return view('admin.Roles and Permissions.role-permission-list');
     }
 
-    public function user_list()
+    public function user_list(Request $request)
     {
+        if ($request->ajax()) {
+
+            // Get all users
+            $users = Userlist::all();
+
+            // Get all roles and convert to key-value pair
+            // [ id => rolename ]
+            $roles = Role::pluck('rolename', 'id');
+
+            // Attach role name manually
+            $users = $users->map(function ($user) use ($roles) {
+                return [
+                    'id'    => $user->id,
+                    'name'  => $user->name,
+                    'email' => $user->email,
+                    'role'  => $roles[$user->role_id] ?? '-',
+                ];
+            });
+
+            return response()->json([
+                'data' => $users
+            ]);
+        }
+
+        // Page load
         $role = Role::all();
         return view('admin.Roles and Permissions.user-list', compact('role'));
     }
+
     public function usersubmit(Request $request)
-{
-    $user_rules = [
-        'name'      => 'required|string|max:255',
-        'email'     => 'required|email|unique:userlists,email',
-        'number'    => 'required|string|max:20|unique:userlists,number',
-        'password'  => 'required|string|min:6',
-        'role_id'   => 'required',
-    ];
+    {
+        $user_rules = [
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|unique:userlists,email',
+            'number'    => 'required|string|max:20|unique:userlists,number',
+            'password'  => 'required|string|min:6',
+            'role_id'   => 'required',
+        ];
 
-    $validator = Validator::make($request->all(), $user_rules);
+        $validator = Validator::make($request->all(), $user_rules);
 
-    if ($validator->fails()) {
-        return response()->json([
-            'status' => false,
-            'message' => 'Validation failed',
-            'errors' => $validator->errors()
-        ], 422);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // 🔐 HASH PASSWORD
+        $request->merge([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return $this->service->store(
+            $request,
+            $user_rules,
+            \App\Models\Userlist::class
+        );
     }
 
-    // 🔐 HASH PASSWORD
-    $request->merge([
-        'password' => Hash::make($request->password),
-    ]);
+    public function userdelete(Request $request)
+    {
+        $this->service->delete(Userlist::class, $request->id);
 
-    return $this->service->store(
-        $request,
-        $user_rules,
-        \App\Models\Userlist::class
-    );
-}
-
+        return response()->json([
+            'status' => true,
+            'message' => 'User deleted successfully'
+        ]);
+    }
 }
