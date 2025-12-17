@@ -50,9 +50,11 @@
                                         placeholder="Short description">
                                 </div>
 
-                                <div class="col-md-2 d-flex align-items-end">
-                                    <button type="submit" class="btn btn-primary w-100">Save Permission</button>
-                                </div>
+                                @can('permission', 'edit-post')
+                                    <div class="col-md-2 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-primary w-100">Save Permission</button>
+                                    </div>
+                                @endcan
                             </form>
                         </div>
                     </div>
@@ -133,21 +135,21 @@
 @include('admin.includes.footer')
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         //for add data
-         $('#permissionForm').on('submit',function(e){
+        $('#permissionForm').on('submit', function (e) {
             e.preventDefault();
             let formData = $(this).serialize();
             $.ajax({
-                url:"{{ route('permissionsubmit') }}",
-                method:"POST",
-                data:formData,
+                url: "{{ route('permissionsubmit') }}",
+                method: "POST",
+                data: formData,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success:function(response){
-                    if(response.status == true){
+                success: function (response) {
+                    if (response.status == true) {
                         Swal.fire({
                             title: "Success!",
                             text: response.message,
@@ -186,32 +188,32 @@
         })
 
         // DataTable initialization
-    let table = $('#datatable1').DataTable({
-        processing: true,
-        serverSide: false,
-        ordering: false,
+        let table = $('#datatable1').DataTable({
+            processing: true,
+            serverSide: false,
+            ordering: false,
 
-        ajax: {
-            url: "{{ route('permissions') }}",
-            type: "GET"
-        },
-
-        columns: [
-            {
-                data: null,
-                render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
+            ajax: {
+                url: "{{ route('permissions') }}",
+                type: "GET"
             },
 
-            { data: "permission_name" },
+            columns: [
+                {
+                    data: null,
+                    render: function (data, type, row, meta) {
+                        return meta.row + 1;
+                    }
+                },
 
-            { data: "description" },
+                { data: "permission_name" },
 
-            {
-                data: "id",
-                render: function (id) {
-                    return `
+                { data: "description" },
+
+                {
+                    data: "id",
+                    render: function (id) {
+                        return `
             <a href="javascript:void(0)" class="text-warning me-2 editBtn" data-id="${id}" style="cursor:pointer;">
                 <i class="fa-solid fa-pen-to-square fa-lg"></i>
             </a>
@@ -220,124 +222,124 @@
                 <i class="fa-solid fa-trash fa-lg"></i>
             </a>
         `;
-                }
-            }
-
-        ]
-
-    });
- 
-
-    //for delete
-    $(document).on("click", ".deleteBtn", function () {
-    let id = $(this).data("id");
-
-    Swal.fire({
-        title: "Are you sure?",
-        text: "This permission will be deleted permanently.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: `/permission/delete/${id}`,
-                type: "DELETE",
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (response) {
-                    if (response.status) {
-                        Swal.fire("Deleted!", response.message, "success");
-
-                        // Remove row if needed
-                        $(`#row-${id}`).remove();
-                        table.ajax.reload(null, false);
                     }
+                }
 
-                },
-                error: function () {
-                    Swal.fire("Error!", "Something went wrong!", "error");
+            ]
+
+        });
+
+
+        //for delete
+        $(document).on("click", ".deleteBtn", function () {
+            let id = $(this).data("id");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This permission will be deleted permanently.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/permission/delete/${id}`,
+                        type: "DELETE",
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (response) {
+                            if (response.status) {
+                                Swal.fire("Deleted!", response.message, "success");
+
+                                // Remove row if needed
+                                $(`#row-${id}`).remove();
+                                table.ajax.reload(null, false);
+                            }
+
+                        },
+                        error: function () {
+                            Swal.fire("Error!", "Something went wrong!", "error");
+                        }
+                    });
                 }
             });
-        }
-    });
-});
+        });
 
 
-// OPEN ROLE EDIT POPUP
-$(document).on("click", ".editBtn", function () {
-    let id = $(this).data("id");
+        // OPEN ROLE EDIT POPUP
+        $(document).on("click", ".editBtn", function () {
+            let id = $(this).data("id");
 
-    $.ajax({
-        url: "/permission/edit/" + id,
-        type: "GET",
-        success: function (res) {
+            $.ajax({
+                url: "/permission/edit/" + id,
+                type: "GET",
+                success: function (res) {
 
-            $("#edit_id").val(res.id);
-            $("#edit_permissioname").val(res.permission_name);
-            $("#edit_description").val(res.description);
+                    $("#edit_id").val(res.id);
+                    $("#edit_permissioname").val(res.permission_name);
+                    $("#edit_description").val(res.description);
 
-            $("#editpermissionModal").modal("show");
-        }
-    });
-});
+                    $("#editpermissionModal").modal("show");
+                }
+            });
+        });
 
 
-// UPDATE Permission AJAX
-$("#updatepermissionForm").on("submit", function (e) {
-    e.preventDefault();
+        // UPDATE Permission AJAX
+        $("#updatepermissionForm").on("submit", function (e) {
+            e.preventDefault();
 
-    let id = $("#edit_id").val();
-    let formData = new FormData(this);
+            let id = $("#edit_id").val();
+            let formData = new FormData(this);
 
-    $.ajax({
-        url: "/permission/update/" + id,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-        },
-        success: function (res) {
+            $.ajax({
+                url: "/permission/update/" + id,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function (res) {
 
-            if (res.status === true) {
-                Swal.fire({
-                    icon: "success",
-                    text: res.message,
-                    timer: 1500,
-                    showConfirmButton: false
-                });
+                    if (res.status === true) {
+                        Swal.fire({
+                            icon: "success",
+                            text: res.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
 
-                $("#editpermissionModal").modal("hide");
+                        $("#editpermissionModal").modal("hide");
 
-                // reload datatable
-                table.ajax.reload(null, false);
-            }
-        },
-        error: function (xhr) {
-            if (xhr.status === 422) {
-                let errors = xhr.responseJSON.errors;
-                let msg = "";
+                        // reload datatable
+                        table.ajax.reload(null, false);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        let msg = "";
 
-                $.each(errors, function (key, value) {
-                    msg += value[0] + "<br>";
-                });
+                        $.each(errors, function (key, value) {
+                            msg += value[0] + "<br>";
+                        });
 
-                Swal.fire({
-                    icon: "error",
-                    title: "Validation Error",
-                    html: msg
-                });
+                        Swal.fire({
+                            icon: "error",
+                            title: "Validation Error",
+                            html: msg
+                        });
 
-            } else {
-                Swal.fire("Error", "Something went wrong!", "error");
-            }
-        }
-    });
-});
+                    } else {
+                        Swal.fire("Error", "Something went wrong!", "error");
+                    }
+                }
+            });
+        });
 
-    
+
     })
 </script>
