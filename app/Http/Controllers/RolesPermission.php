@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Models\Userlist;
+use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Validator;
@@ -139,7 +140,7 @@ class RolesPermission extends Controller
 
 
 
-  public function getPermissions(Request $request)
+    public function getPermissions(Request $request)
     {
         $permissions = Permission::select('id', 'permission_name')->get();
 
@@ -294,6 +295,40 @@ class RolesPermission extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User deleted successfully'
+        ]);
+    }
+
+    public function assignPermissions(Request $request)
+    {
+        $request->validate([
+            'role_id' => 'required',
+            'permissions' => 'array'
+        ]);
+
+        $roleId = $request->role_id;
+        $permissions = $request->permissions ?? [];
+
+        // 🔥 Delete old permissions for this role/user
+        UserPermission::where('user_id', $roleId)->delete();
+
+        // 🔥 Insert new permissions
+        $data = [];
+        foreach ($permissions as $permissionId) {
+            $data[] = [
+                'user_id' => $roleId,          // storing role_id as user_id (as per your design)
+                'permission_id' => $permissionId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        if (!empty($data)) {
+            UserPermission::insert($data);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Permissions assigned successfully'
         ]);
     }
 }

@@ -62,7 +62,7 @@
                                     <select name="role_id" class="form-select" required>
                                         <option value="">Select Role</option>
                                         @foreach($role as $roles)
-                                            <option value="{{ $roles->id }}">{{ $roles->rolename }}</option>
+                                        <option value="{{ $roles->id }}">{{ $roles->rolename }}</option>
                                         @endforeach
                                         <option value=""></option>
                                     </select>
@@ -158,6 +158,35 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="assignPermissionModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <form id="permissionForm">
+            @csrf
+
+            <input type="hidden" name="user_id" id="permission_user_id">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Assign Permissions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div id="permissionCheckboxes"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
+                        Save Permissions
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 @include('admin.includes.footer')
 
 <script>
@@ -213,20 +242,27 @@
             {
                 data: "id",
                 render: function (id) {
-                    return `
-                        <a href="javascript:void(0)"
-                           class="text-warning me-2 editBtn"
-                           data-id="${id}">
-                            <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                        </a>
+    return `
+        <a href="javascript:void(0)"
+           class="text-warning me-2 editBtn"
+           data-id="${id}">
+            <i class="fa-solid fa-pen-to-square fa-lg"></i>
+        </a>
 
-                        <a href="javascript:void(0)"
-                           class="text-danger deleteBtn"
-                           data-id="${id}">
-                            <i class="fa-solid fa-trash fa-lg"></i>
-                        </a>
-                    `;
-                }
+        <a href="javascript:void(0)"
+           class="text-info me-2 assignPermissionBtn"
+           data-userid="${id}">
+            <i class="fa-solid fa-key fa-lg"></i>
+        </a>
+
+        <a href="javascript:void(0)"
+           class="text-danger deleteBtn"
+           data-id="${id}">
+            <i class="fa-solid fa-trash fa-lg"></i>
+        </a>
+    `;
+}
+
             }
         ]
     });
@@ -269,4 +305,53 @@
 
 });
 
-    </script>
+</script>
+
+
+<script>
+    $(document).on('click', '.assignPermissionBtn', function () {
+
+    let userId = $(this).data('userid');
+    $('#permission_user_id').val(userId);
+
+    $.get("{{ route('permissions.list') }}", function (res) {
+
+        let html = '';
+        res.data.forEach(function (permission) {
+            html += `
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="permissions[]"
+                           value="${permission.id}">
+                    <label class="form-check-label">
+                        ${permission.permission_name}
+                    </label>
+                </div>
+            `;
+        });
+
+        $('#permissionCheckboxes').html(html);
+        $('#assignPermissionModal').modal('show');
+    });
+});
+
+
+$('#permissionForm').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: "{{ route('permissions.assign') }}",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function (res) {
+            Swal.fire("Success", res.message, "success");
+            $('#assignPermissionModal').modal('hide');
+        },
+        error: function () {
+            Swal.fire("Error", "Permission assign failed", "error");
+        }
+    });
+});
+
+</script>

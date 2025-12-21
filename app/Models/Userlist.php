@@ -29,4 +29,6 @@ class Userlist extends Authenticatable
             $this->attributes['password'] = Hash::make($value);
         }
     }
+
+    
 }

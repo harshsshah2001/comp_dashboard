@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\Userlist;
+use App\Models\UserPermission;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -24,9 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('isAdmin', function () {
-            $user = Auth::guard('userlist')->user();
-            return $user && $user->role_id == 1;
+        Gate::define('isAdmin', function (Userlist $user) {
+            return in_array($user->role_id, [1, 2]);
         });
+        
     }
 }
