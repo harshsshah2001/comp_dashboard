@@ -12,4 +12,10 @@ class Role extends Model
         'rolename',
         'description',
     ];
+
+    public function users()
+{
+    return $this->hasMany(Userlist::class, 'role_id');
+}
+
 }

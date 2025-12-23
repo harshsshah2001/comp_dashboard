@@ -54,7 +54,7 @@
                                     <div class="col-md-2 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary w-100">Save Permission</button>
                                     </div>
-                                @endcan
+                                @endcan 
                             </form>
                         </div>
                     </div>
