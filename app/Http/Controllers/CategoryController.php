@@ -31,8 +31,6 @@ class CategoryController extends Controller
     public function categoryform(Request $request)
     {
 
-        // Gate::authorize('isAdmin');
-        // Fetch categories
         $categories = Category::all();
 
         // For dropdown only (title)

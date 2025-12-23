@@ -21,7 +21,6 @@
                 <a href="{{ route('admin.slider') }}"><i class="material-icons-two-tone">cloud_queue</i>Add Slider</a>
             </li>
 
-            @can('isAdmin')
             <li>
                 <a><i class="material-icons-two-tone">star</i>Products<i
                         class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
@@ -31,7 +30,6 @@
                     <li><a href="{{ route('sub.product.create') }}">Sub Product</a></li>
                 </ul>
             </li>
-            @endcan
 
 
             {{-- @can('isAdmin') --}}

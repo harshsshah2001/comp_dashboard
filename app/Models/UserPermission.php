@@ -1,5 +1,4 @@
 <?php
-
 // app/Models/UserPermission.php
 namespace App\Models;
 
@@ -14,4 +13,3 @@ class UserPermission extends Model
         'permission_id',
     ];
 }
-

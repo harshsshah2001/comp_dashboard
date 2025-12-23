@@ -25,9 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('isAdmin', function (Userlist $user) {
-            return in_array($user->role_id, [1, 2]);
-        });
+        
         
     }
 }
