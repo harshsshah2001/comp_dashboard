@@ -13,34 +13,63 @@ use App\Http\Controllers\InfocardsController;
 use App\Http\Controllers\MailstoreController;
 
 
+Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
+Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
+Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
+Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
+Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
+
+Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
+Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
+
+// fetch permissions list
+Route::get('/permissions/list', [RolesPermission::class, 'getPermissions'])
+    ->name('permissions.list');
+
+// save role permissions
+Route::post('/permissions/assign', [RolesPermission::class, 'assignPermissions'])
+    ->name('permissions.assign');
+
+
+Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
+Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
+Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
+Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
+Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
+Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
+Route::delete('user/delete/{id}', [RolesPermission::class, 'userdelete'])->name('userdelete');
+
+
 
 // Roles and permissions routes
 
 
-    Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
-    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
-    Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
-    Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
-    Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
-    Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
-    Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
-    Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
+Route::get('/roles', [RolesPermission::class, 'roles'])->name('roles');
+Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+Route::get('/roles/edit/{id}', [RolesPermission::class, 'edit'])->name('roleedit');
+Route::post('/roles/update/{id}', [RolesPermission::class, 'update']);
+Route::delete('roles/delete/{id}', [RolesPermission::class, 'roledelete'])->name('roledelete');
+Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list');
+Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
+Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
 
-    // fetch permissions list
-    Route::get('/permissions/list', [RolesPermission::class, 'getPermissions'])
-        ->name('permissions.list');
+// fetch permissions list
+Route::get('/permissions/list', [RolesPermission::class, 'getPermissions'])
+    ->name('permissions.list');
 
-    Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
-    Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
-    Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
-    Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
-    Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
-    Route::post('/permissions/assign', [RolesPermission::class, 'assignPermissions'])
+Route::post('/roles', [RolesPermission::class, 'rolesubmit'])->name('rolesubmit');
+Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
+Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
+Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
+Route::get('/role-permission-list', [RolesPermission::class, 'role_permission_list'])->name('role_permission_list');
+Route::post('/permissions/assign', [RolesPermission::class, 'assignPermissions'])
     ->name('permissions.assign');
 
-    Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
-    Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
-    Route::delete('user/delete/{id}', [RolesPermission::class, 'userdelete'])->name('userdelete');
+Route::get('/user-lists', [RolesPermission::class, 'user_list'])->name('userlist');
+Route::post('/user/submit', [RolesPermission::class, 'usersubmit'])->name('user.submit');
+Route::delete('user/delete/{id}', [RolesPermission::class, 'userdelete'])->name('userdelete');
 
 
 
@@ -84,7 +113,9 @@ Route::middleware('auth:userlist')->group(function () {
     Route::get('sub/product/create', [SubProductController::class, 'subproductform'])->name('sub.product.create');
 
 
-    
+    // Roles and permissions routes
+
+
     //ImageBox Routes
 
     Route::get('/admin/imagebox', [AdminController::class, 'imagebox'])->name('admin.imagebox');

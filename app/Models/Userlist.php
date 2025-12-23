@@ -17,6 +17,13 @@ class Userlist extends Authenticatable
         'role_id',
     ];
 
+    public function role()
+{
+    return $this->belongsTo(Role::class, 'role_id');
+}
+
+
+
     protected $hidden = [
         'password',
         'remember_token',

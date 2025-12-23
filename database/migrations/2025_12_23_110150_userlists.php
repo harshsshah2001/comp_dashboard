@@ -11,22 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('userlists', function (Blueprint $table) {
-            $table->id();
+         Schema::create('userlists', function (Blueprint $table) {
+         $table->id();
              $table->string('name');
             $table->string('email')->unique();
             $table->string('number')->unique();
             $table->string('password');
-            $table->string('role_id');
+            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('userlists');
+        //
     }
 };
