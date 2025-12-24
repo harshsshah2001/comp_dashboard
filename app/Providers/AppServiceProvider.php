@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\Userlist;
-use App\Models\Permission;
 use App\Models\UserPermission;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Gate;

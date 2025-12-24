@@ -77,7 +77,11 @@
                                             </div>
                                             <span class="text-danger error-text image_error"></span>
 
+                                            {{-- @if(hasPermission('edit-post')) --}}
+
                                             <button type="submit" class="btn btn-primary">Submit</button>
+
+                                            {{-- @endif --}}
                                         </form>
 
                                         <div class="modal fade" id="cropperModal" tabindex="-1" aria-hidden="true">
@@ -94,11 +98,11 @@
                                                         <img id="cropperImage" style="max-width: 100%;">
                                                     </div>
 
+
                                                     <div class="modal-footer">
                                                         <button class="btn btn-primary" id="cropImageBtn">Crop &
                                                             Save</button>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>

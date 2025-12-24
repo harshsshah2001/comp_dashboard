@@ -31,8 +31,6 @@ class CategoryController extends Controller
     public function categoryform(Request $request)
     {
 
-        // Gate::authorize('isAdmin');
-        // Fetch categories
         $categories = Category::all();
 
         // For dropdown only (title)
@@ -81,6 +79,8 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+
+        
         $validation_rules = [
             'parentCategory' => 'nullable|string',
             'categoryTitle'  => 'required|string|max:255|min:3',

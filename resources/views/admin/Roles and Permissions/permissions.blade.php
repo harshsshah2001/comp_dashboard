@@ -50,11 +50,9 @@
                                         placeholder="Short description">
                                 </div>
 
-                                @can('permission', 'edit-post')
                                     <div class="col-md-2 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary w-100">Save Permission</button>
                                     </div>
-                                @endcan 
                             </form>
                         </div>
                     </div>

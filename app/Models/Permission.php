@@ -12,4 +12,8 @@ class Permission extends Model
         'permission_name',
         'description'
     ];
+
+    public function permission(){
+       return $this->hasMany(UserPermission::class,'permission_id');
+    }
 }

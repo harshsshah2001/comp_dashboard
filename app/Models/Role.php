@@ -18,4 +18,10 @@ class Role extends Model
     return $this->hasMany(Userlist::class, 'role_id');
 }
 
+//one role has many permission
+    public function permissions()
+{
+    return $this->hasMany(UserPermission::class, 'user_id');
+}
+
 }
