@@ -209,6 +209,10 @@
             processData: false,
             success: function (response) {
                 Swal.fire("Success", "User added successfully!", "success");
+                $('#datatable1').DataTable().ajax.reload(null, false);
+
+    // optional: reset form
+    $('#addUserForm')[0].reset();
             },
             error: function (xhr) {
                 Swal.fire("Error", "Validation failed", "error");
@@ -247,12 +251,6 @@
            class="text-warning me-2 editBtn"
            data-id="${id}">
             <i class="fa-solid fa-pen-to-square fa-lg"></i>
-        </a>
-
-        <a href="javascript:void(0)"
-           class="text-info me-2 assignPermissionBtn"
-           data-userid="${id}">
-            <i class="fa-solid fa-key fa-lg"></i>
         </a>
 
         <a href="javascript:void(0)"
@@ -309,33 +307,6 @@
 
 
 <script>
-    $(document).on('click', '.assignPermissionBtn', function () {
-
-    let userId = $(this).data('userid');
-    $('#permission_user_id').val(userId);
-
-    $.get("{{ route('permissions.list') }}", function (res) {
-
-        let html = '';
-        res.data.forEach(function (permission) {
-            html += `
-                <div class="form-check">
-                    <input class="form-check-input"
-                           type="checkbox"
-                           name="permissions[]"
-                           value="${permission.id}">
-                    <label class="form-check-label">
-                        ${permission.permission_name}
-                    </label>
-                </div>
-            `;
-        });
-
-        $('#permissionCheckboxes').html(html);
-        $('#assignPermissionModal').modal('show');
-    });
-});
-
 
 $('#permissionForm').on('submit', function (e) {
     e.preventDefault();

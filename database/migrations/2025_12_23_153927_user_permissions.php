@@ -10,28 +10,25 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('user_permissions', function (Blueprint $table) {
+{
+    Schema::create('user_permissions', function (Blueprint $table) {
+        $table->id();
 
-            $table->id();
+        $table->foreignId('user_id')
+            ->constrained('userlists')
+            ->cascadeOnDelete();
 
-            $table->foreignId('user_id')
-                ->constrained('roles')
-                ->cascadeOnDelete();
+        $table->foreignId('permission_id')
+            ->constrained('permissions')
+            ->cascadeOnDelete();
 
-            $table->foreignId('permission_id')
-                ->constrained('permissions')
-                ->cascadeOnDelete();
+        $table->timestamps();
+    });
+}
 
-            $table->timestamps();
-        });
-    }
+public function down(): void
+{
+    Schema::dropIfExists('user_permissions');
+}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        //
-    }
 };
