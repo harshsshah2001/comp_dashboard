@@ -9,6 +9,7 @@ use App\Http\Controllers\RolesPermission;
 use App\Http\Controllers\SubProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Countdowns;
+use App\Http\Controllers\frontend\RegisterController;
 use App\Http\Controllers\InfocardsController;
 use App\Http\Controllers\MailstoreController;
 
@@ -22,7 +23,7 @@ Route::get('/role/list', [RolesPermission::class, 'rolelist'])->name('role.list'
 Route::get('/permissions', [RolesPermission::class, 'permissions'])->name('permissions');
 Route::post('/permissions', [RolesPermission::class, 'permissionsubmit'])->name('permissionsubmit');
 Route::get('/permissions/list', [RolesPermission::class, 'getPermissions'])->name('permissions.list');
-Route::post('/permissions/assign', [RolesPermission::class, 'assignPermissions'])->name('permissions.assgn');
+Route::post('/permissions/assign', [RolesPermission::class, 'assignPermissions'])->name('permissions.assign');
 Route::get('/permission/edit/{id}', [RolesPermission::class, 'permissionedit'])->name('permissionedit');
 Route::post('/permission/update/{id}', [RolesPermission::class, 'permissionupdate']);
 Route::delete('permission/delete/{id}', [RolesPermission::class, 'permissiondelete'])->name('permissiondelete');
@@ -100,5 +101,7 @@ Route::middleware('auth:userlist')->group(function () {
 // Frontend Routes
 
 Route::get('/Homepage', [UserController::class, 'Homepage'])->name('homepage');
+Route::get('/registerform',[RegisterController::class,'registerform'])->name('registerform');
+Route::get('/userloginform',[RegisterController::class,'userloginform'])->name('userloginform');
 
 Route::post('/mail', [MailstoreController::class, 'Mail'])->name('mail.store');

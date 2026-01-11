@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 <!--[if (gte IE 9)|!(IE)]><!-->
-{{-- <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><!--<![endif]--> --}}
+{{-- <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]--> --}}
 
 {{--
 
@@ -85,6 +86,11 @@
                                 </div>
                                 <div class="money">USD <i class="fa fa-usd"></i></div>
                                 <div class="account"><a href="#">My Account <i class="fa fa-user"></i></a></div>
+                                <div class="auth-buttons" style="margin-left: 20px;">
+                                    <a href="{{ route('userloginform') }}" class="btn btn-sm btn-outline-primary"
+                                        style="margin-right: 10px;">Login</a>
+                                    <a href="{{ route('registerform') }}" class="btn btn-sm btn-primary">Register</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,6 +108,8 @@
                     </div><!-- /.logo -->
                     <div class="mobile-button"><span></span></div>
                     <ul class="menu-extra">
+
+
                         <li class="box-search">
                             <a class="icon_search header-search-icon" href="#"></a>
                             <form role="search" method="get" class="header-search-form" action="#">
