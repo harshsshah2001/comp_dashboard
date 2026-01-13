@@ -161,7 +161,7 @@
                             Create your fashion account & stay ahead of trends
                         </p>
 
-                        <form method="POST">
+                        <form id="registerform">
                             @csrf
 
                             <div class="mb-3">
@@ -186,7 +186,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mt-4">
-                                <a href="" class="auth-link text-decoration-none">
+                                <a href="{{ route('userloginform') }}" class="auth-link text-decoration-none">
                                     Already have an account?
                                 </a>
                                 <button type="submit" class="btn btn-primary">
@@ -203,8 +203,48 @@
         </div>
     </div>
 
-    <script src="{{ asset('dashboard/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('dashboard/js/bootstrap.bundle.min.js') }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
 </body>
+
+<script>
+$(document).ready(function(){
+    $('#registerform').on('submit', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('registeruser') }}",
+            type: "POST",
+            data: $(this).serialize(),
+
+            success:function(response){
+                Swal.fire({
+                    title: "Success!",
+                    text: response.message,
+                    icon: "success"
+                }).then(() => {
+                    window.location.href = "{{ route('userloginform') }}";
+                });
+            },
+
+            error:function(xhr){
+                if(xhr.status === 422){
+                    let errors = xhr.responseJSON.errors;
+                    let msg = Object.values(errors)[0][0];
+
+                    Swal.fire("Validation Error", msg, "warning");
+                } else {
+                    Swal.fire("Error", "Something went wrong", "error");
+                }
+            }
+        });
+    });
+});
+</script>
+
 
 </html>

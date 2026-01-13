@@ -7,7 +7,7 @@ use App\Models\Userlist;
 use App\Models\UserPermission;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-{
-   
-}
+    {
+        Schema::defaultStringLength(191);
+    }
 }

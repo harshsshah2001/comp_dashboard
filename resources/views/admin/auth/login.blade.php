@@ -76,6 +76,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 <script>
@@ -96,7 +97,13 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.status === 'success') {
-                    window.location.href = response.redirect;
+                    Swal.fire(
+                        'Login Successful!',
+                        response.message,
+                        'success'
+                    ).then(function(){
+                        window.location.href = response.redirect;
+                    });
                 }
             },
             error: function (xhr) {

@@ -86,11 +86,17 @@
                                 </div>
                                 <div class="money">USD <i class="fa fa-usd"></i></div>
                                 <div class="account"><a href="#">My Account <i class="fa fa-user"></i></a></div>
-                                <div class="auth-buttons" style="margin-left: 20px;">
-                                    <a href="{{ route('userloginform') }}" class="btn btn-sm btn-outline-primary"
-                                        style="margin-right: 10px;">Login</a>
-                                    <a href="{{ route('registerform') }}" class="btn btn-sm btn-primary">Register</a>
-                                </div>
+                                @if(session()->has('user_name'))
+                                    <div class="user-info" style="margin-left: 20px; color: white;">
+                                        Welcome, {{ session('user_name') }}
+                                    </div>
+                                @else
+                                    <div class="auth-buttons" style="margin-left: 20px;">
+                                        <a href="{{ route('userloginform') }}" class="btn btn-sm btn-outline-primary"
+                                            style="margin-right: 10px;">Login</a>
+                                        <a href="{{ route('registerform') }}" class="btn btn-sm btn-primary">Register</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

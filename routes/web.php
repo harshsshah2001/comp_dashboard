@@ -102,6 +102,8 @@ Route::middleware('auth:userlist')->group(function () {
 
 Route::get('/Homepage', [UserController::class, 'Homepage'])->name('homepage');
 Route::get('/registerform',[RegisterController::class,'registerform'])->name('registerform');
+Route::post('/registeruser',[RegisterController::class,'registeruser'])->name('registeruser');
 Route::get('/userloginform',[RegisterController::class,'userloginform'])->name('userloginform');
+Route::post('/userlogin',[RegisterController::class,'userlogin'])->name('userlogin');
 
 Route::post('/mail', [MailstoreController::class, 'Mail'])->name('mail.store');

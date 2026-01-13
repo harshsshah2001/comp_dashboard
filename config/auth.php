@@ -7,14 +7,14 @@ return [
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
-    /*  
+    /*
     |--------------------------------------------------------------------------
     | Authentication Guards
     |--------------------------------------------------------------------------
     */
 
     'guards' => [
-        'web' => [
+        'user' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
@@ -27,6 +27,10 @@ return [
         'userlist' => [
             'driver' => 'session',
             'provider' => 'userlists',
+        ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
         ],
     ],  // ← THIS bracket was wrongly placed in your file
 
